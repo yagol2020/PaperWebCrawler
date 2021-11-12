@@ -38,6 +38,7 @@ public class BastTest {
     @Test
     public void testLoveScience() {
         LoveScienceDetector detector = new LoveScienceDetector();
-        detector.detector("IEEE Transactions on Software Engineering");
+        String result=detector.detector("IEEE Transactions on Software Engineering");
+        System.out.println(result);
     }
 }

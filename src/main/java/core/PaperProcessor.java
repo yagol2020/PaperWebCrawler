@@ -13,6 +13,7 @@ public interface PaperProcessor<SearchQuery extends BaseSearchQuery, Result exte
      * 执行浏览器查询
      *
      * @param searchQuery 查询条件类，能够生成查询条件字符串
+     * @return Result 文献查询结果
      */
     Result run(SearchQuery searchQuery);
 }

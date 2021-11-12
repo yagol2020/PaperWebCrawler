@@ -1,7 +1,6 @@
 package result;
 
 import cn.hutool.core.collection.CollUtil;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -54,14 +53,4 @@ public abstract class BaseResult {
                 "authors",
         };
     }
-}
-
-@Data
-@AllArgsConstructor
-class PaperInfo {
-    String title;
-    List<String> authors;
-    String source;
-    String year;
-    String paperType;
 }

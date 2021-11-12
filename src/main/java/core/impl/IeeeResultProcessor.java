@@ -53,9 +53,7 @@ public class IeeeResultProcessor implements PaperProcessor<IeeeSearchQuery, Ieee
         webDriver.get(webUri);
         WebDriverWait webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(30));
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(IeeeParam.UNTIL_CONDITION_XPATH)));
-
         ieeeResult.parserTotalSize(webDriver.findElement(By.xpath(IeeeParam.PAPER_SIZE_XPATH)).getText());
-
         webDriver.findElements(By.xpath("//xpl-search-results//xpl-results-list//*[@id>0]")).forEach(webElement -> {
             log.info(webElement.getText());
             List<String> webPaperInfos = StrUtil.split(webElement.getText(), "\n");
