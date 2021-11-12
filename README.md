@@ -9,5 +9,5 @@
 
 驱动的版本应与Chrome的版本一致，下图将展示如何查看Chrome版本
 
-![chrome_version](./images/chrome version.png)
+![chrome_version](https://github.com/yagol2020/PaperWebCrawler/blob/master/images/chrome%20version.png)
 
