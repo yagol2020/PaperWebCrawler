@@ -33,3 +33,7 @@ public class App {
     4. 出处（期刊或会议名称）
     5. 发表日期
     6. 论文类型（期刊或会议）
+
+## 文献查询结果 Csv Result
+文献查询结果会以`csv`文件形式呈现，如下图所示，该样例以`NLP Model Parameter`作为关键字进行查询。
+![ieee result demo](https://github.com/yagol2020/PaperWebCrawler/blob/master/images/ieee%20result%20demo.png)
