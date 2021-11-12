@@ -23,19 +23,17 @@ import java.util.List;
  * @TIME 2021/11/10 - 8:23 下午
  * @Description
  **/
-public class IeeeResultProcessor implements PaperProcessor<IeeeSearchQuery> {
+public class IeeeResultProcessor implements PaperProcessor<IeeeSearchQuery, IeeeResult> {
     private static final Log log = LogFactory.get();
 
     @Override
-    public void run(IeeeSearchQuery ieeeSearchQuery) {
+    public IeeeResult run(IeeeSearchQuery ieeeSearchQuery) {
         WebDriver webDriver = new ChromeUtil().initChrome();
         IeeeResult ieeeResult = new IeeeResult();
         ieeeResult.setSearchQuery(ieeeSearchQuery.getQueryText());
         try {
-
             //第一轮需要外部执行，这一轮中，获得总共的论文数量
             getIeeeResult(ieeeSearchQuery, webDriver, ieeeResult);
-
             //计算总共有多少页，循环更新论文信息
             int totalPage = ieeeResult.getPaperSize() / (ieeeSearchQuery.getRowsPerPage()) + 1;
             for (int i = ieeeSearchQuery.getPageNumber() + 1; i <= totalPage; i++) {
@@ -45,8 +43,8 @@ public class IeeeResultProcessor implements PaperProcessor<IeeeSearchQuery> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        ieeeResult.save2File();
         webDriver.quit();
+        return ieeeResult;
     }
 
     private void getIeeeResult(IeeeSearchQuery ieeeSearchQuery, WebDriver webDriver, IeeeResult ieeeResult) {
@@ -84,8 +82,6 @@ public class IeeeResultProcessor implements PaperProcessor<IeeeSearchQuery> {
                 }
             }
             ieeeResult.updatePaperInfo(title, authors, source, year, paperType);
-
-
         });
     }
 

@@ -1,0 +1,59 @@
+{
+  "createTime": "2021年11月12日",
+  "updateTime": "2021年11月12日",
+  "createBy": "yagol",
+  "updateBy": "yagol",
+  "content": [
+    {
+      "分类": "网络与信息安全",
+      "A": [
+        {
+          "类别": "期刊",
+          "名称": [
+            "IEEE Transactions on Dependable and Secure Computing",
+            "IEEE Transactions on Information Forensics and Security",
+            "Journal of Cryptology"
+          ]
+        },
+        {
+          "类别": "会议",
+          "名称": [
+            "ACM Conference on Computer and Communications Security",
+            "European Cryptology Conference",
+            "IEEE Symposium on Security and privacy",
+            "International Cryptology Conference",
+            "Usnix Security Symposium"
+          ]
+        }
+      ],
+      "B": [
+        {
+          "类别": "期刊",
+          "名称": [
+            "ACM Transactions on Information and System Security",
+            "Computers & Security",
+            "Designs, Codes and Cryptography",
+            "Journal of Computer Security"
+          ]
+        },
+        {
+          "类别": "会议",
+          "名称": [
+            "Annual Computer Security Applications Conference",
+            "Annual International Conference on the Theory and Application of Cryptology and Information Security",
+            "European Symposium on Research in Computer Security",
+            "Fast Software Encryption",
+            "IEEE Computer Security Foundations Workshop",
+            "IEEE International Symposium on Reliable Distributed Systems",
+            "International Symposium on Recent Advances in Intrusion Detection",
+            "International Workshop on Practice and Theory in Public Key Cryptography",
+            "ISOC Network and Distributed System Security Symposium",
+            "International Conference on Dependable Systems and Networks",
+            "Theory of Cryptography Conference",
+            "International Conference on Cryptographic Hardware and Embedded Systems"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -35,10 +35,10 @@ public abstract class BaseResult {
             results.add(new String[]{
                     searchQuery,
                     paperInfo.title,
-                    CollUtil.join(paperInfo.getAuthors(), ","),
-                    paperInfo.source,
                     paperInfo.getYear(),
-                    paperInfo.getPaperType()
+                    paperInfo.source,
+                    paperInfo.getPaperType(),
+                    CollUtil.join(paperInfo.getAuthors(), ","),
             });
         }
         return results;
@@ -48,10 +48,10 @@ public abstract class BaseResult {
         return new String[]{
                 "searchQuery",
                 "title",
-                "authors",
-                "source",
                 "year",
-                "paperType"
+                "source",
+                "paperType",
+                "authors",
         };
     }
 }
