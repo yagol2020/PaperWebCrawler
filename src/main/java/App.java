@@ -1,5 +1,5 @@
-import bean.SearchQuery;
-import core.IeeeResultProcessor;
+import bean.impl.IeeeSearchQuery;
+import core.impl.IeeeResultProcessor;
 
 /**
  * @author yagol
@@ -8,8 +8,8 @@ import core.IeeeResultProcessor;
  **/
 public class App {
     public static void main(String[] args) {
-        SearchQuery searchQuery = new SearchQuery("smart contract analysis", 75, 1);
+        IeeeSearchQuery ieeeSearchQuery = new IeeeSearchQuery("smart contract analysis");
         IeeeResultProcessor processor = new IeeeResultProcessor();
-        processor.run(searchQuery);
+        processor.run(ieeeSearchQuery);
     }
 }

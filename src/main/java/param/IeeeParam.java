@@ -5,7 +5,7 @@ import lombok.Data;
 /**
  * @author yagol
  * @TIME 2021/11/11 - 8:32 下午
- * @Description
+ * @Description IEEE静态参数
  **/
 @Data
 public class IeeeParam {

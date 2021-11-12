@@ -19,6 +19,7 @@ public class ChromeUtil {
         System.setProperty(CHROME_DRIVER_PROPERTY, CHROME_DRIVER_PATH);
         CHROME_OPTIONS = new ChromeOptions();
         CHROME_OPTIONS.setPageLoadStrategy(PageLoadStrategy.EAGER);
+        //隐藏浏览器不显示
         CHROME_OPTIONS.addArguments("--headless");
     }
 

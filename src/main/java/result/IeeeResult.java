@@ -1,4 +1,4 @@
-package bean;
+package result;
 
 import cn.hutool.core.util.StrUtil;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 /**
  * @author yagol
  * @TIME 2021/11/11 - 8:27 下午
- * @Description
+ * @Description IEEE论文统计结果
  **/
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -16,6 +16,11 @@ public class IeeeResult extends BaseResult {
         databaseName = "IEEE XPLORE";
     }
 
+    /**
+     * 从页面的原始字符串获得论文数量
+     *
+     * @param origin 形如 Showing 1-12 of <strong>30</strong> for YourKeyWords
+     */
     public void parserTotalSize(String origin) {
         paperSize = Integer.parseInt(StrUtil.split(origin, " ").get(3));
     }

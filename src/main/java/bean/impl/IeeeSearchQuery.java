@@ -1,5 +1,6 @@
-package bean;
+package bean.impl;
 
+import bean.BaseSearchQuery;
 import cn.hutool.core.util.ArrayUtil;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -13,19 +14,24 @@ import java.util.List;
  **/
 @Data
 @Slf4j
-public class SearchQuery {
+public class IeeeSearchQuery implements BaseSearchQuery {
     final static Integer ROW_PER_PAGE_10 = 10;
     final static Integer ROW_PER_PAGE_25 = 25;
     final static Integer ROW_PER_PAGE_50 = 50;
     final static Integer ROW_PER_PAGE_75 = 75;
-    Integer rowsPerPage;
-    Integer pageNumber;
+    Integer rowsPerPage = 75;
+    Integer pageNumber = 1;
     String queryText;
     Boolean highlight = true;
     List<String> returnFacets = ArrayUtil.map(new String[]{"ALL"}, s -> s);
     String returnType = "SEARCH";
 
-    public SearchQuery(String queryText, Integer rowsPerPage, Integer pageNumber) {
+
+    public IeeeSearchQuery(String queryText) {
+        this(queryText, 75, 1);
+    }
+
+    public IeeeSearchQuery(String queryText, Integer rowsPerPage, Integer pageNumber) {
         if (!rowsPerPage.equals(ROW_PER_PAGE_10) && !rowsPerPage.equals(ROW_PER_PAGE_25)
                 && !rowsPerPage.equals(ROW_PER_PAGE_50) && !rowsPerPage.equals(ROW_PER_PAGE_75)) {
             this.rowsPerPage = ROW_PER_PAGE_10;
@@ -36,13 +42,17 @@ public class SearchQuery {
         this.pageNumber = pageNumber;
     }
 
+    @Override
     public String gen() {
-        StringBuilder sb = new StringBuilder("queryText=");
-        sb.append(queryText);
-        sb.append("&");
-        sb.append("rowsPerPage=").append(rowsPerPage);
-        sb.append("&");
-        sb.append("pageNumber=").append(pageNumber);
-        return sb.toString();
+        return "queryText=" + queryText +
+                "&" +
+                "rowsPerPage=" + rowsPerPage +
+                "&" +
+                "pageNumber=" + pageNumber;
+    }
+
+    @Override
+    public Integer getSearchSize() {
+        return rowsPerPage;
     }
 }
