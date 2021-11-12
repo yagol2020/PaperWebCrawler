@@ -3,6 +3,10 @@ package result;
 import cn.hutool.core.util.StrUtil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import param.OutPutParam;
+import util.MyFileUtil;
+
+import java.util.List;
 
 /**
  * @author yagol
@@ -22,6 +26,22 @@ public class IeeeResult extends BaseResult {
      * @param origin 形如 Showing 1-12 of <strong>30</strong> for YourKeyWords
      */
     public void parserTotalSize(String origin) {
-        paperSize = Integer.parseInt(StrUtil.split(origin, " ").get(3));
+        if (paperSize == 0) {
+            paperSize = Integer.parseInt(StrUtil.split(origin, " ").get(3));
+        }
+    }
+
+    public void updatePaperInfo(String title, List<String> authors, String source,String year,String paperType) {
+        paperList.add(new PaperInfo(title, authors, source,year,paperType));
+    }
+
+    @Override
+    public void save2File() {
+        MyFileUtil.writeMultiLine2Csv(OutPutParam.IEEE_OUT_PUT_FILE_PATH + getSearchQuery(), genHeader(), genResults());
+    }
+
+    @Override
+    public void save2Db() {
+
     }
 }

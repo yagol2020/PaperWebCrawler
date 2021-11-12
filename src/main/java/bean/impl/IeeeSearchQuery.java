@@ -19,8 +19,9 @@ public class IeeeSearchQuery implements BaseSearchQuery {
     final static Integer ROW_PER_PAGE_25 = 25;
     final static Integer ROW_PER_PAGE_50 = 50;
     final static Integer ROW_PER_PAGE_75 = 75;
-    Integer rowsPerPage = 75;
-    Integer pageNumber = 1;
+    final static Integer ROW_PER_PAGE_100 = 100;
+    Integer rowsPerPage;
+    Integer pageNumber;
     String queryText;
     Boolean highlight = true;
     List<String> returnFacets = ArrayUtil.map(new String[]{"ALL"}, s -> s);
@@ -28,13 +29,13 @@ public class IeeeSearchQuery implements BaseSearchQuery {
 
 
     public IeeeSearchQuery(String queryText) {
-        this(queryText, 75, 1);
+        this(queryText, ROW_PER_PAGE_100, 1);
     }
 
     public IeeeSearchQuery(String queryText, Integer rowsPerPage, Integer pageNumber) {
         if (!rowsPerPage.equals(ROW_PER_PAGE_10) && !rowsPerPage.equals(ROW_PER_PAGE_25)
                 && !rowsPerPage.equals(ROW_PER_PAGE_50) && !rowsPerPage.equals(ROW_PER_PAGE_75)) {
-            this.rowsPerPage = ROW_PER_PAGE_10;
+            this.rowsPerPage = ROW_PER_PAGE_100;
         } else {
             this.rowsPerPage = rowsPerPage;
         }

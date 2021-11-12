@@ -8,7 +8,7 @@ import core.impl.IeeeResultProcessor;
  **/
 public class App {
     public static void main(String[] args) {
-        IeeeSearchQuery ieeeSearchQuery = new IeeeSearchQuery("smart contract analysis");
+        IeeeSearchQuery ieeeSearchQuery = new IeeeSearchQuery("smart contract bug");
         IeeeResultProcessor processor = new IeeeResultProcessor();
         processor.run(ieeeSearchQuery);
     }
