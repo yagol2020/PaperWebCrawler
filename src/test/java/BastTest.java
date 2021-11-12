@@ -1,4 +1,5 @@
 import cn.hutool.core.util.StrUtil;
+import core.impl.LoveScienceDetector;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -33,5 +34,10 @@ public class BastTest {
         });
         webDriver.quit();
     }
+
+    @Test
+    public void testLoveScience() {
+        LoveScienceDetector detector = new LoveScienceDetector();
+        detector.detector("IEEE Transactions on Software Engineering");
+    }
 }
-//Year: 2020 | Conference Paper | Publisher: IEEE

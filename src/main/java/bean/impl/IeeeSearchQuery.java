@@ -51,9 +51,4 @@ public class IeeeSearchQuery implements BaseSearchQuery {
                 "&" +
                 "pageNumber=" + pageNumber;
     }
-
-    @Override
-    public Integer getSearchSize() {
-        return rowsPerPage;
-    }
 }

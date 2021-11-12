@@ -12,11 +12,4 @@ public interface BaseSearchQuery {
      * @return 查询条件
      */
     String gen();
-
-    /**
-     * 获得分页查询中，限制的每页论文数量
-     *
-     * @return 限制的论文数量
-     */
-    Integer getSearchSize();
 }
