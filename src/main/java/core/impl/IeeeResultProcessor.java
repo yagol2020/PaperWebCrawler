@@ -14,6 +14,7 @@ import result.IeeeResult;
 import util.ChromeUtil;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -58,14 +59,33 @@ public class IeeeResultProcessor implements PaperProcessor<IeeeSearchQuery> {
         ieeeResult.parserTotalSize(webDriver.findElement(By.xpath(IeeeParam.PAPER_SIZE_XPATH)).getText());
 
         webDriver.findElements(By.xpath("//xpl-search-results//xpl-results-list//*[@id>0]")).forEach(webElement -> {
+            log.info(webElement.getText());
             List<String> webPaperInfos = StrUtil.split(webElement.getText(), "\n");
             String title = webPaperInfos.get(0);
-            List<String> authors = StrUtil.splitTrim(webPaperInfos.get(1), ";");
-            String source = webPaperInfos.get(2);
-            String year = StrUtil.splitTrim(webPaperInfos.get(3), "|").get(0).replace("Year:", "").trim();
-            String paperType = StrUtil.splitTrim(webPaperInfos.get(3), "|").get(1);
+            String year = StrUtil.EMPTY;
+            String paperType = StrUtil.EMPTY;
+            String source = StrUtil.EMPTY;
+            List<String> authors = new ArrayList<>();
+            int infoIndex = 0;
+            for (int i = webPaperInfos.size() - 1; i >= 1; i--) {
+                String content = webPaperInfos.get(i);
+                if (content.startsWith("Year")) {
+                    year = StrUtil.splitTrim(content, "|").get(0).replace("Year:", "").trim();
+                    paperType = StrUtil.splitTrim(content, "|").get(1);
+                    infoIndex = i;
+                } else {
+                    if (infoIndex != 0) {
+                        if (source.equals(StrUtil.EMPTY)) {
+                            source = content;
+                        } else {
+                            authors = StrUtil.splitTrim(content, ";");
+                        }
+                    }
+                }
+            }
             ieeeResult.updatePaperInfo(title, authors, source, year, paperType);
-            log.info(title);
+
+
         });
     }
 
