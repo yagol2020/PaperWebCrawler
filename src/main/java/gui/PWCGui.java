@@ -27,6 +27,7 @@ public class PWCGui {
     private final JTextField searchQueryInput = new JTextField();
     private final JButton searchButton = new JButton("开始");
     private final JButton helpButton = new JButton("关于&使用说明");
+    private final JTextArea logTextArea = new JTextArea();
 
     private final JFrame helpFrame = new JFrame("PWC 帮助");
     private final Container helpContainer = helpFrame.getContentPane();
@@ -83,6 +84,11 @@ public class PWCGui {
         helpPanel.add(helpContent);
         helpPanel.add(closeHelpButton);
         helpContainer.add(helpPanel, "Center");
+
+        JPanel logPanel = new JPanel();
+        logPanel.setLayout(new FlowLayout());
+        helpPanel.add(logTextArea);
+        mainContainer.add(logPanel, "East");
 
         JScrollPane paperInfoPanel = new JScrollPane();
         paperInfoTable.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
