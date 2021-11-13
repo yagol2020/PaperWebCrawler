@@ -3,7 +3,7 @@ import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import core.impl.IeeeResultProcessor;
 import core.impl.LoveScienceDetector;
-import param.PaperTypeParam;
+import result.BaseResult;
 import result.IeeeResult;
 
 /**
@@ -18,17 +18,8 @@ public class App {
         IeeeSearchQuery ieeeSearchQuery = new IeeeSearchQuery("NLP Model Parameter");
         IeeeResultProcessor processor = new IeeeResultProcessor();
         IeeeResult ieeeResult = processor.run(ieeeSearchQuery);
-
         LoveScienceDetector loveScienceDetector = new LoveScienceDetector();
-        ieeeResult.getPaperList().forEach(paperInfo -> {
-            if (PaperTypeParam.CONFERENCE_PAPER.contains(paperInfo.getPaperType())) {
-                paperInfo.setInfluenceFactor("会议论文");
-            } else {
-                String influenceFactor = loveScienceDetector.detector(paperInfo.getSource());
-                paperInfo.setInfluenceFactor(influenceFactor);
-            }
-        });
-        loveScienceDetector.quitWebDriver();
+        BaseResult result = loveScienceDetector.detector(ieeeResult);
         ieeeResult.save2File();
     }
 }

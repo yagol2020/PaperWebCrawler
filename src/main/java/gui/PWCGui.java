@@ -4,7 +4,7 @@ import bean.impl.IeeeSearchQuery;
 import core.impl.IeeeResultProcessor;
 import core.impl.LoveScienceDetector;
 import param.NormalParam;
-import param.PaperTypeParam;
+import result.BaseResult;
 import result.IeeeResult;
 import util.MyFileUtil;
 
@@ -111,18 +111,10 @@ public class PWCGui {
                 IeeeResultProcessor processor = new IeeeResultProcessor();
                 IeeeResult ieeeResult = processor.run(ieeeSearchQuery);
                 LoveScienceDetector loveScienceDetector = new LoveScienceDetector();
-                ieeeResult.getPaperList().forEach(paperInfo -> {
-                    if (PaperTypeParam.CONFERENCE_PAPER.contains(paperInfo.getPaperType())) {
-                        paperInfo.setInfluenceFactor("会议论文");
-                    } else {
-                        String influenceFactor = loveScienceDetector.detector(paperInfo.getSource());
-                        paperInfo.setInfluenceFactor(influenceFactor);
-                    }
-                });
-                loveScienceDetector.quitWebDriver();
+                BaseResult result = loveScienceDetector.detector(ieeeResult);
                 DefaultTableModel tableModel = (DefaultTableModel) paperInfoTable.getModel();
-                tableModel.setColumnIdentifiers(ieeeResult.genHeader());
-                ieeeResult.genResults().forEach(tableModel::addRow);
+                tableModel.setColumnIdentifiers(result.genHeader());
+                result.genResults().forEach(tableModel::addRow);
                 paperInfoTable.setModel(tableModel);
                 paperInfoFrame.setVisible(true);
             }

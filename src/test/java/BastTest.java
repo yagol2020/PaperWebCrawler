@@ -6,9 +6,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import param.IeeeParam;
+import result.BaseResult;
+import result.IeeeResult;
 import util.ChromeUtil;
 
 import java.time.Duration;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -39,8 +42,10 @@ public class BastTest {
 
     @Test
     public void testLoveScience() {
+        IeeeResult ieeeResult = new IeeeResult();
+        ieeeResult.addPaperInfo("test", Collections.singletonList("yagol"), "IEEE Transactions on Software Engineering", "2021", "Journal");
         LoveScienceDetector detector = new LoveScienceDetector();
-        String result = detector.detector("IEEE Transactions on Software Engineering");
+        BaseResult result = detector.detector(ieeeResult);
         System.out.println(result);
     }
 

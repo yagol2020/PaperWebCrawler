@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import param.LoveScienceParam;
 import param.NormalParam;
 import param.PaperLevelParam;
+import result.BaseResult;
 import util.ChromeUtil;
 
 import java.time.Duration;
@@ -31,7 +32,7 @@ public class LoveScienceDetector implements PaperLevelDetector {
         webDriver = new ChromeUtil().initChrome();
     }
 
-    public void quitWebDriver() {
+    private void quitWebDriver() {
         webDriver.quit();
     }
 
@@ -66,8 +67,7 @@ public class LoveScienceDetector implements PaperLevelDetector {
         }
     }
 
-    @Override
-    public String detector(String name) {
+    private String detector(String name) {
         String result = StrUtil.EMPTY;
         name = simplifyName(name);
         LoveScienceSearchQuery loveScienceSearchQuery = new LoveScienceSearchQuery();
@@ -94,6 +94,15 @@ public class LoveScienceDetector implements PaperLevelDetector {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return result;
+    }
+
+    @Override
+    public BaseResult detector(BaseResult result) {
+        result.getPaperList().forEach(paperInfo -> {
+            paperInfo.setInfluenceFactor(this.detector(paperInfo.getSource()));
+        });
+        this.quitWebDriver();
         return result;
     }
 }
