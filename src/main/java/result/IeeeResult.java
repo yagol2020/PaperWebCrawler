@@ -27,7 +27,7 @@ public class IeeeResult extends BaseResult {
      */
     public void parserTotalSize(String origin) {
         if (paperSize == 0) {
-            paperSize = Integer.parseInt(StrUtil.split(origin, " ").get(3));
+            paperSize = Integer.parseInt(StrUtil.split(origin.replace(",", StrUtil.EMPTY), " ").get(3));
         }
     }
 

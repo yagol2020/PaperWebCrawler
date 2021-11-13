@@ -1,6 +1,8 @@
 package gui;
 
 import bean.impl.IeeeSearchQuery;
+import cn.hutool.log.Log;
+import cn.hutool.log.LogFactory;
 import core.impl.IeeeResultProcessor;
 import core.impl.LoveScienceDetector;
 import param.NormalParam;
@@ -18,6 +20,7 @@ import java.awt.*;
  * @author yagol
  */
 public class PWCGui {
+    private final Log log = LogFactory.get();
     private final JFrame mainFrame = new JFrame("Paper Web Crawler 文献网站爬虫工具");
     private final Container mainContainer = mainFrame.getContentPane();
     private final JLabel searchQueryLabel = new JLabel("关键字");
@@ -85,8 +88,6 @@ public class PWCGui {
         paperInfoTable.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         paperInfoPanel.setViewportView(paperInfoTable);
         paperInfoContainer.add(paperInfoPanel, "Center");
-
-
     }
 
     private void setButtonFunction() {
@@ -103,6 +104,7 @@ public class PWCGui {
             result.genResults().forEach(tableModel::addRow);
             paperInfoTable.setModel(tableModel);
             paperInfoFrame.setVisible(true);
+            log.info("论文信息窗口渲染完毕");
         });
     }
 

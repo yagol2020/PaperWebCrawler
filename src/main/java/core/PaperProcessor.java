@@ -3,6 +3,8 @@ package core;
 import bean.BaseSearchQuery;
 import result.BaseResult;
 
+import javax.swing.*;
+
 /**
  * @author yagol
  * @TIME 2021/11/12 - 8:21 上午
