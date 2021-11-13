@@ -31,8 +31,13 @@ public class IeeeResult extends BaseResult {
         }
     }
 
-    public void updatePaperInfo(String title, List<String> authors, String source, String year, String paperType) {
-        paperList.add(new PaperInfo(title, authors, source, year, paperType, "N/A"));
+    public void addPaperInfo(String title, List<String> authors, String source, String year, String paperType) {
+        this.addPaperInfo(title, authors, source, year, paperType, "N/A");
+    }
+
+
+    public void addPaperInfo(String title, List<String> authors, String source, String year, String paperType, String influenceFactor) {
+        paperList.add(new PaperInfo(title, authors, source, year, paperType, influenceFactor));
     }
 
     @Override

@@ -1,5 +1,6 @@
 package util;
 
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.text.csv.CsvUtil;
 import cn.hutool.core.text.csv.CsvWriter;
 import cn.hutool.core.util.CharsetUtil;
@@ -17,5 +18,9 @@ public class MyFileUtil {
         csvWriter.writeLine(header);
         csvWriter.write(results);
         csvWriter.close();
+    }
+
+    public static String readFile(String path) {
+        return FileUtil.readString(path, CharsetUtil.CHARSET_UTF_8);
     }
 }

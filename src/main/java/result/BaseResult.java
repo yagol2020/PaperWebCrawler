@@ -14,6 +14,10 @@ import java.util.List;
 @Data
 public abstract class BaseResult {
     String databaseName;
+    /**
+     * 文献数量，来源于网站的数值。
+     * 请注意！这个值不一定等于paperList，因为部分文献无法提取
+     */
     Integer paperSize = 0;
     List<PaperInfo> paperList = new ArrayList<>();
     String searchQuery;
@@ -44,7 +48,7 @@ public abstract class BaseResult {
         return results;
     }
 
-    protected String[] genHeader() {
+    public String[] genHeader() {
         return new String[]{
                 "searchQuery",
                 "title",
@@ -55,4 +59,5 @@ public abstract class BaseResult {
                 "authors",
         };
     }
+
 }

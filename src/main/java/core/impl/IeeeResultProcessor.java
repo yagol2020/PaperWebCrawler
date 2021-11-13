@@ -79,7 +79,7 @@ public class IeeeResultProcessor implements PaperProcessor<IeeeSearchQuery, Ieee
                     }
                 }
             }
-            ieeeResult.updatePaperInfo(title, authors, source, year, paperType);
+            ieeeResult.addPaperInfo(title, authors, source, year, paperType);
         });
     }
 
