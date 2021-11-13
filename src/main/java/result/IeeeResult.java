@@ -31,13 +31,13 @@ public class IeeeResult extends BaseResult {
         }
     }
 
-    public void addPaperInfo(String title, List<String> authors, String source, String year, String paperType) {
-        this.addPaperInfo(title, authors, source, year, paperType, "N/A");
+    public void addPaperInfo(String title, List<String> authors, String source, String year, String paperType, String paperUrl) {
+        this.addPaperInfo(title, authors, source, year, paperType, "N/A", paperUrl);
     }
 
 
-    public void addPaperInfo(String title, List<String> authors, String source, String year, String paperType, String influenceFactor) {
-        paperList.add(new PaperInfo(title, authors, source, year, paperType, influenceFactor));
+    public void addPaperInfo(String title, List<String> authors, String source, String year, String paperType, String influenceFactor, String paperUrl) {
+        paperList.add(new PaperInfo(title, authors, source, year, paperType, influenceFactor, paperUrl));
     }
 
     @Override

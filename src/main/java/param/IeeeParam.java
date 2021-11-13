@@ -15,4 +15,6 @@ public class IeeeParam {
     public final static String[] SEARCH_INDEX_INFO_ALL = {"title", "authors", "source", "paper info", "cited info", "abstract", "html"};
     public final static String[] SEARCH_INDEX_INFO_NO_CITED = {"title", "authors", "source", "paper info", "abstract", "html"};
     public final static String[] SEARCH_INDEX_INFO_NO_AUTHORS = {"title", "source", "paper info", "abstract", "html"};
+    public final static String PAPER_URL_PREFIX = "https://ieeexplore.ieee.org/document/";
+    public final static String PAPER_ID_ATTRIBUTE = "id";
 }

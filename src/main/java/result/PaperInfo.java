@@ -19,4 +19,5 @@ public class PaperInfo {
     String year;
     String paperType;
     String influenceFactor;
+    String paperUrl;
 }

@@ -32,7 +32,7 @@ public class BastTest {
     @Test
     public void testLoveScience() {
         IeeeResult ieeeResult = new IeeeResult();
-        ieeeResult.addPaperInfo("test", Collections.singletonList("yagol"), "IEEE Transactions on Software Engineering", "2021", "Journal");
+        ieeeResult.addPaperInfo("test", Collections.singletonList("yagol"), "IEEE Transactions on Software Engineering", "2021", "Journal", "https://ieeexplore.ieee.org/document/9247056");
         LoveScienceDetector detector = new LoveScienceDetector();
         BaseResult result = detector.detector(ieeeResult);
         System.out.println(result);
@@ -66,11 +66,13 @@ public class BastTest {
     @Test
     public void testIeeePaperIdXpath() {
         WebDriver webDriver = new ChromeUtil().initChrome();
-        webDriver.get("https://ieeexplore.ieee.org/search/searchresult.jsp?newsearch=true&queryText=smart%20contract%20bug&returnFacets=ALL&returnType=SEARCH&matchPubs=true&rowsPerPage=75&pageNumber=1");
+        webDriver.get("https://ieeexplore.ieee.org/search/searchresult.jsp?queryText=smart%20contract%20bug&returnFacets=ALL&returnType=SEARCH&matchPubs=true&rowsPerPage=10&pageNumber=1");
         WebDriverWait webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(30));
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(IeeeParam.UNTIL_CONDITION_XPATH)));
-        webDriver.findElements(By.xpath("//xpl-search-results//xpl-results-list//*[@id>0]//a")).forEach(webElement -> {
-            System.out.println(webElement.getAttribute("href"));
+        webDriver.findElements(By.xpath("//xpl-search-results//xpl-results-list//div[@id>0]")).forEach(webElement -> {
+            System.out.println(webElement.getText());
+            System.out.println(webElement.getAttribute("id"));
+            System.out.println("==========");
         });
         webDriver.quit();
     }

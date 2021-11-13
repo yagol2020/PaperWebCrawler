@@ -43,6 +43,7 @@ public abstract class BaseResult {
                     paperInfo.source,
                     paperInfo.getPaperType(),
                     CollUtil.join(paperInfo.getAuthors(), ","),
+                    paperInfo.getPaperUrl()
             });
         }
         return results;
@@ -57,6 +58,7 @@ public abstract class BaseResult {
                 "source",
                 "paperType",
                 "authors",
+                "paperUrl"
         };
     }
 

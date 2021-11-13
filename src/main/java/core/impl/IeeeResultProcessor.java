@@ -54,7 +54,7 @@ public class IeeeResultProcessor implements PaperProcessor<IeeeSearchQuery, Ieee
         WebDriverWait webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(30));
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(IeeeParam.UNTIL_CONDITION_XPATH)));
         ieeeResult.parserTotalSize(webDriver.findElement(By.xpath(IeeeParam.PAPER_SIZE_XPATH)).getText());
-        webDriver.findElements(By.xpath("//xpl-search-results//xpl-results-list//*[@id>0]")).forEach(webElement -> {
+        webDriver.findElements(By.xpath("//xpl-search-results//xpl-results-list//div[@id>0]")).forEach(webElement -> {
             log.info(webElement.getText());
             List<String> webPaperInfos = StrUtil.split(webElement.getText(), "\n");
             String title = webPaperInfos.get(0);
@@ -79,7 +79,8 @@ public class IeeeResultProcessor implements PaperProcessor<IeeeSearchQuery, Ieee
                     }
                 }
             }
-            ieeeResult.addPaperInfo(title, authors, source, year, paperType);
+            String paperUrl = IeeeParam.PAPER_URL_PREFIX + webElement.getAttribute(IeeeParam.PAPER_ID_ATTRIBUTE);
+            ieeeResult.addPaperInfo(title, authors, source, year, paperType, paperUrl);
         });
     }
 
