@@ -11,8 +11,6 @@ import util.MyFileUtil;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * PWC Gui
@@ -58,7 +56,7 @@ public class PWCGui {
     private void init() {
         JPanel authorInfo = new JPanel();
         authorInfo.setLayout(new FlowLayout());
-        authorInfo.add(new JLabel("author : @yagol"));
+        authorInfo.add(new JLabel("author : @yagol, @vencerk"));
         mainContainer.add(authorInfo, "North");
 
         JPanel fieldPanel = new JPanel();
@@ -92,32 +90,19 @@ public class PWCGui {
     }
 
     private void setButtonFunction() {
-        helpButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                helpFrame.setVisible(true);
-            }
-        });
-        closeHelpButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                helpFrame.setVisible(false);
-            }
-        });
-        searchButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                IeeeSearchQuery ieeeSearchQuery = new IeeeSearchQuery(searchQueryInput.getText());
-                IeeeResultProcessor processor = new IeeeResultProcessor();
-                IeeeResult ieeeResult = processor.run(ieeeSearchQuery);
-                LoveScienceDetector loveScienceDetector = new LoveScienceDetector();
-                BaseResult result = loveScienceDetector.detector(ieeeResult);
-                DefaultTableModel tableModel = (DefaultTableModel) paperInfoTable.getModel();
-                tableModel.setColumnIdentifiers(result.genHeader());
-                result.genResults().forEach(tableModel::addRow);
-                paperInfoTable.setModel(tableModel);
-                paperInfoFrame.setVisible(true);
-            }
+        helpButton.addActionListener(e -> helpFrame.setVisible(true));
+        closeHelpButton.addActionListener(e -> helpFrame.setVisible(false));
+        searchButton.addActionListener(e -> {
+            IeeeSearchQuery ieeeSearchQuery = new IeeeSearchQuery(searchQueryInput.getText());
+            IeeeResultProcessor processor = new IeeeResultProcessor();
+            IeeeResult ieeeResult = processor.run(ieeeSearchQuery);
+            LoveScienceDetector loveScienceDetector = new LoveScienceDetector();
+            BaseResult result = loveScienceDetector.detector(ieeeResult);
+            DefaultTableModel tableModel = (DefaultTableModel) paperInfoTable.getModel();
+            tableModel.setColumnIdentifiers(result.genHeader());
+            result.genResults().forEach(tableModel::addRow);
+            paperInfoTable.setModel(tableModel);
+            paperInfoFrame.setVisible(true);
         });
     }
 

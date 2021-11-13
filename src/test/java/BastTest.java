@@ -1,4 +1,3 @@
-import cn.hutool.core.util.StrUtil;
 import core.impl.LoveScienceDetector;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -12,7 +11,6 @@ import util.ChromeUtil;
 
 import java.time.Duration;
 import java.util.Collections;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,20 +21,11 @@ import java.util.regex.Pattern;
  **/
 public class BastTest {
     @Test
-    public void test() {
+    public void test() throws Exception {
         WebDriver webDriver = new ChromeUtil().initChrome();
         webDriver.get("https://ieeexplore.ieee.org/search/searchresult.jsp?newsearch=true&queryText=smart%20contract%20bug&returnFacets=ALL&returnType=SEARCH&matchPubs=true&rowsPerPage=75&pageNumber=1");
         WebDriverWait webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(30));
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(IeeeParam.UNTIL_CONDITION_XPATH)));
-        webDriver.findElements(By.xpath("//xpl-search-results//xpl-results-list//*[@id>0]")).forEach(webElement -> {
-            List<String> webPaperInfos = StrUtil.split(webElement.getText(), "\n");
-            System.out.println("title: " + webPaperInfos.get(0));
-            System.out.println("authors: " + webPaperInfos.get(1));
-            System.out.println("source: " + webPaperInfos.get(2));
-            System.out.println("year: " + StrUtil.splitTrim(webPaperInfos.get(3), "|").get(0));
-            System.out.println("paper type: " + StrUtil.splitTrim(webPaperInfos.get(3), "|").get(1));
-            System.out.println("=====================");
-        });
         webDriver.quit();
     }
 
