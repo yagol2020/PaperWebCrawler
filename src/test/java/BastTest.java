@@ -73,4 +73,16 @@ public class BastTest {
         Pattern r = Pattern.compile(pattern);
         System.out.println(r.matcher(input).matches());
     }
+
+    @Test
+    public void testIeeePaperIdXpath() {
+        WebDriver webDriver = new ChromeUtil().initChrome();
+        webDriver.get("https://ieeexplore.ieee.org/search/searchresult.jsp?newsearch=true&queryText=smart%20contract%20bug&returnFacets=ALL&returnType=SEARCH&matchPubs=true&rowsPerPage=75&pageNumber=1");
+        WebDriverWait webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(30));
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(IeeeParam.UNTIL_CONDITION_XPATH)));
+        webDriver.findElements(By.xpath("//xpl-search-results//xpl-results-list//*[@id>0]//a")).forEach(webElement -> {
+            System.out.println(webElement.getAttribute("href"));
+        });
+        webDriver.quit();
+    }
 }
