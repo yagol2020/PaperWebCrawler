@@ -14,4 +14,5 @@ public class LoveScienceParam {
     public final static String UNTIL_CONDITION_XPATH = "//section//table[@class='sci-table-info']//tbody";
     public final static String SCI_INFO_TABLE_XPATH = "//section//table[@class='sci-table-info']//tbody//tr";
     public final static String INFLUENCE_FACTOR_XPATH = "//section//table[@class='sci-table-info']//tbody//tr//td[@data-del]";
+    public final static Integer MAX_QUERY_LENGTH = 50;
 }

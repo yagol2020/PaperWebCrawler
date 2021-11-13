@@ -10,6 +10,8 @@ import util.ChromeUtil;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author yagol
@@ -38,7 +40,32 @@ public class BastTest {
     @Test
     public void testLoveScience() {
         LoveScienceDetector detector = new LoveScienceDetector();
-        String result=detector.detector("IEEE Transactions on Software Engineering");
+        String result = detector.detector("IEEE Transactions on Software Engineering");
         System.out.println(result);
+    }
+
+    @Test
+    public void testRegexBracket() {
+        String nameInput = "(start bracket) prefix text [Test Software] inner text (second) last text {last bracket} end";
+        try {
+            String pattern = "[\\(\\[\\{](.*?)[\\)\\]\\}]";
+            Pattern r = Pattern.compile(pattern);
+            Matcher m = r.matcher(nameInput);
+            int count = 0;
+            while (m.find()) {
+                System.out.println(count + ":" + m.group());
+                count++;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testRegexNumber() {
+        String input = "202211";
+        String pattern = "[0-9]+";
+        Pattern r = Pattern.compile(pattern);
+        System.out.println(r.matcher(input).matches());
     }
 }

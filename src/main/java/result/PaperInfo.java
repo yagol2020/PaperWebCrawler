@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @author yagol
  * @TIME 2021/11/12 - 9:55 下午
- * @Description
+ * @Description 文章信息
  **/
 @Data
 @AllArgsConstructor
@@ -18,4 +18,5 @@ public class PaperInfo {
     String source;
     String year;
     String paperType;
+    String influenceFactor;
 }

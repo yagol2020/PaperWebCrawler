@@ -18,15 +18,17 @@ public class App {
         IeeeSearchQuery ieeeSearchQuery = new IeeeSearchQuery("NLP Model Parameter");
         IeeeResultProcessor processor = new IeeeResultProcessor();
         IeeeResult ieeeResult = processor.run(ieeeSearchQuery);
-        ieeeResult.save2File();
+
         LoveScienceDetector loveScienceDetector = new LoveScienceDetector();
         ieeeResult.getPaperList().forEach(paperInfo -> {
             if (PaperTypeParam.CONFERENCE_PAPER.contains(paperInfo.getPaperType())) {
-                log.info("是会议，暂时跳过");
+                paperInfo.setInfluenceFactor("会议论文");
             } else {
-                System.out.println(loveScienceDetector.detector(paperInfo.getSource()));
+                String influenceFactor = loveScienceDetector.detector(paperInfo.getSource());
+                paperInfo.setInfluenceFactor(influenceFactor);
             }
         });
         loveScienceDetector.quitWebDriver();
+        ieeeResult.save2File();
     }
 }

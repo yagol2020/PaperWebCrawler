@@ -32,7 +32,7 @@ public class IeeeResult extends BaseResult {
     }
 
     public void updatePaperInfo(String title, List<String> authors, String source, String year, String paperType) {
-        paperList.add(new PaperInfo(title, authors, source, year, paperType));
+        paperList.add(new PaperInfo(title, authors, source, year, paperType, "N/A"));
     }
 
     @Override

@@ -11,6 +11,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import param.LoveScienceParam;
+import param.NormalParam;
 import param.PaperLevelParam;
 import util.ChromeUtil;
 
@@ -34,9 +35,41 @@ public class LoveScienceDetector implements PaperLevelDetector {
         webDriver.quit();
     }
 
+    /**
+     * 去除期刊名称中的无用信息
+     *
+     * @param name 期刊名称
+     * @return 去除后的期刊名称
+     */
+    private String simplifyName(String name) {
+        List<String> bracketContentList = NormalParam.getBracketContentList(name);
+        for (String s : bracketContentList) {
+            name = name.replace(s, StrUtil.EMPTY);
+        }
+        if (name.length() >= LoveScienceParam.MAX_QUERY_LENGTH) {
+            List<String> splitList = StrUtil.splitTrim(name, StrUtil.SPACE);
+            StringBuilder sb = new StringBuilder();
+            for (String s : splitList) {
+                if (!s.contains(NormalParam.ORDINAL_WORD_TH) && !NormalParam.NUMBER_PATTERN.matcher(s).matches()
+                        && !s.contains(NormalParam.APOSTROPHE) &&
+                        !s.contains(NormalParam.TRANSACTIONS)) {
+                    sb.append(s);
+                    sb.append(StrUtil.SPACE);
+                }
+            }
+            if (sb.length() >= LoveScienceParam.MAX_QUERY_LENGTH) {
+                sb.delete(0, sb.length() - LoveScienceParam.MAX_QUERY_LENGTH);
+            }
+            return sb.toString();
+        } else {
+            return name;
+        }
+    }
+
     @Override
     public String detector(String name) {
         String result = StrUtil.EMPTY;
+        name = simplifyName(name);
         LoveScienceSearchQuery loveScienceSearchQuery = new LoveScienceSearchQuery();
         loveScienceSearchQuery.setTitle(name);
         String webUrl = LoveScienceParam.BASE_SEARCH_URL + loveScienceSearchQuery.gen();
