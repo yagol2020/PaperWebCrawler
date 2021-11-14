@@ -14,7 +14,7 @@
 ## 使用说明 Usage
 
 1. 根据pom.xml配置依赖
-2. 工具的入口是App.main
+2. 控制台级别的工具入口是App.main，GUI级别的工具入口是`gui.PWCGui.main`
 3. 输入想要查询的关键字
 
 ```java
@@ -27,15 +27,20 @@ public class App {
 }
 ```
 
-4. 文献的结果会输出在`target/classes/output/IEEE XPLORE YourSerarchQuery.csv`中
+![gui main](images/gui main.png)
+
+4. 文献的结果会输出在`target/classes/output/IEEE XPLORE YourSerarchQuery.csv`中，GUI级别的会弹出结果展示表格
+
+![gui paper info table](images/gui paper info table.png)
+
 5. 目前文献的信息包括
-    1. 你查询的关键字
-    2. 文章标题
-    3. 作者列表
-    4. 出处（期刊或会议名称）
-    5. 发表日期
-    6. 论文类型（期刊或会议）
-    7. 对于期刊，能够获得影响因子
+	1. 你查询的关键字
+	2. 文章标题
+	3. 作者列表
+	4. 出处（期刊或会议名称）
+	5. 发表日期
+	6. 论文类型（期刊或会议）
+	7. 对于期刊，能够获得影响因子
 
 ## 文献查询结果 Csv Result
 
