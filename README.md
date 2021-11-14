@@ -9,7 +9,13 @@
 ## 准备工作
 
 * Chrome浏览器
-* ChromeDriver: [链接](http://chromedriver.storage.googleapis.com/index.html)
+* **ChromeDriver: [链接](http://chromedriver.storage.googleapis.com/index.html)**
+
+```markdown
+极其重要！！！！！！
+
+一定要将合适的ChromeDriver放到src/main/resources里，替换掉原有的ChromeDriver!
+```
 
 驱动的版本应与Chrome的版本一致，下图将展示如何查看Chrome版本
 
@@ -38,14 +44,14 @@ public class App {
 ![gui paper info table](https://github.com/yagol2020/PaperWebCrawler/blob/master/images/gui%20paper%20info%20table.png)
 
 5. 目前文献的信息包括
-    1. 你查询的关键字
-    2. 文章标题
-    3. 作者列表
-    4. 出处（期刊或会议名称）
-    5. 发表日期
-    6. 论文类型（期刊或会议）
-    7. 对于期刊，可以获得影响因子
-    8. paper的网页地址
+	1. 你查询的关键字
+	2. 文章标题
+	3. 作者列表
+	4. 出处（期刊或会议名称）
+	5. 发表日期
+	6. 论文类型（期刊或会议）
+	7. 对于期刊，可以获得影响因子
+	8. paper的网页地址
 
 ## 文献查询结果 Csv Result
 
