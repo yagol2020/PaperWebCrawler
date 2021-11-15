@@ -24,7 +24,7 @@
 ## 使用说明 Usage
 
 1. 根据pom.xml配置依赖
-2. 控制台级别的工具入口是App.main，GUI级别的工具入口是`gui.PWCGui.main`
+2. 控制台级别的工具入口是App.main，GUI级别的工具入口是`gui.designer.MainGui.main`
 3. 输入想要查询的关键字
 
 ```java

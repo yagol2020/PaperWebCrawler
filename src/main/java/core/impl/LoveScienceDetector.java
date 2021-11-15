@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import param.LoveScienceParam;
 import param.NormalParam;
 import param.PaperLevelParam;
+import param.PaperTypeParam;
 import result.BaseResult;
 import util.ChromeUtil;
 
@@ -100,7 +101,11 @@ public class LoveScienceDetector implements PaperLevelDetector {
     @Override
     public BaseResult detector(BaseResult result) {
         result.getPaperList().forEach(paperInfo -> {
-            paperInfo.setInfluenceFactor(this.detector(paperInfo.getSource()));
+            if (PaperTypeParam.CONFERENCE_PAPER.contains(paperInfo.getPaperType())) {
+                paperInfo.setInfluenceFactor(paperInfo.getPaperType());
+            } else {
+                paperInfo.setInfluenceFactor(this.detector(paperInfo.getSource()));
+            }
         });
         this.quitWebDriver();
         return result;
