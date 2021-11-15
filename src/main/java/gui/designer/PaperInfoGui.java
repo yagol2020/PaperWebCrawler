@@ -47,16 +47,15 @@ public class PaperInfoGui implements BaseGui {
     public PaperInfoGui init() {
         frame = new JFrame("PaperInfoGui");
         frame.setContentPane(paperInfo);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.pack();
         frame.setVisible(false);
         return this;
     }
 
     @Override
-    public BaseGui show() {
+    public void show() {
         frame.setVisible(true);
-        return this;
     }
 
     public static void main(String[] args) {

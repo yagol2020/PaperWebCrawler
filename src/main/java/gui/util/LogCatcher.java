@@ -1,6 +1,7 @@
 package gui.util;
 
 import cn.hutool.core.thread.ThreadUtil;
+import cn.hutool.core.util.StrUtil;
 
 import javax.swing.*;
 import java.io.ByteArrayOutputStream;
@@ -32,7 +33,9 @@ public class LogCatcher implements Runnable {
         while (true) {
             baoStream.reset();
             String logMessage = baoStream.toString();
-            logTextArea.append(logMessage);
+            if (StrUtil.isNotEmpty(logMessage)) {
+                logTextArea.append(logMessage);
+            }
         }
     }
 }

@@ -19,7 +19,7 @@ import java.util.HashMap;
 /**
  * @author yagol
  * @TIME 2021/11/15 - 11:05 上午
- * @Description
+ * @Description 工具界面启动类
  **/
 public class MainGui {
     private final Log log = LogFactory.get();
@@ -30,9 +30,23 @@ public class MainGui {
     private final PaperInfoGui paperInfoGui = new PaperInfoGui().init();
 
     public MainGui() {
+        initButtonFunctions();
+        initLogArea();
+    }
+
+    private void initButtonFunctions() {
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadPaperInfoData2Table();
+                    }
+                });
+            }
+
+            private void loadPaperInfoData2Table() {
                 IeeeSearchQuery ieeeSearchQuery = new IeeeSearchQuery(searchQueryInput.getText());
                 IeeeResultProcessor processor = new IeeeResultProcessor();
                 IeeeResult ieeeResult = processor.run(ieeeSearchQuery);
@@ -55,6 +69,10 @@ public class MainGui {
                 }
             }
         });
+    }
+
+    private void initLogArea() {
+
     }
 
     public static void main(String[] args) {

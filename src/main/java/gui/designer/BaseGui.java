@@ -5,7 +5,7 @@ import java.util.HashMap;
 /**
  * @author yagol
  * @TIME 2021/11/15 - 2:16 下午
- * @Description
+ * @Description 界面接口，除主界面外其他均需实现本接口
  **/
 public interface BaseGui {
     /**
@@ -25,7 +25,6 @@ public interface BaseGui {
     /**
      * 展示窗口
      *
-     * @return 窗口自身
      */
-    BaseGui show();
+    void show();
 }

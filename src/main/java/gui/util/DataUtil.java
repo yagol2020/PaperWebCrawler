@@ -8,12 +8,12 @@ import result.BaseResult;
  * @Description Gui相关数据填充工具类
  **/
 public class DataUtil {
+    @Deprecated
     public static Object[][] fillPaperInfoTableData(BaseResult result) {
         Object[][] data = new Object[result.getPaperList().size()][result.genHeader().length];
         for (int i = 0; i < data.length; i++) {
             data[i] = result.genResults().get(i);
         }
         return data;
-
     }
 }
