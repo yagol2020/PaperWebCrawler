@@ -5,6 +5,7 @@ import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import core.impl.IeeeResultProcessor;
 import core.impl.LoveScienceDetector;
+import gui.param.GuiParam;
 import param.NormalParam;
 import result.BaseResult;
 import result.IeeeResult;
@@ -12,7 +13,11 @@ import util.MyFileUtil;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 /**
  * PWC Gui
@@ -108,10 +113,32 @@ public class PWCGui {
             DefaultTableModel tableModel = (DefaultTableModel) paperInfoTable.getModel();
             tableModel.setColumnIdentifiers(result.genHeader());
             result.genResults().forEach(tableModel::addRow);
+            RowSorter<TableModel> rowSorter = new TableRowSorter<>(tableModel);
+            paperInfoTable.setRowSorter(rowSorter);
             paperInfoTable.setModel(tableModel);
             paperInfoFrame.setVisible(true);
             log.info("论文信息窗口渲染完毕");
         });
+
+        searchQueryInput.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == GuiParam.ENTER_CODE) {
+                    searchButton.doClick();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
+
     }
 
     public static void main(String[] args) {
