@@ -1,6 +1,7 @@
 package gui.designer;
 
 import bean.impl.IeeeSearchQuery;
+import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import core.impl.IeeeResultProcessor;
@@ -28,25 +29,36 @@ public class MainGui {
     private JPanel main;
 
     private final PaperInfoGui paperInfoGui = new PaperInfoGui().init();
+    private final HelpGui helpGui = new HelpGui().init();
 
     public MainGui() {
         initButtonFunctions();
         initLogArea();
     }
 
+
+    private void saveResult2Csv(BaseResult result) {
+        result.save2File();
+    }
+
     private void initButtonFunctions() {
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SwingUtilities.invokeLater(new Runnable() {
+
+                ThreadUtil.execute(new Runnable() {
                     @Override
                     public void run() {
-                        loadPaperInfoData2Table();
+                        BaseResult result = loadPaperInfoData2Table();
+                        if (saveResult2Csv.isSelected()) {
+                            log.info("存储到csv中，地址为{}", result.getCsvResultPath());
+                            saveResult2Csv(result);
+                        }
                     }
                 });
             }
 
-            private void loadPaperInfoData2Table() {
+            private BaseResult loadPaperInfoData2Table() {
                 IeeeSearchQuery ieeeSearchQuery = new IeeeSearchQuery(searchQueryInput.getText());
                 IeeeResultProcessor processor = new IeeeResultProcessor();
                 IeeeResult ieeeResult = processor.run(ieeeSearchQuery);
@@ -59,6 +71,7 @@ public class MainGui {
                 });
                 paperInfoGui.show();
                 log.info("论文信息窗口渲染完毕");
+                return result;
             }
         });
         searchQueryInput.addKeyListener(new KeyAdapter() {
@@ -67,6 +80,12 @@ public class MainGui {
                 if (e.getKeyCode() == GuiParam.ENTER_CODE) {
                     searchButton.doClick();
                 }
+            }
+        });
+        helpButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                helpGui.show();
             }
         });
     }
@@ -89,5 +108,6 @@ public class MainGui {
     private JButton helpButton;
     private JLabel titleLabel;
     private JLabel authorLabel;
+    private JCheckBox saveResult2Csv;
 
 }

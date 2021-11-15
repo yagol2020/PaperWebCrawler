@@ -58,6 +58,11 @@ public class PaperInfoGui implements BaseGui {
         frame.setVisible(true);
     }
 
+    @Override
+    public void initButtonFunctions() {
+
+    }
+
     public static void main(String[] args) {
         JFrame frame = new JFrame("PaperInfoGui");
         frame.setContentPane(new PaperInfoGui().paperInfo);

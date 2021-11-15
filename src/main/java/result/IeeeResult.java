@@ -3,7 +3,6 @@ package result;
 import cn.hutool.core.util.StrUtil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import param.OutPutParam;
 import util.MyFileUtil;
 
 import java.util.List;
@@ -42,7 +41,7 @@ public class IeeeResult extends BaseResult {
 
     @Override
     public void save2File() {
-        MyFileUtil.writeMultiLine2Csv(OutPutParam.IEEE_OUT_PUT_FILE_PATH + getSearchQuery(), genHeader(), genResults());
+        MyFileUtil.writeMultiLine2Csv(getCsvResultPath(), genHeader(), genResults());
     }
 
     @Override

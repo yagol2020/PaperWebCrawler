@@ -7,5 +7,5 @@ package param;
  **/
 
 public class OutPutParam {
-    public static final String IEEE_OUT_PUT_FILE_PATH = "output/IEEE XPLORE ";
+    public static final String OUT_PUT_CSV_RESULT_PATH = "output/";
 }

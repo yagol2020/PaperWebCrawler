@@ -1,7 +1,9 @@
 package result;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import lombok.Data;
+import param.OutPutParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +23,13 @@ public abstract class BaseResult {
     Integer paperSize = 0;
     List<PaperInfo> paperList = new ArrayList<>();
     String searchQuery;
+    String csvResultPath;
+
+
+    public void setSearchQuery(String searchQuery) {
+        this.searchQuery = searchQuery;
+        this.setCsvResultPath(OutPutParam.OUT_PUT_CSV_RESULT_PATH + databaseName.toUpperCase() + StrUtil.SPACE + searchQuery);
+    }
 
     /**
      * 保存论文查询的结果，到文件

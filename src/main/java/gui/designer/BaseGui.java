@@ -24,7 +24,11 @@ public interface BaseGui {
 
     /**
      * 展示窗口
-     *
      */
     void show();
+
+    /**
+     * 初始化按钮
+     */
+    void initButtonFunctions();
 }
