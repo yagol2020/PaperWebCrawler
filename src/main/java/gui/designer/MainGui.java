@@ -45,7 +45,6 @@ public class MainGui {
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 ThreadUtil.execute(new Runnable() {
                     @Override
                     public void run() {
@@ -91,6 +90,12 @@ public class MainGui {
     }
 
     private void initLogArea() {
+        ThreadUtil.execute(new Runnable() {
+            @Override
+            public void run() {
+                
+            }
+        });
 
     }
 

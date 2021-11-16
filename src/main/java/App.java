@@ -15,7 +15,8 @@ public class App {
     private static final Log log = LogFactory.get();
 
     public static void main(String[] args) {
-        IeeeSearchQuery ieeeSearchQuery = new IeeeSearchQuery("NLP Model Parameter");
+        log.info("控制台级别的启动程序");
+        IeeeSearchQuery ieeeSearchQuery = new IeeeSearchQuery("NLP Model per");
         IeeeResultProcessor processor = new IeeeResultProcessor();
         IeeeResult ieeeResult = processor.run(ieeeSearchQuery);
         LoveScienceDetector loveScienceDetector = new LoveScienceDetector();
