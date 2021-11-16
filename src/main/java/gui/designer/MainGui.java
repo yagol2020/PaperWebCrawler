@@ -2,11 +2,13 @@ package gui.designer;
 
 import bean.impl.IeeeSearchQuery;
 import cn.hutool.core.thread.ThreadUtil;
-import cn.hutool.log.Log;
-import cn.hutool.log.LogFactory;
+import cn.hutool.core.util.ArrayUtil;
+import cn.hutool.core.util.ObjectUtil;
 import core.impl.IeeeResultProcessor;
 import core.impl.LoveScienceDetector;
 import gui.param.GuiParam;
+import log.MyLogFactory;
+import log.MySwingTextAreaLog;
 import result.BaseResult;
 import result.IeeeResult;
 
@@ -23,7 +25,7 @@ import java.util.HashMap;
  * @Description 工具界面启动类
  **/
 public class MainGui {
-    private final Log log = LogFactory.get();
+    private final MySwingTextAreaLog log = MyLogFactory.get();
     private JTextField searchQueryInput;
     private JTextArea logArea;
     private JPanel main;
@@ -32,6 +34,7 @@ public class MainGui {
     private final HelpGui helpGui = new HelpGui().init();
 
     public MainGui() {
+        log.setLogTextArea(logArea);
         initButtonFunctions();
     }
 
@@ -44,12 +47,13 @@ public class MainGui {
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                logArea.append("执行爬虫任务，请稍后。请勿再次点击\"开始\"按钮\n");
+                log.info("执行爬虫任务，请稍后。请勿再次点击\"开始\"按钮");
                 ThreadUtil.execute(new Runnable() {
                     @Override
                     public void run() {
                         BaseResult result = loadPaperInfoData2Table();
-                        if (saveResult2Csv.isSelected()) {
+                        if (saveResult2Csv.isSelected() && ObjectUtil.isNotNull(result)) {
+                            assert result != null;
                             log.info("存储到csv中，地址为{}", result.getCsvResultPath());
                             saveResult2Csv(result);
                         }
@@ -61,16 +65,21 @@ public class MainGui {
                 IeeeSearchQuery ieeeSearchQuery = new IeeeSearchQuery(searchQueryInput.getText());
                 IeeeResultProcessor processor = new IeeeResultProcessor();
                 IeeeResult ieeeResult = processor.run(ieeeSearchQuery, logArea);
-                LoveScienceDetector loveScienceDetector = new LoveScienceDetector();
-                BaseResult result = loveScienceDetector.detector(ieeeResult);
-                paperInfoGui.start(new HashMap<String, Object>(16) {
-                    {
-                        put(BaseResult.class.getSimpleName(), result);
-                    }
-                });
-                paperInfoGui.show();
-                log.info("论文信息窗口渲染完毕");
-                return result;
+                if (ArrayUtil.isNotEmpty(ieeeResult.getPaperList())) {
+                    LoveScienceDetector loveScienceDetector = new LoveScienceDetector();
+                    BaseResult result = loveScienceDetector.detector(ieeeResult, logArea);
+                    paperInfoGui.start(new HashMap<String, Object>(16) {
+                        {
+                            put(BaseResult.class.getSimpleName(), result);
+                        }
+                    });
+                    paperInfoGui.show();
+                    log.info("论文信息窗口渲染完毕");
+                    return result;
+                } else {
+                    return null;
+                }
+
             }
         });
         searchQueryInput.addKeyListener(new KeyAdapter() {

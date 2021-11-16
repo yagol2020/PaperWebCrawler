@@ -2,9 +2,9 @@ package core.impl;
 
 import bean.impl.LoveScienceSearchQuery;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.log.Log;
-import cn.hutool.log.LogFactory;
 import core.PaperLevelDetector;
+import log.MyLogFactory;
+import log.MySwingTextAreaLog;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -17,6 +17,7 @@ import param.PaperTypeParam;
 import result.BaseResult;
 import util.ChromeUtil;
 
+import javax.swing.*;
 import java.time.Duration;
 import java.util.List;
 
@@ -26,7 +27,7 @@ import java.util.List;
  * @Description 爱科学期刊等级检测器
  **/
 public class LoveScienceDetector implements PaperLevelDetector {
-    private static final Log log = LogFactory.get();
+    private final MySwingTextAreaLog log = MyLogFactory.get();
     private final WebDriver webDriver;
 
     public LoveScienceDetector() {
@@ -109,5 +110,11 @@ public class LoveScienceDetector implements PaperLevelDetector {
         });
         this.quitWebDriver();
         return result;
+    }
+
+    @Override
+    public BaseResult detector(BaseResult result, JTextArea jTextArea) {
+        log.setLogTextArea(jTextArea);
+        return this.detector(result);
     }
 }

@@ -42,6 +42,7 @@ public class IeeeResultProcessor implements PaperProcessor<IeeeSearchQuery, Ieee
                 getIeeeResult(ieeeSearchQuery, webDriver, ieeeResult);
             }
         } catch (Exception e) {
+            log.error("建立链接时出现异常！请检查您的网络链接是否正常！爬虫的地址为{}", IeeeParam.BASE_SEARCH_URL + ieeeSearchQuery.gen());
             e.printStackTrace();
         }
         webDriver.quit();
