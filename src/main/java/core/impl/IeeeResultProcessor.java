@@ -2,9 +2,9 @@ package core.impl;
 
 import bean.impl.IeeeSearchQuery;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.log.Log;
-import cn.hutool.log.LogFactory;
 import core.PaperProcessor;
+import log.MyLogFactory;
+import log.MySwingTextAreaLog;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -13,6 +13,7 @@ import param.IeeeParam;
 import result.IeeeResult;
 import util.ChromeUtil;
 
+import javax.swing.*;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ import java.util.List;
  * @Description
  **/
 public class IeeeResultProcessor implements PaperProcessor<IeeeSearchQuery, IeeeResult> {
-    private static final Log log = LogFactory.get();
+    private final MySwingTextAreaLog log = MyLogFactory.get();
 
     @Override
     public IeeeResult run(IeeeSearchQuery ieeeSearchQuery) {
@@ -45,6 +46,12 @@ public class IeeeResultProcessor implements PaperProcessor<IeeeSearchQuery, Ieee
         }
         webDriver.quit();
         return ieeeResult;
+    }
+
+    @Override
+    public IeeeResult run(IeeeSearchQuery searchQuery, JTextArea jTextArea) {
+        log.setLogTextArea(jTextArea);
+        return run(searchQuery);
     }
 
     private void getIeeeResult(IeeeSearchQuery ieeeSearchQuery, WebDriver webDriver, IeeeResult ieeeResult) {

@@ -33,7 +33,6 @@ public class MainGui {
 
     public MainGui() {
         initButtonFunctions();
-        initLogArea();
     }
 
 
@@ -45,6 +44,7 @@ public class MainGui {
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                logArea.append("执行爬虫任务，请稍后。请勿再次点击\"开始\"按钮\n");
                 ThreadUtil.execute(new Runnable() {
                     @Override
                     public void run() {
@@ -60,7 +60,7 @@ public class MainGui {
             private BaseResult loadPaperInfoData2Table() {
                 IeeeSearchQuery ieeeSearchQuery = new IeeeSearchQuery(searchQueryInput.getText());
                 IeeeResultProcessor processor = new IeeeResultProcessor();
-                IeeeResult ieeeResult = processor.run(ieeeSearchQuery);
+                IeeeResult ieeeResult = processor.run(ieeeSearchQuery, logArea);
                 LoveScienceDetector loveScienceDetector = new LoveScienceDetector();
                 BaseResult result = loveScienceDetector.detector(ieeeResult);
                 paperInfoGui.start(new HashMap<String, Object>(16) {
@@ -89,16 +89,6 @@ public class MainGui {
         });
     }
 
-    private void initLogArea() {
-        ThreadUtil.execute(new Runnable() {
-            @Override
-            public void run() {
-                
-            }
-        });
-
-    }
-
     public static void main(String[] args) {
         JFrame frame = new JFrame("MainGui");
         frame.setContentPane(new MainGui().main);
@@ -114,5 +104,6 @@ public class MainGui {
     private JLabel titleLabel;
     private JLabel authorLabel;
     private JCheckBox saveResult2Csv;
+    private JScrollPane logScrollPane;
 
 }
