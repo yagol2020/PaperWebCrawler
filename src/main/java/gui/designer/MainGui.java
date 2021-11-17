@@ -99,7 +99,6 @@ public class MainGui {
                 } else {
                     return null;
                 }
-
             }
         });
         searchQueryInput.addKeyListener(new KeyAdapter() {
