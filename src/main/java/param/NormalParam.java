@@ -11,11 +11,12 @@ import java.util.regex.Pattern;
  * @Description
  **/
 public class NormalParam {
+    public final static String BASE_RESOURCES_PATH = NormalParam.class.getResource("/").getPath();
     public final static String ORDINAL_WORD_TH = "th";
     public final static String APOSTROPHE = "'";
     public final static String TRANSACTIONS = "Transaction";
     public final static Pattern NUMBER_PATTERN = Pattern.compile("[0-9]+");
-    public final static String HELP_FILE_PATH = "help.txt";
+    public final static String HELP_FILE_PATH = "/gui_text_file/help.txt";
     /**
      * 小、中、大括号内容匹配，注意需要循环遍历
      */
@@ -30,4 +31,5 @@ public class NormalParam {
         }
         return result;
     }
+
 }

@@ -12,7 +12,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
  **/
 public class ChromeUtil {
     static final String CHROME_DRIVER_PROPERTY = "webdriver.chrome.driver";
-    static final String CHROME_DRIVER_PATH = "src/main/resources/chromedriver";
+    static final String CHROME_DRIVER_PATH = "chromedriver";
     static ChromeOptions CHROME_OPTIONS;
 
     public ChromeUtil() {

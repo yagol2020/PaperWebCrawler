@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import param.IeeeParam;
+import param.NormalParam;
 import result.BaseResult;
 import result.IeeeResult;
 import util.ChromeUtil;
@@ -73,5 +74,10 @@ public class BastTest {
             System.out.println("==========");
         });
         webDriver.quit();
+    }
+
+    @Test
+    public void testResourcesPath() {
+        System.out.println(NormalParam.BASE_RESOURCES_PATH);
     }
 }

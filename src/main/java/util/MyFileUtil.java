@@ -1,10 +1,11 @@
 package util;
 
-import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.text.csv.CsvUtil;
 import cn.hutool.core.text.csv.CsvWriter;
 import cn.hutool.core.util.CharsetUtil;
 
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -21,6 +22,11 @@ public class MyFileUtil {
     }
 
     public static String readFile(String path) {
-        return FileUtil.readString(path, CharsetUtil.CHARSET_UTF_8);
+        InputStream inputStream = MyFileUtil.class.getResourceAsStream(path);
+        return IoUtil.read(inputStream, CharsetUtil.CHARSET_UTF_8);
+    }
+
+    public static String getResourcesFilePath(String filePathInResources) {
+        return MyFileUtil.class.getResource(filePathInResources).getPath();
     }
 }

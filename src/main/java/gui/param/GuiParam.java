@@ -6,5 +6,8 @@ package gui.param;
  * @Description
  **/
 public class GuiParam {
+    /**
+     * 回车的code
+     */
     public final static int ENTER_CODE = 10;
 }
