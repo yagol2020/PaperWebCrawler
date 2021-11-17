@@ -32,6 +32,7 @@ public class MySwingTextAreaLog extends Slf4jLog {
         super.info(format, arguments);
         if (ObjectUtil.isNotNull(logTextArea)) {
             logTextArea.append(DateUtil.now());
+            logTextArea.append(StrUtil.SPACE);
             logTextArea.append(StrUtil.format(format, arguments));
             logTextArea.append("\n");
             logTextArea.setCaretPosition(logTextArea.getText().length());

@@ -20,7 +20,6 @@ import java.util.regex.Pattern;
  * @Description
  **/
 public class BastTest {
-    @Test
     public void test() throws Exception {
         WebDriver webDriver = new ChromeUtil().initChrome();
         webDriver.get("https://ieeexplore.ieee.org/search/searchresult.jsp?newsearch=true&queryText=smart%20contract%20bug&returnFacets=ALL&returnType=SEARCH&matchPubs=true&rowsPerPage=75&pageNumber=1");
@@ -63,7 +62,6 @@ public class BastTest {
         System.out.println(r.matcher(input).matches());
     }
 
-    @Test
     public void testIeeePaperIdXpath() {
         WebDriver webDriver = new ChromeUtil().initChrome();
         webDriver.get("https://ieeexplore.ieee.org/search/searchresult.jsp?queryText=smart%20contract%20bug&returnFacets=ALL&returnType=SEARCH&matchPubs=true&rowsPerPage=10&pageNumber=1");
