@@ -175,6 +175,21 @@
                 <includes>
                     <include>**/*</include>
                 </includes>
+                <excludes>
+                    <exclude>
+                        config/base.yaml
+                    </exclude>
+                </excludes>
+            </testResource>
+            <testResource>
+                <directory>
+                    src/test/resources
+                </directory>
+                <includes>
+                    <include>
+                        config/base.yaml
+                    </include>
+                </includes>
             </testResource>
         </testResources>
     </build>

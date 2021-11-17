@@ -1,0 +1,2 @@
+chrome:
+  driverPath: null # null就是java中的空，null字符串是'null'

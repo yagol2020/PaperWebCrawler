@@ -1,5 +1,6 @@
 package util;
 
+import config.MyConfig;
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -11,12 +12,12 @@ import org.openqa.selenium.chrome.ChromeOptions;
  * @Description
  **/
 public class ChromeUtil {
+    MyConfig config = MyConfig.getConfig(JarUtil.PWC_JAR_PATH);
     static final String CHROME_DRIVER_PROPERTY = "webdriver.chrome.driver";
-    static final String CHROME_DRIVER_PATH = "chromedriver";
     static ChromeOptions CHROME_OPTIONS;
 
     public ChromeUtil() {
-        System.setProperty(CHROME_DRIVER_PROPERTY, CHROME_DRIVER_PATH);
+        System.setProperty(CHROME_DRIVER_PROPERTY, config.getChrome().getDriverPath());
         CHROME_OPTIONS = new ChromeOptions();
         CHROME_OPTIONS.setPageLoadStrategy(PageLoadStrategy.EAGER);
         //隐藏浏览器不显示

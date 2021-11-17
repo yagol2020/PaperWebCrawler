@@ -17,6 +17,7 @@ public class NormalParam {
     public final static String TRANSACTIONS = "Transaction";
     public final static Pattern NUMBER_PATTERN = Pattern.compile("[0-9]+");
     public final static String HELP_FILE_PATH = "/gui_text_file/help.txt";
+    public final static String CONFIG_FILE_NAME = "base.yaml";
     /**
      * 小、中、大括号内容匹配，注意需要循环遍历
      */

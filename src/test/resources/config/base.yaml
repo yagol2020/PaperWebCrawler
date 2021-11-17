@@ -1,0 +1,2 @@
+chrome:
+  driverPath: src/main/resources/chromedriver
