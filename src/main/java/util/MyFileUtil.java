@@ -25,8 +25,4 @@ public class MyFileUtil {
         InputStream inputStream = MyFileUtil.class.getResourceAsStream(path);
         return IoUtil.read(inputStream, CharsetUtil.CHARSET_UTF_8);
     }
-
-    public static String getResourcesFilePath(String filePathInResources) {
-        return MyFileUtil.class.getResource(filePathInResources).getPath();
-    }
 }

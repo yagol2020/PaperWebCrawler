@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import lombok.Data;
 import param.OutPutParam;
+import util.JarUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +28,10 @@ public abstract class BaseResult {
 
 
     public void setSearchQuery(String searchQuery) {
-        this.searchQuery = searchQuery;
-        this.setCsvResultPath(OutPutParam.OUT_PUT_CSV_RESULT_PATH + databaseName.toUpperCase() + StrUtil.SPACE + searchQuery);
+        this.searchQuery = searchQuery;}
+
+    public void setCsvResultPath(String outputPath) {
+        this.csvResultPath = outputPath + OutPutParam.OUT_PUT_CSV_RESULT_PATH + databaseName.toUpperCase() + StrUtil.SPACE + searchQuery;
     }
 
     /**

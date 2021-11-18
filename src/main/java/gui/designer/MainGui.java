@@ -1,6 +1,7 @@
 package gui.designer;
 
 import bean.impl.IeeeSearchQuery;
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ObjectUtil;
@@ -32,7 +33,7 @@ import java.util.Objects;
  * @Description 工具界面启动类
  **/
 public class MainGui {
-    private final MyConfig config = MyConfig.initConfig(JarUtil.PWC_JAR_PATH);
+    private MyConfig config = MyConfig.initConfig(JarUtil.PWC_JAR_PATH);
 
     private final MySwingTextAreaLog log = MyLogFactory.get();
     private JTextField searchQueryInput;
@@ -48,11 +49,13 @@ public class MainGui {
         initComponent();
         initComponentFunctions();
         log.info(JarUtil.PWC_JAR_PATH);
+
+
     }
 
     private void initComponent() {
         if (StrUtil.isNotEmpty(config.getChrome().getDriverPath())) {
-            driverFilePath.setText(config.getChrome().getDriverPath());
+            output.setText(config.getChrome().getDriverPath());
         }
     }
 
@@ -65,15 +68,32 @@ public class MainGui {
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if (StrUtil.isNotEmpty(configPath.getText())) {
+                    String configPathStr = configPath.getText();
+                    //判断地址是不是以/结尾，如果不是，则自己加一个
+                    if (!StrUtil.endWith(configPathStr, StrUtil.SLASH)) {
+                        configPathStr += "/";
+                    }
+                    config = MyConfig.createOrUpdateConfig(config, configPathStr);
+                }
+                if (saveResult2Csv.isSelected() && StrUtil.isEmpty(outputPath.getText())) {
+                    log.info("如果您选择了【输出结果】选项，请选择输出文件夹；否则，请取消【输出结果】选项");
+                    return;
+                }
                 if (StrUtil.isNotEmpty(config.getChrome().getDriverPath())) {
+                    log.info("驱动地址为{}", config.getChrome().getDriverPath());
                     log.info("执行爬虫任务，请稍后。请勿再次点击\"开始\"按钮");
                     ThreadUtil.execute(new Runnable() {
                         @Override
                         public void run() {
                             searchButton.setEnabled(false);
                             BaseResult result = loadPaperInfoData2Table();
-                            if (saveResult2Csv.isSelected() && ObjectUtil.isNotNull(result)) {
-                                assert result != null;
+                            if (saveResult2Csv.isSelected() && ObjectUtil.isNotNull(result) && CollUtil.isNotEmpty(Objects.requireNonNull(result).getPaperList())) {
+                                String outputPathStr = outputPath.getText();
+                                if (!StrUtil.endWith(outputPathStr, StrUtil.SLASH)) {
+                                    outputPathStr += "/";
+                                }
+                                result.setCsvResultPath(outputPathStr);
                                 log.info("存储到csv中，地址为{}", result.getCsvResultPath());
                                 saveResult2Csv(result);
                             } else {
@@ -85,6 +105,7 @@ public class MainGui {
                 } else {
                     log.info("驱动未选定，请选定驱动地址！");
                 }
+
             }
         });
         searchQueryInput.addKeyListener(new KeyAdapter() {
@@ -107,9 +128,9 @@ public class MainGui {
                 JFileChooser driverChooser = new JFileChooser();
                 driverChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
                 if (driverChooser.showOpenDialog(content) == JFileChooser.APPROVE_OPTION) {
-                    driverFilePath.setText(driverChooser.getSelectedFile().getAbsolutePath());
-                    config.getChrome().setDriverPath(driverFilePath.getText());
-                    log.info("设置驱动地址为:{}", driverFilePath.getText());
+                    output.setText(driverChooser.getSelectedFile().getAbsolutePath());
+                    config.getChrome().setDriverPath(output.getText());
+                    log.info("设置驱动地址为:{}", output.getText());
                     MyConfig.createOrUpdateConfig(config, JarUtil.PWC_JAR_PATH);
                 }
             }
@@ -124,6 +145,28 @@ public class MainGui {
                 } else {
                     resultLimitChoose.removeItem(GuiParam.RESULT_UN_LIMIT);
                     resultLimitChoose.setEnabled(true);
+                }
+            }
+        });
+        outputPathChooserButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser outputFileChooser = new JFileChooser();
+                outputFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                if (outputFileChooser.showOpenDialog(content) == JFileChooser.APPROVE_OPTION) {
+                    outputPath.setText(outputFileChooser.getSelectedFile().getAbsolutePath());
+                    log.info("设置的输出目录为:{}", outputPath.getText());
+                }
+            }
+        });
+        configPathChooserButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser configPathChooser = new JFileChooser();
+                configPathChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                if (configPathChooser.showOpenDialog(content) == JFileChooser.APPROVE_OPTION) {
+                    configPath.setText(configPathChooser.getSelectedFile().getAbsolutePath());
+                    log.info("选择的配置文件目录为:{}", configPath.getText());
                 }
             }
         });
@@ -171,12 +214,18 @@ public class MainGui {
     private JLabel authorLabel;
     private JCheckBox saveResult2Csv;
     private JScrollPane logScrollPane;
-    private JTextField driverFilePath;
+    private JTextField output;
     private JButton driverChoseButton;
     private JLabel driverChoseLabel;
     private JLabel resultLimit;
     private JComboBox<Object> resultLimitChoose;
     private JCheckBox resultLimitCheck;
+    private JTextField outputPath;
+    private JButton outputPathChooserButton;
+    private JLabel outputPathLabel;
+    private JTextField configPath;
+    private JButton configPathChooserButton;
+    private JLabel configPathLabel;
 
     /**
      * Method generated by IntelliJ IDEA GUI Designer
@@ -247,16 +296,35 @@ public class MainGui {
         helpButton.setDisplayedMnemonicIndex(2);
         panel4.add(helpButton, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel5 = new JPanel();
-        panel5.setLayout(new GridLayoutManager(2, 2, new Insets(0, 0, 0, 0), -1, -1));
+        panel5.setLayout(new GridLayoutManager(6, 2, new Insets(0, 0, 0, 0), -1, -1));
         panel4.add(panel5, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        driverFilePath = new JTextField();
-        panel5.add(driverFilePath, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        output = new JTextField();
+        output.setEditable(false);
+        panel5.add(output, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         driverChoseButton = new JButton();
         driverChoseButton.setText("选择驱动");
         panel5.add(driverChoseButton, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         driverChoseLabel = new JLabel();
         driverChoseLabel.setText("浏览器驱动（目前仅支持chrome）");
         panel5.add(driverChoseLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        outputPath = new JTextField();
+        outputPath.setEditable(false);
+        panel5.add(outputPath, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        outputPathLabel = new JLabel();
+        outputPathLabel.setText("输出目录");
+        panel5.add(outputPathLabel, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        outputPathChooserButton = new JButton();
+        outputPathChooserButton.setText("选择输出目录");
+        panel5.add(outputPathChooserButton, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        configPathLabel = new JLabel();
+        configPathLabel.setText("配置文件目录（选填）");
+        panel5.add(configPathLabel, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        configPath = new JTextField();
+        configPath.setEditable(false);
+        panel5.add(configPath, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        configPathChooserButton = new JButton();
+        configPathChooserButton.setText("选择配置文件目录");
+        panel5.add(configPathChooserButton, new GridConstraints(5, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         searchQueryLabel = new JLabel();
         searchQueryLabel.setText("关键字");
         content.add(searchQueryLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));

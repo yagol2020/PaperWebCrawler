@@ -39,6 +39,7 @@ public class PaperInfoGui implements BaseGui {
                 RowSorter<TableModel> rowSorter = new TableRowSorter<>(tableModel);
                 paperInfoTable.setRowSorter(rowSorter);
                 paperInfoTable.setModel(tableModel);
+                searchInputLabel.setText(result.getSearchQuery());
             }
         } else {
             log.info("文献表格初始化错误");
@@ -75,7 +76,6 @@ public class PaperInfoGui implements BaseGui {
     }
 
     private void createUIComponents() {
-        // TODO: place custom component creation code here
         paperInfoTable = new JTable();
         paperInfoTable.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
     }
@@ -118,12 +118,18 @@ public class PaperInfoGui implements BaseGui {
         jScrollPane = new JScrollPane();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
         paperInfo.add(jScrollPane, gbc);
         jScrollPane.setViewportView(paperInfoTable);
+        final JPanel spacer1 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        paperInfo.add(spacer1, gbc);
     }
 
     /**
@@ -132,4 +138,5 @@ public class PaperInfoGui implements BaseGui {
     public JComponent $$$getRootComponent$$$() {
         return paperInfo;
     }
+
 }
