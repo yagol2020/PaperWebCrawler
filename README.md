@@ -67,3 +67,8 @@ public class App {
 | 2        | 论文等级识别      |   2021年11月12日    |   -    |@[yagol2020](https://github.com/yagol2020) |
 | 3        | ACM 爬虫框架      |   -    |   -    |- |
 | 4        | IEEE XPLORE 摘要获取      |   2021年11月13日    |   -    |@[vencerk](https://github.com/vencerk) |
+
+## 仓库
+GitHub ![链接](https://github.com/yagol2020/PaperWebCrawler)
+
+Gitee ![链接](https://gitee.com/yagol2020/PaperWebCrawler)
