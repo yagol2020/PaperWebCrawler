@@ -17,4 +17,5 @@ public class IeeeParam {
     public final static String[] SEARCH_INDEX_INFO_NO_AUTHORS = {"title", "source", "paper info", "abstract", "html"};
     public final static String PAPER_URL_PREFIX = "https://ieeexplore.ieee.org/document/";
     public final static String PAPER_ID_ATTRIBUTE = "id";
+    public final static String IEEE_PAPER_XPATH="//xpl-search-results//xpl-results-list//div[@id>0]";
 }

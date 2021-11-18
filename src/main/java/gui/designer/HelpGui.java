@@ -18,11 +18,11 @@ import java.util.HashMap;
  **/
 public class HelpGui implements BaseGui {
     public HelpGui() {
-        initButtonFunctions();
+        initComponentFunctions();
     }
 
     @Override
-    public void initButtonFunctions() {
+    public void initComponentFunctions() {
         closeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -103,6 +103,7 @@ public class HelpGui implements BaseGui {
         gbc.fill = GridBagConstraints.BOTH;
         mainPanel.add(helpPanel, gbc);
         helpTextArea = new JTextArea();
+        helpTextArea.setEditable(false);
         helpPanel.add(helpTextArea, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
         final JPanel panel1 = new JPanel();
         panel1.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
@@ -126,6 +127,7 @@ public class HelpGui implements BaseGui {
         gbc.fill = GridBagConstraints.BOTH;
         mainPanel.add(aboutPanel, gbc);
         aboutTextArea = new JTextArea();
+        aboutTextArea.setEditable(false);
         aboutPanel.add(aboutTextArea, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
@@ -155,4 +157,5 @@ public class HelpGui implements BaseGui {
     public JComponent $$$getRootComponent$$$() {
         return mainPanel;
     }
+
 }

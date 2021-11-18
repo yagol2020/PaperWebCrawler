@@ -28,7 +28,7 @@ public interface BaseGui {
     void show();
 
     /**
-     * 初始化按钮
+     * 初始化组件功能
      */
-    void initButtonFunctions();
+    void initComponentFunctions();
 }

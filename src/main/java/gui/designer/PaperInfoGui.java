@@ -62,7 +62,7 @@ public class PaperInfoGui implements BaseGui {
     }
 
     @Override
-    public void initButtonFunctions() {
+    public void initComponentFunctions() {
 
     }
 

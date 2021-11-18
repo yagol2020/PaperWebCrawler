@@ -43,7 +43,6 @@ public class IeeeSearchQuery implements BaseSearchQuery {
         this.pageNumber = pageNumber;
     }
 
-    @Override
     public String gen() {
         return "queryText=" + queryText +
                 "&" +

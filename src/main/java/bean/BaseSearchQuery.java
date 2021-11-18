@@ -6,6 +6,7 @@ package bean;
  * @Description
  **/
 public interface BaseSearchQuery {
+
     /**
      * 生成查询条件
      *

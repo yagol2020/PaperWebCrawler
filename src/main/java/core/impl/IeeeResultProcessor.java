@@ -7,6 +7,7 @@ import log.MyLogFactory;
 import log.MySwingTextAreaLog;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import param.IeeeParam;
@@ -28,18 +29,18 @@ public class IeeeResultProcessor implements PaperProcessor<IeeeSearchQuery, Ieee
     private final MySwingTextAreaLog log = MyLogFactory.get();
 
     @Override
-    public IeeeResult run(IeeeSearchQuery ieeeSearchQuery) {
+    public IeeeResult run(IeeeSearchQuery ieeeSearchQuery, Integer searchLimit) {
         WebDriver webDriver = new ChromeUtil().initChrome();
         IeeeResult ieeeResult = new IeeeResult();
         ieeeResult.setSearchQuery(ieeeSearchQuery.getQueryText());
         try {
             //第一轮需要外部执行，这一轮中，获得总共的论文数量
-            getIeeeResult(ieeeSearchQuery, webDriver, ieeeResult);
+            getIeeeResult(ieeeSearchQuery, webDriver, ieeeResult, searchLimit);
             //计算总共有多少页，循环更新论文信息
             int totalPage = ieeeResult.getPaperSize() / (ieeeSearchQuery.getRowsPerPage()) + 1;
             for (int i = ieeeSearchQuery.getPageNumber() + 1; i <= totalPage; i++) {
                 ieeeSearchQuery.setPageNumber(i);
-                getIeeeResult(ieeeSearchQuery, webDriver, ieeeResult);
+                getIeeeResult(ieeeSearchQuery, webDriver, ieeeResult, searchLimit);
             }
         } catch (Exception e) {
             log.error("建立链接时出现异常！请检查您的网络链接是否正常！爬虫的地址为{}", IeeeParam.BASE_SEARCH_URL + ieeeSearchQuery.gen());
@@ -50,19 +51,23 @@ public class IeeeResultProcessor implements PaperProcessor<IeeeSearchQuery, Ieee
     }
 
     @Override
-    public IeeeResult run(IeeeSearchQuery searchQuery, JTextArea jTextArea) {
+    public IeeeResult run(IeeeSearchQuery searchQuery, JTextArea jTextArea, Integer searchLimit) {
         log.setLogTextArea(jTextArea);
-        return run(searchQuery);
+        return run(searchQuery, searchLimit);
     }
 
-    private void getIeeeResult(IeeeSearchQuery ieeeSearchQuery, WebDriver webDriver, IeeeResult ieeeResult) {
+    private void getIeeeResult(IeeeSearchQuery ieeeSearchQuery, WebDriver webDriver, IeeeResult ieeeResult, Integer searchLimit) {
+        //如果已经爬取了足够数量，就不要再执行了
+        if (ieeeResult.getPaperList().size() >= searchLimit) {
+            return;
+        }
         String webUri = IeeeParam.BASE_SEARCH_URL + ieeeSearchQuery.gen();
         log.info("准备提取的网站是：{}", webUri);
         webDriver.get(webUri);
         WebDriverWait webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(30));
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(IeeeParam.UNTIL_CONDITION_XPATH)));
         ieeeResult.parserTotalSize(webDriver.findElement(By.xpath(IeeeParam.PAPER_SIZE_XPATH)).getText());
-        webDriver.findElements(By.xpath("//xpl-search-results//xpl-results-list//div[@id>0]")).forEach(webElement -> {
+        for (WebElement webElement : webDriver.findElements(By.xpath(IeeeParam.IEEE_PAPER_XPATH))) {
             log.info(webElement.getText());
             List<String> webPaperInfos = StrUtil.split(webElement.getText(), "\n");
             String title = webPaperInfos.get(0);
@@ -89,7 +94,11 @@ public class IeeeResultProcessor implements PaperProcessor<IeeeSearchQuery, Ieee
             }
             String paperUrl = IeeeParam.PAPER_URL_PREFIX + webElement.getAttribute(IeeeParam.PAPER_ID_ATTRIBUTE);
             ieeeResult.addPaperInfo(title, authors, source, year, paperType, paperUrl);
-        });
+            //循环过程中如果够数量了，就不要再执行了
+            if (ieeeResult.getPaperList().size() >= searchLimit) {
+                break;
+            }
+        }
     }
 
 }

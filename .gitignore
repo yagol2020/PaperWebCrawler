@@ -12,3 +12,4 @@ target/
 *.log
 *.iml
 chromedriver
+releases/

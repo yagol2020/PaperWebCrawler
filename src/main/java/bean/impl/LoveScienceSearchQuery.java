@@ -18,7 +18,6 @@ public class LoveScienceSearchQuery implements BaseSearchQuery {
     Integer ph = 1;
     String searchType = LoveScienceParam.SEARCH_TYPE_URL;
 
-    @Override
     public String gen() {
         return "title=" + title + "&ph=" + ph + "&classid=" + searchType;
     }

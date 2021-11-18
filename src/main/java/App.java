@@ -18,7 +18,7 @@ public class App {
         log.info("控制台级别的启动程序");
         IeeeSearchQuery ieeeSearchQuery = new IeeeSearchQuery("NLP Model per");
         IeeeResultProcessor processor = new IeeeResultProcessor();
-        IeeeResult ieeeResult = processor.run(ieeeSearchQuery);
+        IeeeResult ieeeResult = processor.run(ieeeSearchQuery,10);
         LoveScienceDetector loveScienceDetector = new LoveScienceDetector();
         BaseResult result = loveScienceDetector.detector(ieeeResult);
         ieeeResult.save2File();

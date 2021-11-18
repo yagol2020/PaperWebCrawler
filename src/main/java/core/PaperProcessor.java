@@ -15,16 +15,18 @@ public interface PaperProcessor<SearchQuery extends BaseSearchQuery, Result exte
      * 执行浏览器查询
      *
      * @param searchQuery 查询条件类，能够生成查询条件字符串
+     * @param searchLimit 结果数量的最大值
      * @return Result 文献查询结果
      */
-    Result run(SearchQuery searchQuery);
+    Result run(SearchQuery searchQuery, Integer searchLimit);
 
     /**
      * 执行浏览器查询，将日志输出到swing中
      *
      * @param searchQuery 查询条件类，能够生成查询条件字符串
      * @param jTextArea   swing组件
+     * @param searchLimit 结果数量的最大值
      * @return Result 文献查询结果
      */
-    Result run(SearchQuery searchQuery, JTextArea jTextArea);
+    Result run(SearchQuery searchQuery, JTextArea jTextArea, Integer searchLimit);
 }
