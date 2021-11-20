@@ -129,12 +129,13 @@
             <artifactId>jcommon</artifactId>
             <version>1.0.24</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/eu.mindfusion/diagramming -->
-<!--        <dependency>-->
-<!--            <groupId>eu.mindfusion</groupId>-->
-<!--            <artifactId>diagramming</artifactId>-->
-<!--            <version>4.6</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>mindfusion</groupId>
+            <artifactId>mindfusion</artifactId>
+            <version>2021.r1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/JarDependencies/JPack.jar</systemPath>
+        </dependency>
 
     </dependencies>
     <properties>
@@ -150,7 +151,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>gui.designer.MainGui</mainClass>
+                            <mainClass>gui.view.MainGui</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

@@ -1,4 +1,4 @@
-package gui.designer;
+package gui.view;
 
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;

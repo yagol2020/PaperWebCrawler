@@ -1,4 +1,4 @@
-package gui.designer;
+package gui.view;
 
 import bean.impl.IeeeSearchQuery;
 import cn.hutool.core.collection.CollUtil;
