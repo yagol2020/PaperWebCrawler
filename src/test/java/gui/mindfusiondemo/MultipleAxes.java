@@ -7,7 +7,6 @@ import javax.swing.*;
 
 import com.mindfusion.charting.*;
 import com.mindfusion.charting.animation.*;
-import com.mindfusion.charting.swing.*;
 import com.mindfusion.common.ObservableList;
 import com.mindfusion.drawing.*;
 
@@ -18,7 +17,7 @@ public class MultipleAxes
 {
 	public static void main(String[] args)
 	{
-		Dashboard dashboard1 = new Dashboard();
+		com.mindfusion.charting.swing.Dashboard dashboard1 = new com.mindfusion.charting.swing.Dashboard();
 		Plot2D plot = new Plot2D();
 		plot.setGridType(GridType.Horizontal);
 		plot.setGridLineColor(new Color(220, 220, 220));
@@ -133,7 +132,7 @@ public class MultipleAxes
 		plot.setXAxis(monthAxis);
 		lineRenderer.setYAxis(pasquals);
 
-		LayoutBuilder builder = new LayoutBuilder(dashboard1);
+		com.mindfusion.charting.swing.LayoutBuilder builder = new com.mindfusion.charting.swing.LayoutBuilder(dashboard1);
 		dashboard1.getTheme().setAxisLabelsFontSize(12.0);
 		dashboard1.getTheme().setAxisTitleFontSize(12.0);
 		dashboard1.getTheme().setAxisTitleFontStyle(EnumSet.of(FontStyle.BOLD));
