@@ -118,6 +118,24 @@
             <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.jfree</groupId>
+            <artifactId>jfreechart</artifactId>
+            <version>1.5.3</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.jfree/jcommon -->
+        <dependency>
+            <groupId>org.jfree</groupId>
+            <artifactId>jcommon</artifactId>
+            <version>1.0.24</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/eu.mindfusion/diagramming -->
+<!--        <dependency>-->
+<!--            <groupId>eu.mindfusion</groupId>-->
+<!--            <artifactId>diagramming</artifactId>-->
+<!--            <version>4.6</version>-->
+<!--        </dependency>-->
+
     </dependencies>
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

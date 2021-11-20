@@ -4,6 +4,7 @@ import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import com.intellij.uiDesigner.core.Spacer;
 import result.BaseResult;
 
 import javax.swing.*;
@@ -26,6 +27,7 @@ public class PaperInfoGui implements BaseGui {
     private JLabel searchLabel;
     private JScrollPane jScrollPane;
     private JPanel upperPanel;
+    private JButton showChartButton;
     private JFrame frame;
 
     @Override
@@ -130,6 +132,18 @@ public class PaperInfoGui implements BaseGui {
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         paperInfo.add(spacer1, gbc);
+        final JPanel panel1 = new JPanel();
+        panel1.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        gbc.fill = GridBagConstraints.BOTH;
+        paperInfo.add(panel1, gbc);
+        showChartButton = new JButton();
+        showChartButton.setText("折线图");
+        panel1.add(showChartButton, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final Spacer spacer2 = new Spacer();
+        panel1.add(spacer2, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
     }
 
     /**
