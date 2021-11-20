@@ -69,6 +69,18 @@ public class App {
 | 4        | IEEE XPLORE 摘要获取      |   2021年11月13日    |   -    |@[vencerk](https://github.com/vencerk) |
 
 ## 仓库
-GitHub ![链接](https://github.com/yagol2020/PaperWebCrawler)
+![GitHub](https://github.com/yagol2020/PaperWebCrawler)
 
-Gitee ![链接](https://gitee.com/yagol2020/PaperWebCrawler)
+![Gitee](https://gitee.com/yagol2020/PaperWebCrawler)
+
+## IDEA's {File and Code Templates}
+```java
+/**
+* @author your name
+* @date ${TIME}
+* @deprecated
+**/
+class YourCode{
+    
+}
+```
