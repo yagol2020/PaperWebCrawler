@@ -46,7 +46,7 @@ public class App {
 
 文献查询结果会以`csv`文件形式呈现，如下图所示，该样例以`NLP Model Parameter`作为关键字进行查询。
 
-![ieee result demo](images/ieee result demo.png)
+![ieee bean.result demo](images/ieee result demo.png)
 
 ## 近期目标 TODO List
 

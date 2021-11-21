@@ -1,6 +1,6 @@
 package core.impl;
 
-import bean.impl.IeeeSearchQuery;
+import bean.searchquery.impl.IeeeSearchQuery;
 import cn.hutool.core.util.StrUtil;
 import core.PaperProcessor;
 import log.MyLogFactory;
@@ -11,7 +11,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import param.IeeeParam;
-import result.IeeeResult;
+import bean.result.IeeeResult;
 import util.ChromeUtil;
 
 import javax.swing.*;

@@ -1,6 +1,6 @@
 package core;
 
-import result.BaseResult;
+import bean.result.BaseResult;
 
 import javax.swing.*;
 

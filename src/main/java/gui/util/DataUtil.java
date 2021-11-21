@@ -1,6 +1,6 @@
 package gui.util;
 
-import result.BaseResult;
+import bean.result.BaseResult;
 
 /**
  * @author yagol

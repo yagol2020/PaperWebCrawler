@@ -22,7 +22,7 @@ import java.util.List;
  * @date 17:45
  * @deprecated
  **/
-public class ChartGui {
+public class ChartGui implements BaseGui {
     public static void main(String[] args) {
         Object[] countData = new Object[]{"3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14"};
         Dashboard chart = new Dashboard();
@@ -132,5 +132,25 @@ public class ChartGui {
 
         f.add(chart);
         f.setVisible(true);
+    }
+
+    @Override
+    public void start(HashMap<String, Object> data) {
+
+    }
+
+    @Override
+    public BaseGui init() {
+        return null;
+    }
+
+    @Override
+    public void show() {
+
+    }
+
+    @Override
+    public void initComponentFunctions() {
+
     }
 }

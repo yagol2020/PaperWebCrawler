@@ -1,10 +1,9 @@
-package result;
+package bean.result;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import lombok.Data;
 import param.OutPutParam;
-import util.JarUtil;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
-package bean.impl;
+package bean.searchquery.impl;
 
-import bean.BaseSearchQuery;
+import bean.searchquery.BaseSearchQuery;
 import cn.hutool.core.util.ArrayUtil;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -43,6 +43,7 @@ public class IeeeSearchQuery implements BaseSearchQuery {
         this.pageNumber = pageNumber;
     }
 
+    @Override
     public String gen() {
         return "queryText=" + queryText +
                 "&" +

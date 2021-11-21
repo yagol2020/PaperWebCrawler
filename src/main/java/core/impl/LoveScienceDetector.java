@@ -1,6 +1,6 @@
 package core.impl;
 
-import bean.impl.LoveScienceSearchQuery;
+import bean.searchquery.impl.LoveScienceSearchQuery;
 import cn.hutool.core.util.StrUtil;
 import core.PaperLevelDetector;
 import log.MyLogFactory;
@@ -14,7 +14,7 @@ import param.LoveScienceParam;
 import param.NormalParam;
 import param.PaperLevelParam;
 import param.PaperTypeParam;
-import result.BaseResult;
+import bean.result.BaseResult;
 import util.ChromeUtil;
 
 import javax.swing.*;

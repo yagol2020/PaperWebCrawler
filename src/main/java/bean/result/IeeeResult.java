@@ -1,4 +1,4 @@
-package result;
+package bean.result;
 
 import cn.hutool.core.util.StrUtil;
 import lombok.Data;

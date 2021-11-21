@@ -1,6 +1,6 @@
 package gui.view;
 
-import bean.impl.IeeeSearchQuery;
+import bean.searchquery.impl.IeeeSearchQuery;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.ArrayUtil;
@@ -15,8 +15,8 @@ import core.impl.LoveScienceDetector;
 import gui.param.GuiParam;
 import log.MyLogFactory;
 import log.MySwingTextAreaLog;
-import result.BaseResult;
-import result.IeeeResult;
+import bean.result.BaseResult;
+import bean.result.IeeeResult;
 import util.JarUtil;
 
 import javax.swing.*;

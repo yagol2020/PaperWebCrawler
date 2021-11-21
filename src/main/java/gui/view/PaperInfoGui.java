@@ -5,7 +5,7 @@ import cn.hutool.log.LogFactory;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import result.BaseResult;
+import bean.result.BaseResult;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

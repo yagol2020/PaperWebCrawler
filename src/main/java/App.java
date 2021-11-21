@@ -1,10 +1,10 @@
-import bean.impl.IeeeSearchQuery;
+import bean.searchquery.impl.IeeeSearchQuery;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import core.impl.IeeeResultProcessor;
 import core.impl.LoveScienceDetector;
-import result.BaseResult;
-import result.IeeeResult;
+import bean.result.BaseResult;
+import bean.result.IeeeResult;
 
 /**
  * @author yagol

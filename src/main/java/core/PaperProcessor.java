@@ -1,7 +1,7 @@
 package core;
 
-import bean.BaseSearchQuery;
-import result.BaseResult;
+import bean.searchquery.BaseSearchQuery;
+import bean.result.BaseResult;
 
 import javax.swing.*;
 

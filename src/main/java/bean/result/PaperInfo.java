@@ -1,4 +1,4 @@
-package result;
+package bean.result;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
