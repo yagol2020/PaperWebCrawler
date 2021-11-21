@@ -19,7 +19,7 @@
 
 驱动的版本应与Chrome的版本一致，下图将展示如何查看Chrome版本
 
-![chrome_version](https://github.com/yagol2020/PaperWebCrawler/blob/master/images/chrome%20version.png)
+[chrome_version](https://github.com/yagol2020/PaperWebCrawler/blob/master/images/chrome%20version.png)
 
 ## 使用说明 Usage
 
@@ -37,11 +37,11 @@ public class App {
 }
 ```
 
-![gui main](https://github.com/yagol2020/PaperWebCrawler/blob/master/images/gui%20main.png)
+[gui main](https://github.com/yagol2020/PaperWebCrawler/blob/master/images/gui%20main.png)
 
 4. 文献的结果会输出在`target/classes/output/IEEE XPLORE YourSerarchQuery.csv`中，GUI级别的会弹出结果展示表格
 
-![gui paper info table](https://github.com/yagol2020/PaperWebCrawler/blob/master/images/gui%20paper%20info%20table.png)
+[gui paper info table](https://github.com/yagol2020/PaperWebCrawler/blob/master/images/gui%20paper%20info%20table.png)
 
 5. 目前文献的信息包括
 	1. 你查询的关键字
@@ -52,12 +52,18 @@ public class App {
 	6. 论文类型（期刊或会议）
 	7. 对于期刊，可以获得影响因子
 	8. paper的网页地址
+	9. 论文数量统计，以折线图的形式
 
 ## 文献查询结果 Csv Result
 
 文献查询结果会以`csv`文件形式呈现，如下图所示，该样例以`NLP Model Parameter`作为关键字进行查询。
 
 ![ieee bean.result demo](https://github.com/yagol2020/PaperWebCrawler/blob/master/images/ieee%20result%20demo.png)
+
+## 折线图
+
+[gui_chart]()
+
 
 ## 近期目标 TODO List
 
@@ -69,18 +75,22 @@ public class App {
 | 4        | IEEE XPLORE 摘要获取      |   2021年11月13日    |   -    |@[vencerk](https://github.com/vencerk) |
 
 ## 仓库
-![GitHub](https://github.com/yagol2020/PaperWebCrawler)
 
-![Gitee](https://gitee.com/yagol2020/PaperWebCrawler)
+[GitHub仓库链接](https://github.com/yagol2020/PaperWebCrawler)
+
+[Gitee仓库链接](https://gitee.com/yagol2020/PaperWebCrawler)
+
+* Gitee不定期与GitHub同步，还请以**GitHub**仓库为准
 
 ## IDEA's {File and Code Templates}
+
 ```java
 /**
-* @author your name
-* @date ${TIME}
-* @description the description of this class
-**/
-class YourCode{
-    
+ * @author your name
+ * @date ${TIME}
+ * @description the description of this class
+ **/
+class YourCode {
+
 }
 ```
