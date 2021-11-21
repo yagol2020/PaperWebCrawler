@@ -24,7 +24,7 @@
 ## 使用说明 Usage
 
 1. 根据pom.xml配置依赖
-2. 控制台级别的工具入口是App.main，GUI级别的工具入口是`gui.designer.MainGui.main`
+2. 控制台级别的工具入口是App.main，GUI级别的工具入口是`gui.view.MainGui.main`
 3. 输入想要查询的关键字
 
 ```java
@@ -57,7 +57,7 @@ public class App {
 
 文献查询结果会以`csv`文件形式呈现，如下图所示，该样例以`NLP Model Parameter`作为关键字进行查询。
 
-![ieee result demo](https://github.com/yagol2020/PaperWebCrawler/blob/master/images/ieee%20result%20demo.png)
+![ieee bean.result demo](https://github.com/yagol2020/PaperWebCrawler/blob/master/images/ieee%20result%20demo.png)
 
 ## 近期目标 TODO List
 
@@ -69,6 +69,18 @@ public class App {
 | 4        | IEEE XPLORE 摘要获取      |   2021年11月13日    |   -    |@[vencerk](https://github.com/vencerk) |
 
 ## 仓库
-GitHub ![链接](https://github.com/yagol2020/PaperWebCrawler)
+![GitHub](https://github.com/yagol2020/PaperWebCrawler)
 
-Gitee ![链接](https://gitee.com/yagol2020/PaperWebCrawler)
+![Gitee](https://gitee.com/yagol2020/PaperWebCrawler)
+
+## IDEA's {File and Code Templates}
+```java
+/**
+* @author your name
+* @date ${TIME}
+* @description the description of this class
+**/
+class YourCode{
+    
+}
+```

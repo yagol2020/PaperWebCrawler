@@ -2,6 +2,7 @@ package gui;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import org.jfree.chart.JFreeChart;
 
 import javax.swing.*;
 import java.awt.*;

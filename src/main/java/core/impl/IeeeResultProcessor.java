@@ -1,6 +1,6 @@
 package core.impl;
 
-import bean.impl.IeeeSearchQuery;
+import bean.searchquery.impl.IeeeSearchQuery;
 import cn.hutool.core.util.StrUtil;
 import core.PaperProcessor;
 import log.MyLogFactory;
@@ -11,7 +11,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import param.IeeeParam;
-import result.IeeeResult;
+import bean.result.IeeeResult;
 import util.ChromeUtil;
 
 import javax.swing.*;
@@ -27,6 +27,7 @@ import java.util.List;
  **/
 public class IeeeResultProcessor implements PaperProcessor<IeeeSearchQuery, IeeeResult> {
     private final MySwingTextAreaLog log = MyLogFactory.get();
+    public volatile Boolean runnable = true;
 
     @Override
     public IeeeResult run(IeeeSearchQuery ieeeSearchQuery, Integer searchLimit) {
@@ -39,6 +40,15 @@ public class IeeeResultProcessor implements PaperProcessor<IeeeSearchQuery, Ieee
             //计算总共有多少页，循环更新论文信息
             int totalPage = ieeeResult.getPaperSize() / (ieeeSearchQuery.getRowsPerPage()) + 1;
             for (int i = ieeeSearchQuery.getPageNumber() + 1; i <= totalPage; i++) {
+                //接收了外部指令，用户觉得该停止了
+                if (!runnable) {
+                    log.info("用户请求停止，结束本次爬虫");
+                    break;
+                }
+                //如果已经爬取了足够数量，就不要再执行了
+                if (ieeeResult.getPaperList().size() >= searchLimit) {
+                    break;
+                }
                 ieeeSearchQuery.setPageNumber(i);
                 getIeeeResult(ieeeSearchQuery, webDriver, ieeeResult, searchLimit);
             }

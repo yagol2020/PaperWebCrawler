@@ -118,6 +118,25 @@
             <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.jfree</groupId>
+            <artifactId>jfreechart</artifactId>
+            <version>1.5.3</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.jfree/jcommon -->
+        <dependency>
+            <groupId>org.jfree</groupId>
+            <artifactId>jcommon</artifactId>
+            <version>1.0.24</version>
+        </dependency>
+        <dependency>
+            <groupId>mindfusion</groupId>
+            <artifactId>mindfusion</artifactId>
+            <version>2021.r1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/JarDependencies/JPack.jar</systemPath>
+        </dependency>
+
     </dependencies>
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -132,7 +151,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>gui.designer.MainGui</mainClass>
+                            <mainClass>gui.view.MainGui</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
