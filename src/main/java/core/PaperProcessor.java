@@ -11,6 +11,8 @@ import javax.swing.*;
  * @Description 网站数据爬虫
  **/
 public interface PaperProcessor<SearchQuery extends BaseSearchQuery, Result extends BaseResult> {
+
+
     /**
      * 执行浏览器查询
      *

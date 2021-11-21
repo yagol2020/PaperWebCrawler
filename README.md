@@ -78,7 +78,7 @@ public class App {
 /**
 * @author your name
 * @date ${TIME}
-* @deprecated
+* @description the description of this class
 **/
 class YourCode{
     

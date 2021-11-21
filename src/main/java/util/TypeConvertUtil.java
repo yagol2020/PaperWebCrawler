@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @author yagol
  * @date 18:13
- * @deprecated 类型转换工具类
+ * @description 类型转换工具类
  **/
 public class TypeConvertUtil {
     public static void main(String[] args) {

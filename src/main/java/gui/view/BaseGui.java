@@ -5,7 +5,8 @@ import java.util.HashMap;
 /**
  * @author yagol
  * @TIME 2021/11/15 - 2:16 下午
- * @Description 界面接口，除主界面外其他均需实现本接口
+ * @Description 界面接口，除主界面外其他均需实现本接口。
+ * 理论上，顺序为new Gui().init()，然后通过start传递数据，最后show()
  **/
 public interface BaseGui {
     /**
