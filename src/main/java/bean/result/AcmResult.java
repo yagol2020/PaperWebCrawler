@@ -1,6 +1,7 @@
 package bean.result;
 
 import cn.hutool.core.util.StrUtil;
+import util.MyFileUtil;
 
 import java.util.List;
 
@@ -10,9 +11,14 @@ import java.util.List;
  * @Description
  **/
 public class AcmResult extends BaseResult {
+
+    public AcmResult() {
+        databaseName = "ACM";
+    }
+
     @Override
     public void save2File() {
-
+        MyFileUtil.writeMultiLine2Csv(getCsvResultPath(), genHeader(), genResults());
     }
 
     @Override

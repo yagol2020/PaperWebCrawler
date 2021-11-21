@@ -1,5 +1,6 @@
 package core.detector.impl;
 
+import bean.result.BaseResult;
 import bean.searchquery.impl.LoveScienceSearchQuery;
 import cn.hutool.core.util.StrUtil;
 import core.detector.PaperLevelDetector;
@@ -14,7 +15,6 @@ import param.LoveScienceParam;
 import param.NormalParam;
 import param.PaperLevelParam;
 import param.PaperTypeParam;
-import bean.result.BaseResult;
 import util.ChromeUtil;
 
 import javax.swing.*;
@@ -55,7 +55,8 @@ public class LoveScienceDetector implements PaperLevelDetector {
             for (String s : splitList) {
                 if (!s.contains(NormalParam.ORDINAL_WORD_TH) && !NormalParam.NUMBER_PATTERN.matcher(s).matches()
                         && !s.contains(NormalParam.APOSTROPHE) &&
-                        !s.contains(NormalParam.TRANSACTIONS)) {
+                        !s.contains(NormalParam.TRANSACTIONS) &&
+                        !s.contains(StrUtil.COLON)) {
                     sb.append(s);
                     sb.append(StrUtil.SPACE);
                 }
