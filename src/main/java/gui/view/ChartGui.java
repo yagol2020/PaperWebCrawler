@@ -45,6 +45,7 @@ public class ChartGui implements BaseGui {
     JFrame f;
     List<Double> y;
     List<String> labels;
+    Animation animation;
 
     @Override
     public void start(HashMap<String, Object> data) {
@@ -94,14 +95,14 @@ public class ChartGui implements BaseGui {
                 seriesList1.add(lineSeries);
                 ObservableList<Series> ols1 = new ObservableList<>(seriesList1);
                 LineRenderer lineRenderer = new LineRenderer(ols1);
-                Animation animation = new Animation();
+                animation = new Animation();
                 AnimationTimeline timeline = new AnimationTimeline();
                 timeline.addAnimation(
                         AnimationType.PerElementAnimation, 2f, barRenderer);
                 timeline.addAnimation(
                         AnimationType.PerElementAnimation, 1f, lineRenderer);
                 animation.addTimeline(timeline);
-                animation.runAnimation();
+
 
                 UniformSeriesStyle style = new UniformSeriesStyle(
                         new com.mindfusion.drawing.SolidBrush(new Color(206, 0, 0)),
@@ -166,7 +167,7 @@ public class ChartGui implements BaseGui {
     @Override
     public ChartGui init() {
         f = new JFrame();
-        plot=new Plot2D();
+        plot = new Plot2D();
         plot.setGridType(GridType.Horizontal);
         plot.setGridLineColor(new Color(220, 220, 220));
         f.setSize(1100, 600);
@@ -176,6 +177,7 @@ public class ChartGui implements BaseGui {
 
     @Override
     public void show() {
+        animation.runAnimation();
         f.setVisible(true);
     }
 

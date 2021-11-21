@@ -33,6 +33,7 @@ public class PaperInfoGui implements BaseGui {
     private JButton showChartButton;
     private JFrame frame;
     private final ChartGui chartGui = new ChartGui().init();
+    private BaseResult baseResult;
 
     public PaperInfoGui() {
         $$$setupUI$$$();
@@ -47,18 +48,14 @@ public class PaperInfoGui implements BaseGui {
                 tableModel.getDataVector().clear();
                 tableModel.fireTableDataChanged();
                 BaseResult result = (BaseResult) data.get(BaseResult.class.getSimpleName());
+                //将数据保存到本地class中
+                baseResult = result;
                 tableModel.setColumnIdentifiers(result.genHeader());
                 result.genResults().forEach(tableModel::addRow);
                 RowSorter<TableModel> rowSorter = new TableRowSorter<>(tableModel);
                 paperInfoTable.setRowSorter(rowSorter);
                 paperInfoTable.setModel(tableModel);
                 searchInputLabel.setText(result.getSearchQuery());
-                //顺手初始化了图标
-                chartGui.start(new HashMap<String, Object>() {
-                    {
-                        put(CountDataPerYear.class.getSimpleName(), new CountDataPerYear().getDataByBaseResult(result));
-                    }
-                });
             }
         } else {
             log.info("文献表格初始化错误");
@@ -83,11 +80,14 @@ public class PaperInfoGui implements BaseGui {
 
     @Override
     public void initComponentFunctions() {
-        showChartButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                chartGui.show();
-            }
+        showChartButton.addActionListener(e -> {
+            //顺手初始化了图标
+            chartGui.start(new HashMap<String, Object>(16) {
+                {
+                    put(CountDataPerYear.class.getSimpleName(), new CountDataPerYear().getDataByBaseResult(baseResult));
+                }
+            });
+            chartGui.show();
         });
 
     }
