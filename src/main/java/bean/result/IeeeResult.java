@@ -48,4 +48,5 @@ public class IeeeResult extends BaseResult {
     public void save2Db() {
 
     }
+
 }

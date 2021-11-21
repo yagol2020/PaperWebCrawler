@@ -27,7 +27,8 @@ public abstract class BaseResult {
 
 
     public void setSearchQuery(String searchQuery) {
-        this.searchQuery = searchQuery;}
+        this.searchQuery = searchQuery;
+    }
 
     public void setCsvResultPath(String outputPath) {
         this.csvResultPath = outputPath + OutPutParam.OUT_PUT_CSV_RESULT_PATH + databaseName.toUpperCase() + StrUtil.SPACE + searchQuery;
@@ -60,6 +61,11 @@ public abstract class BaseResult {
         return results;
     }
 
+    /**
+     * 收集的论文信息的表头，应该与PaperInfo类一致
+     *
+     * @return 论文信息的表头
+     */
     public String[] genHeader() {
         return new String[]{
                 "searchQuery",

@@ -1,8 +1,8 @@
 import bean.searchquery.impl.IeeeSearchQuery;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
-import core.impl.IeeeResultProcessor;
-import core.impl.LoveScienceDetector;
+import core.processor.impl.IeeeResultProcessor;
+import core.detector.impl.LoveScienceDetector;
 import bean.result.BaseResult;
 import bean.result.IeeeResult;
 

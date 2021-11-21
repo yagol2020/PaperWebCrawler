@@ -1,8 +1,8 @@
-package core.impl;
+package core.processor.impl;
 
 import bean.searchquery.impl.IeeeSearchQuery;
 import cn.hutool.core.util.StrUtil;
-import core.PaperProcessor;
+import core.processor.PaperProcessor;
 import log.MyLogFactory;
 import log.MySwingTextAreaLog;
 import org.openqa.selenium.By;

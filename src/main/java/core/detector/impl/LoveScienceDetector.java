@@ -1,8 +1,8 @@
-package core.impl;
+package core.detector.impl;
 
 import bean.searchquery.impl.LoveScienceSearchQuery;
 import cn.hutool.core.util.StrUtil;
-import core.PaperLevelDetector;
+import core.detector.PaperLevelDetector;
 import log.MyLogFactory;
 import log.MySwingTextAreaLog;
 import org.openqa.selenium.By;

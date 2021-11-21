@@ -3,7 +3,6 @@ package bean.searchquery.impl;
 import bean.searchquery.BaseSearchQuery;
 import cn.hutool.core.util.ArrayUtil;
 import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
@@ -13,7 +12,6 @@ import java.util.List;
  * @Description
  **/
 @Data
-@Slf4j
 public class IeeeSearchQuery implements BaseSearchQuery {
     final static Integer ROW_PER_PAGE_10 = 10;
     final static Integer ROW_PER_PAGE_25 = 25;

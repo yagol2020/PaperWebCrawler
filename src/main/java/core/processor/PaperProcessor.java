@@ -1,4 +1,4 @@
-package core;
+package core.processor;
 
 import bean.searchquery.BaseSearchQuery;
 import bean.result.BaseResult;

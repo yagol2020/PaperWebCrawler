@@ -1,4 +1,4 @@
-package core;
+package core.detector;
 
 import bean.result.BaseResult;
 
