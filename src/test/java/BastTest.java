@@ -2,6 +2,7 @@ import cn.hutool.setting.yaml.YamlUtil;
 import config.MyConfig;
 import org.junit.Test;
 import param.NormalParam;
+import util.JarUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -36,6 +37,8 @@ public class BastTest {
         String pattern = "[0-9]+";
         Pattern r = Pattern.compile(pattern);
         System.out.println(r.matcher(input).matches());
+        System.out.println(JarUtil.PWC_JAR_PATH);
+        System.out.println(BastTest.class.getProtectionDomain().getCodeSource().getLocation().getPath());
     }
 
     @Test
@@ -47,5 +50,6 @@ public class BastTest {
     public void testConfig() {
         MyConfig properties = YamlUtil.loadByPath("config/base.yaml", MyConfig.class);
         System.out.println(properties.getChrome().getDriverPath());
+        System.out.println(JarUtil.PWC_JAR_PATH);
     }
 }
