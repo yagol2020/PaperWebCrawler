@@ -5,7 +5,6 @@ import cn.hutool.core.io.StreamProgress;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpUtil;
 import config.MyConfig;
-import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -22,7 +21,11 @@ import java.util.List;
  * @Description
  **/
 public class UpdateTest {
-    @Test
+    public static void main(String[] args) throws IOException {
+        UpdateTest updateTest = new UpdateTest();
+        updateTest.testGitHubReleases();
+    }
+
     public void testGitHubReleases() throws IOException {
         MyConfig config = MyConfig.initConfig(JarUtil.PWC_JAR_PATH);
         String PER_GITHUB_RELEASES_URL = "https://github.com/yagol2020/PaperWebCrawler/releases/";
