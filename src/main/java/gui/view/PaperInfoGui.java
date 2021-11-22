@@ -1,20 +1,18 @@
 package gui.view;
 
 import bean.analysis.CountDataPerYear;
+import bean.result.BaseResult;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import bean.result.BaseResult;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.HashMap;
 
 /**
@@ -40,13 +38,19 @@ public class PaperInfoGui implements BaseGui {
         initComponentFunctions();
     }
 
+    public void cleanTable() {
+        DefaultTableModel tableModel = (DefaultTableModel) paperInfoTable.getModel();
+        //清空table的内容
+        tableModel.getDataVector().clear();
+        //更新table
+        tableModel.fireTableDataChanged();
+    }
+
     @Override
     public void start(HashMap<String, Object> data) {
         DefaultTableModel tableModel = (DefaultTableModel) paperInfoTable.getModel();
         if (data.containsKey(BaseResult.class.getSimpleName())) {
             if (data.get(BaseResult.class.getSimpleName()) instanceof BaseResult) {
-                tableModel.getDataVector().clear();
-                tableModel.fireTableDataChanged();
                 BaseResult result = (BaseResult) data.get(BaseResult.class.getSimpleName());
                 //将数据保存到本地class中
                 baseResult = result;

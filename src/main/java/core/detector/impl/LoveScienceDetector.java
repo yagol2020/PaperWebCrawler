@@ -49,7 +49,7 @@ public class LoveScienceDetector implements PaperLevelDetector {
         for (String s : bracketContentList) {
             name = name.replace(s, StrUtil.EMPTY);
         }
-        if (name.length() >= LoveScienceParam.MAX_QUERY_LENGTH) {
+        if (name.length() >= LoveScienceParam.MAX_QUERY_LENGTH || name.contains(NormalParam.APOSTROPHE)) {
             List<String> splitList = StrUtil.splitTrim(name, StrUtil.SPACE);
             StringBuilder sb = new StringBuilder();
             for (String s : splitList) {

@@ -1,8 +1,12 @@
+import bean.result.BaseResult;
+import bean.result.PaperInfo;
 import cn.hutool.setting.yaml.YamlUtil;
 import config.MyConfig;
+import core.detector.impl.LoveScienceDetector;
 import org.junit.Test;
 import param.NormalParam;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -47,5 +51,29 @@ public class BastTest {
     public void testConfig() {
         MyConfig properties = YamlUtil.loadByPath("config/base.yaml", MyConfig.class);
         System.out.println(properties.getChrome().getDriverPath());
+    }
+
+    @Test
+    public void testLoveScience() {
+        LoveScienceDetector loveScienceDetector = new LoveScienceDetector();
+        BaseResult baseResult = new BaseResult() {
+            @Override
+            public void save2File() {
+
+            }
+
+            @Override
+            public void save2Db() {
+
+            }
+        };
+        baseResult.setPaperList(new ArrayList<PaperInfo>() {
+            {
+                add(new PaperInfo("a", new ArrayList<>(), "ODiSE'10: Ontology-Driven Software Engineering", "",
+                        "", "", ""));
+            }
+        });
+        System.out.println(loveScienceDetector.detector(baseResult));
+
     }
 }

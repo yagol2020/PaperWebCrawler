@@ -19,6 +19,7 @@ import core.processor.impl.IeeeResultProcessor;
 import gui.param.GuiParam;
 import log.MyLogFactory;
 import log.MySwingTextAreaLog;
+import param.PaperWebSiteEnum;
 import util.JarUtil;
 
 import javax.swing.*;
@@ -33,6 +34,7 @@ import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * @author yagol
@@ -96,39 +98,47 @@ public class MainGui {
                     log.info("执行爬虫任务，请稍后。请勿再次点击\"开始\"按钮");
                     ThreadUtil.execute(() -> {
                         searchButton.setEnabled(false);
+                        paperInfoGui.cleanTable();
                         processor.runnable = true;
-                        BaseResult result = null;
+                        acmResultProcessor.runnable = true;
+                        CountDownLatch countDownLatch = ThreadUtil.newCountDownLatch(2);
                         if (ieeeChooseBox.isSelected()) {
-                            result = loadPaperInfoData2TableInIeee();
+                            ThreadUtil.execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    BaseResult result = loadPaperInfoDataTable(PaperWebSiteEnum.IEEE_XPLORE);
+                                    saveResult(result);
+                                    countDownLatch.countDown();
+                                }
+                            });
                         } else {
-                            if (acmChooseBox.isSelected()) {
-                                result = loadPaperInfoData2TableInAcm();
-                            }
+                            countDownLatch.countDown();
                         }
-                        if (saveResult2Csv.isSelected() && ObjectUtil.isNotNull(result) && CollUtil.isNotEmpty(Objects.requireNonNull(result).getPaperList())) {
-                            String outputPathStr = outputPath.getText();
-                            if (!StrUtil.endWith(outputPathStr, StrUtil.SLASH)) {
-                                outputPathStr += "/";
-                            }
-                            result.setCsvResultPath(outputPathStr);
-                            log.info("存储到csv中，地址为{}", result.getCsvResultPath());
-                            saveResult2Csv(result);
+                        if (acmChooseBox.isSelected()) {
+                            ThreadUtil.execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    BaseResult result = loadPaperInfoDataTable(PaperWebSiteEnum.ACM);
+                                    saveResult(result);
+                                    countDownLatch.countDown();
+                                }
+                            });
                         } else {
-                            if (!saveResult2Csv.isSelected()) {
-                                log.info("未选择输出到文件，跳过输出");
-                            }
-                            if (ObjectUtil.isNull(result) || CollUtil.isEmpty(Objects.requireNonNull(result).getPaperList())) {
-                                log.info("爬虫启动错误，请检查网络链接是否正常");
-                            }
+                            countDownLatch.countDown();
                         }
+                        try {
+                            log.info("等待爬虫进程完成...");
+                            countDownLatch.await();
+                        } catch (InterruptedException ex) {
+                            log.info("等待爬虫进程同步时发生错误！错误信息为{}", ex.getMessage());
+                            ex.printStackTrace();
+                        }
+                        paperInfoGui.show();
                         searchButton.setEnabled(true);
                     });
-
-
                 } else {
                     log.info("驱动未选定，请选定驱动地址！");
                 }
-
             }
         });
         searchQueryInput.addKeyListener(new KeyAdapter() {
@@ -198,8 +208,45 @@ public class MainGui {
             public void actionPerformed(ActionEvent e) {
                 log.info("您请求终止爬虫，将在本次爬虫结束后终止！");
                 processor.runnable = false;
+                acmResultProcessor.runnable = false;
             }
         });
+    }
+
+    /**
+     * 根据BaseResult的save2File方法，将爬去的文献信息保存到文件中
+     * 本方法会判断result是否有效
+     *
+     * @param result 需要被保存的result
+     */
+    private void saveResult(BaseResult result) {
+        if (saveResult2Csv.isSelected() && ObjectUtil.isNotNull(result) && CollUtil.isNotEmpty(Objects.requireNonNull(result).getPaperList())) {
+            String outputPathStr = outputPath.getText();
+            if (!StrUtil.endWith(outputPathStr, StrUtil.SLASH)) {
+                outputPathStr += "/";
+            }
+            result.setCsvResultPath(outputPathStr);
+            log.info("存储到csv中，地址为{}", result.getCsvResultPath());
+            saveResult2Csv(result);
+        } else {
+            if (!saveResult2Csv.isSelected()) {
+                log.info("未选择输出到文件，跳过输出");
+            }
+            if (ObjectUtil.isNull(result) || CollUtil.isEmpty(Objects.requireNonNull(result).getPaperList())) {
+                log.info("爬虫启动错误，请检查网络链接是否正常");
+            }
+        }
+    }
+
+    private BaseResult loadPaperInfoDataTable(PaperWebSiteEnum paperWebSite) {
+        switch (paperWebSite) {
+            case ACM:
+                return loadPaperInfoData2TableInAcm();
+            case IEEE_XPLORE:
+                return loadPaperInfoData2TableInIeee();
+            default:
+                return null;
+        }
     }
 
     private BaseResult loadPaperInfoData2TableInIeee() {
@@ -210,16 +257,19 @@ public class MainGui {
         } else {
             ieeeResult = processor.run(ieeeSearchQuery, logArea, Integer.parseInt(String.valueOf(resultLimitChoose.getSelectedItem())));
         }
-        if (ObjectUtil.isNotNull(ieeeResult) && ArrayUtil.isNotEmpty(ieeeResult.getPaperList())) {
+        return getPaperInfoFromLoveScience(ieeeResult);
+    }
+
+    private BaseResult getPaperInfoFromLoveScience(BaseResult baseResult) {
+        if (ObjectUtil.isNotNull(baseResult) && ArrayUtil.isNotEmpty(baseResult.getPaperList())) {
             LoveScienceDetector loveScienceDetector = new LoveScienceDetector();
-            BaseResult result = loveScienceDetector.detector(ieeeResult, logArea);
+            BaseResult result = loveScienceDetector.detector(baseResult, logArea);
             paperInfoGui.start(new HashMap<String, Object>(16) {
                 {
                     put(BaseResult.class.getSimpleName(), result);
                 }
             });
-            paperInfoGui.show();
-            log.info("论文信息窗口渲染完毕");
+            log.info("该批次文献信息已完成【爱科学】处理");
             return result;
         } else {
             return null;
@@ -234,20 +284,7 @@ public class MainGui {
         } else {
             acmResult = acmResultProcessor.run(acmSearchQuery, logArea, Integer.parseInt(String.valueOf(resultLimitChoose.getSelectedItem())));
         }
-        if (ObjectUtil.isNotNull(acmResult) && ArrayUtil.isNotEmpty(acmResult.getPaperList())) {
-            LoveScienceDetector loveScienceDetector = new LoveScienceDetector();
-            BaseResult result = loveScienceDetector.detector(acmResult, logArea);
-            paperInfoGui.start(new HashMap<String, Object>(16) {
-                {
-                    put(BaseResult.class.getSimpleName(), result);
-                }
-            });
-            paperInfoGui.show();
-            log.info("论文信息窗口渲染完毕");
-            return result;
-        } else {
-            return null;
-        }
+        return getPaperInfoFromLoveScience(acmResult);
     }
 
 
