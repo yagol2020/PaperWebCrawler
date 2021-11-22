@@ -16,6 +16,7 @@ public class NormalParam {
     public final static String APOSTROPHE = "'";
     public final static String TRANSACTIONS = "Transaction";
     public final static Pattern NUMBER_PATTERN = Pattern.compile("[0-9]+");
+    public final static String ABOUT_FILE_PATH = "/gui_text_file/about.txt";
     public final static String HELP_FILE_PATH = "/gui_text_file/help.txt";
     public final static String CONFIG_FILE_NAME = "base.yaml";
     /**

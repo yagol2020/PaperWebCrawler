@@ -12,6 +12,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import param.AcmParam;
 import util.ChromeUtil;
+import util.MySeleniumUtil;
 
 import javax.swing.*;
 import java.util.List;
@@ -47,7 +48,7 @@ public class AcmResultProcessor implements PaperProcessor<AcmSearchQuery, AcmRes
                 getAcmResult(searchQuery, acmResult, searchLimit, webDriver);
             }
         } catch (Exception e) {
-            log.error("建立链接时出现异常！请检查您的网络链接是否正常！爬虫的地址为{}", AcmParam.BASE_SEARCH_URL + searchQuery.gen());
+            log.info("建立链接时出现异常！请检查您的网络链接是否正常！爬虫的地址为{}", AcmParam.BASE_SEARCH_URL + searchQuery.gen());
             e.printStackTrace();
         }
         webDriver.quit();
@@ -71,13 +72,12 @@ public class AcmResultProcessor implements PaperProcessor<AcmSearchQuery, AcmRes
         List<WebElement> elements = webDriver.findElements(By.xpath(AcmParam.PAPER_INFO_PER_XPATH));
         for (WebElement webElement : elements) {
             log.info(webElement.getText());
-            String title = webElement.findElement(By.xpath(AcmParam.TITLE_XPATH)).getText();
-            String authors = webElement.findElement(By.xpath(AcmParam.AUTHORS_XPATH)).getText();
-            StrUtil.splitTrim(authors, ",");
-            String source = webElement.findElement(By.xpath(AcmParam.SOURCE_XPATH)).getText();
-            String paperType = webElement.findElement(By.xpath(AcmParam.PAPER_TYPE_XPATH)).getText();
+            String title = MySeleniumUtil.findElementByXpath(webElement, AcmParam.TITLE_XPATH);
+            String authors = MySeleniumUtil.findElementByXpath(webElement, AcmParam.AUTHORS_XPATH);
+            String source = MySeleniumUtil.findElementByXpath(webElement, AcmParam.SOURCE_XPATH);
+            String paperType = MySeleniumUtil.findElementByXpath(webElement, AcmParam.PAPER_TYPE_XPATH);
             String publishYear = "N/A";
-            List<String> publishData = StrUtil.splitTrim(webElement.findElement(By.xpath(AcmParam.PUBLISH_DATA_XPATH)).getText(), StrUtil.SPACE);
+            List<String> publishData = StrUtil.splitTrim(MySeleniumUtil.findElementByXpath(webElement, AcmParam.PUBLISH_DATA_XPATH), StrUtil.SPACE);
             if (publishData.size() == 2) {
                 if (NumberUtil.isInteger(publishData.get(1))) {
                     publishYear = publishData.get(1);

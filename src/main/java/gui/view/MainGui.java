@@ -78,67 +78,70 @@ public class MainGui {
     }
 
     private void initComponentFunctions() {
-        searchButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (StrUtil.isNotEmpty(configPath.getText())) {
-                    String configPathStr = configPath.getText();
-                    //判断地址是不是以/结尾，如果不是，则自己加一个
-                    if (!StrUtil.endWith(configPathStr, StrUtil.SLASH)) {
-                        configPathStr += "/";
-                    }
-                    config = MyConfig.createOrUpdateConfig(config, configPathStr);
+        searchButton.addActionListener(e -> {
+            if (StrUtil.isNotEmpty(configPath.getText())) {
+                String configPathStr = configPath.getText();
+                //判断地址是不是以/结尾，如果不是，则自己加一个
+                if (!StrUtil.endWith(configPathStr, StrUtil.SLASH)) {
+                    configPathStr += "/";
                 }
-                if (saveResult2Csv.isSelected() && StrUtil.isEmpty(outputPath.getText())) {
-                    log.info("如果您选择了【输出结果】选项，请选择输出文件夹；否则，请取消【输出结果】选项");
+                config = MyConfig.createOrUpdateConfig(config, configPathStr);
+            }
+            if (saveResult2Csv.isSelected() && StrUtil.isEmpty(outputPath.getText())) {
+                log.info("如果您选择了【输出结果】选项，请选择输出文件夹；否则，请取消【输出结果】选项");
+                return;
+            }
+            if (StrUtil.isNotEmpty(config.getChrome().getDriverPath())) {
+                log.info("驱动地址为{}", config.getChrome().getDriverPath());
+                if (!ieeeChooseBox.isSelected() && !acmChooseBox.isSelected()) {
+                    log.info("请至少选择一个文献平台！");
                     return;
                 }
-                if (StrUtil.isNotEmpty(config.getChrome().getDriverPath())) {
-                    log.info("驱动地址为{}", config.getChrome().getDriverPath());
-                    log.info("执行爬虫任务，请稍后。请勿再次点击\"开始\"按钮");
-                    ThreadUtil.execute(() -> {
-                        searchButton.setEnabled(false);
-                        paperInfoGui.cleanTable();
-                        processor.runnable = true;
-                        acmResultProcessor.runnable = true;
-                        CountDownLatch countDownLatch = ThreadUtil.newCountDownLatch(2);
-                        if (ieeeChooseBox.isSelected()) {
-                            ThreadUtil.execute(new Runnable() {
-                                @Override
-                                public void run() {
-                                    BaseResult result = loadPaperInfoDataTable(PaperWebSiteEnum.IEEE_XPLORE);
-                                    saveResult(result);
-                                    countDownLatch.countDown();
-                                }
-                            });
-                        } else {
-                            countDownLatch.countDown();
-                        }
-                        if (acmChooseBox.isSelected()) {
-                            ThreadUtil.execute(new Runnable() {
-                                @Override
-                                public void run() {
-                                    BaseResult result = loadPaperInfoDataTable(PaperWebSiteEnum.ACM);
-                                    saveResult(result);
-                                    countDownLatch.countDown();
-                                }
-                            });
-                        } else {
-                            countDownLatch.countDown();
-                        }
-                        try {
-                            log.info("等待爬虫进程完成...");
-                            countDownLatch.await();
-                        } catch (InterruptedException ex) {
-                            log.info("等待爬虫进程同步时发生错误！错误信息为{}", ex.getMessage());
-                            ex.printStackTrace();
-                        }
-                        paperInfoGui.show();
-                        searchButton.setEnabled(true);
-                    });
-                } else {
-                    log.info("驱动未选定，请选定驱动地址！");
-                }
+                log.info("执行爬虫任务，请稍后。请勿再次点击\"开始\"按钮");
+                ThreadUtil.execute(() -> {
+                    showPaperInfoGuiButton.setEnabled(false);
+                    searchButton.setEnabled(false);
+                    paperInfoGui.cleanTable();
+                    processor.runnable = true;
+                    acmResultProcessor.runnable = true;
+                    CountDownLatch countDownLatch = ThreadUtil.newCountDownLatch(2);
+                    if (ieeeChooseBox.isSelected()) {
+                        ThreadUtil.execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                BaseResult result = loadPaperInfoDataTable(PaperWebSiteEnum.IEEE_XPLORE);
+                                saveResult(result);
+                                countDownLatch.countDown();
+                            }
+                        });
+                    } else {
+                        countDownLatch.countDown();
+                    }
+                    if (acmChooseBox.isSelected()) {
+                        ThreadUtil.execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                BaseResult result = loadPaperInfoDataTable(PaperWebSiteEnum.ACM);
+                                saveResult(result);
+                                countDownLatch.countDown();
+                            }
+                        });
+                    } else {
+                        countDownLatch.countDown();
+                    }
+                    try {
+                        log.info("等待爬虫进程完成...");
+                        countDownLatch.await();
+                    } catch (InterruptedException ex) {
+                        log.info("等待爬虫进程同步时发生错误！错误信息为{}", ex.getMessage());
+                        ex.printStackTrace();
+                    }
+                    paperInfoGui.show();
+                    showPaperInfoGuiButton.setEnabled(true);
+                    searchButton.setEnabled(true);
+                });
+            } else {
+                log.info("驱动未选定，请选定驱动地址！");
             }
         });
         searchQueryInput.addKeyListener(new KeyAdapter() {
@@ -149,23 +152,15 @@ public class MainGui {
                 }
             }
         });
-        helpButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                helpGui.show();
-            }
-        });
-        driverChoseButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFileChooser driverChooser = new JFileChooser();
-                driverChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                if (driverChooser.showOpenDialog(content) == JFileChooser.APPROVE_OPTION) {
-                    output.setText(driverChooser.getSelectedFile().getAbsolutePath());
-                    config.getChrome().setDriverPath(output.getText());
-                    log.info("设置驱动地址为:{}", output.getText());
-                    MyConfig.createOrUpdateConfig(config, JarUtil.PWC_JAR_PATH);
-                }
+        helpButton.addActionListener(e -> helpGui.show());
+        driverChoseButton.addActionListener(e -> {
+            JFileChooser driverChooser = new JFileChooser();
+            driverChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            if (driverChooser.showOpenDialog(content) == JFileChooser.APPROVE_OPTION) {
+                output.setText(driverChooser.getSelectedFile().getAbsolutePath());
+                config.getChrome().setDriverPath(output.getText());
+                log.info("设置驱动地址为:{}", output.getText());
+                MyConfig.createOrUpdateConfig(config, JarUtil.PWC_JAR_PATH);
             }
         });
         resultLimitCheck.addActionListener(new ActionListener() {
@@ -209,6 +204,13 @@ public class MainGui {
                 log.info("您请求终止爬虫，将在本次爬虫结束后终止！");
                 processor.runnable = false;
                 acmResultProcessor.runnable = false;
+            }
+        });
+        showPaperInfoGuiButton.setEnabled(false);
+        showPaperInfoGuiButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                paperInfoGui.show();
             }
         });
     }
@@ -321,6 +323,8 @@ public class MainGui {
     private JLabel webSiteLabel;
     private JCheckBox ieeeChooseBox;
     private JCheckBox acmChooseBox;
+    private JButton showPaperInfoGuiButton;
+    private JCheckBox saveResult2Db;
 
     /**
      * Method generated by IntelliJ IDEA GUI Designer
@@ -365,7 +369,7 @@ public class MainGui {
         panel1.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
         content.add(panel1, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
-        panel2.setLayout(new GridLayoutManager(5, 3, new Insets(0, 0, 0, 0), -1, -1));
+        panel2.setLayout(new GridLayoutManager(6, 3, new Insets(0, 0, 0, 0), -1, -1));
         panel1.add(panel2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         searchButton = new JButton();
         searchButton.setText("开始");
@@ -376,7 +380,7 @@ public class MainGui {
         panel2.add(saveResult2Csv, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel3 = new JPanel();
         panel3.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
-        panel2.add(panel3, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panel2.add(panel3, new GridConstraints(2, 1, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         panel3.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         panel3.add(resultLimitChoose, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         resultLimitCheck = new JCheckBox();
@@ -386,23 +390,30 @@ public class MainGui {
         resultLimit.setText("查询数量");
         panel2.add(resultLimit, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         optionLabel = new JLabel();
-        optionLabel.setText("选项");
+        optionLabel.setText("输出结果选项");
         panel2.add(optionLabel, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         stopButton = new JButton();
         stopButton.setText("终止");
         panel2.add(stopButton, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         webSiteLabel = new JLabel();
         webSiteLabel.setText("文献网站");
-        panel2.add(webSiteLabel, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel2.add(webSiteLabel, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel4 = new JPanel();
         panel4.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
-        panel2.add(panel4, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panel2.add(panel4, new GridConstraints(5, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         ieeeChooseBox = new JCheckBox();
         ieeeChooseBox.setText("IEEE XPLORE");
         panel4.add(ieeeChooseBox, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         acmChooseBox = new JCheckBox();
         acmChooseBox.setText("ACM");
         panel4.add(acmChooseBox, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        showPaperInfoGuiButton = new JButton();
+        showPaperInfoGuiButton.setText("查看结果");
+        panel2.add(showPaperInfoGuiButton, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        saveResult2Db = new JCheckBox();
+        saveResult2Db.setEnabled(false);
+        saveResult2Db.setText("是否保存到数据库");
+        panel2.add(saveResult2Db, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel5 = new JPanel();
         panel5.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel1.add(panel5, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));

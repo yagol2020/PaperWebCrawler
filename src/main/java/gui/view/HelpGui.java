@@ -65,7 +65,8 @@ public class HelpGui implements BaseGui {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.pack();
         frame.setVisible(false);
-        aboutTextArea.setText(MyFileUtil.readFile(NormalParam.HELP_FILE_PATH));
+        aboutTextArea.setText(MyFileUtil.readFile(NormalParam.ABOUT_FILE_PATH));
+        helpTextArea.setText(MyFileUtil.readFile(NormalParam.HELP_FILE_PATH));
         return this;
     }
 
@@ -91,7 +92,7 @@ public class HelpGui implements BaseGui {
     private void $$$setupUI$$$() {
         mainPanel = new JPanel();
         mainPanel.setLayout(new GridBagLayout());
-        mainPanel.setPreferredSize(new Dimension(500, 300));
+        mainPanel.setPreferredSize(new Dimension(900, 500));
         helpPanel = new JPanel();
         helpPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         GridBagConstraints gbc;
