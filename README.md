@@ -64,14 +64,13 @@ public class App {
 
 ![gui_chart](https://github.com/yagol2020/PaperWebCrawler/blob/master/images/gui%20chart.png)
 
-
 ## 近期目标 TODO List
 
 | 序号        | 内容    |  开工时间  |  完工时间  | 负责人 |
 | :--------:   | :-----   | :----: | :----: |:------: |
 | 1        | IEEE XPLORE 爬虫框架      |   2021年11月10日    |   2021年11月12日    | @[yagol202](https://github.com/yagol2020)|
-| 2        | 论文等级识别      |   2021年11月12日    |   -    |@[yagol2020](https://github.com/yagol2020) |
-| 3        | ACM 爬虫框架      |   -    |   -    |- |
+| 2        | 论文等级识别      |   2021年11月12日    |   2021年11月22日    |@[yagol2020](https://github.com/yagol2020) |
+| 3        | ACM 爬虫框架      |   2021年11月20日    |   2021年11月22日    |@[yagol](https://github.com/yagol2020) |
 | 4        | IEEE XPLORE 摘要获取      |   2021年11月13日    |   -    |@[vencerk](https://github.com/vencerk) |
 
 ## 仓库
