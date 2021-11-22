@@ -154,12 +154,12 @@
                             <mainClass>gui.view.MainGui</mainClass>
                         </manifest>
                     </archive>
-                    <descriptorRefs>
-                        <!-- 这个jar-with-dependencies是assembly预先写好的一个，组装描述引用 -->
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
                     <!--工程名-->
                     <finalName>${project.name}</finalName>
+                    <!-- assembly.xml文件路径 -->
+                    <descriptors>
+                        <descriptor>assembly.xml</descriptor>
+                    </descriptors>
                 </configuration>
                 <executions>
                     <execution>
@@ -168,6 +168,7 @@
                         <goals>
                             <goal>single</goal>
                         </goals>
+
                     </execution>
                 </executions>
             </plugin>
