@@ -109,8 +109,14 @@ public class MainGui {
                         ThreadUtil.execute(new Runnable() {
                             @Override
                             public void run() {
-                                BaseResult result = loadPaperInfoDataTable(PaperWebSiteEnum.IEEE_XPLORE);
-                                saveResult(result);
+                                try {
+                                    BaseResult result = loadPaperInfoDataTable(PaperWebSiteEnum.IEEE_XPLORE);
+                                    //为了防止找到的文献数量不够限制数量，引起用户的误解，在完成爬虫后将进度条设为100
+                                    ieeeProgressBar.setValue(100);
+                                    saveResult(result);
+                                } catch (Exception exception) {
+                                    log.info("IEEE XPLORE爬虫过程出现异常，异常信息为{}", exception.getMessage());
+                                }
                                 countDownLatch.countDown();
                             }
                         });
@@ -121,8 +127,14 @@ public class MainGui {
                         ThreadUtil.execute(new Runnable() {
                             @Override
                             public void run() {
-                                BaseResult result = loadPaperInfoDataTable(PaperWebSiteEnum.ACM);
-                                saveResult(result);
+                                try {
+                                    BaseResult result = loadPaperInfoDataTable(PaperWebSiteEnum.ACM);
+                                    //为了防止找到的文献数量不够限制数量，引起用户的误解，在完成爬虫后将进度条设为100
+                                    acmProgressBar.setValue(100);
+                                    saveResult(result);
+                                } catch (Exception exception) {
+                                    log.info("ACM爬虫过程出现异常，异常信息为{}", exception.getMessage());
+                                }
                                 countDownLatch.countDown();
                             }
                         });
@@ -255,24 +267,36 @@ public class MainGui {
         IeeeSearchQuery ieeeSearchQuery = new IeeeSearchQuery(searchQueryInput.getText());
         IeeeResult ieeeResult;
         if (Objects.equals(resultLimitChoose.getSelectedItem(), GuiParam.RESULT_UN_LIMIT)) {
-            ieeeResult = processor.run(ieeeSearchQuery, logArea, GuiParam.RESULT_UN_LIMIT_NUM);
+            ieeeResult = processor.run(ieeeSearchQuery, logArea, ieeeProgressBar, GuiParam.RESULT_UN_LIMIT_NUM);
         } else {
-            ieeeResult = processor.run(ieeeSearchQuery, logArea, Integer.parseInt(String.valueOf(resultLimitChoose.getSelectedItem())));
+            ieeeResult = processor.run(ieeeSearchQuery, logArea, ieeeProgressBar, Integer.parseInt(String.valueOf(resultLimitChoose.getSelectedItem())));
         }
-        return getPaperInfoFromLoveScience(ieeeResult);
+        return getPaperInfoFromLoveScience(ieeeResult, PaperWebSiteEnum.IEEE_XPLORE);
     }
 
-    private BaseResult getPaperInfoFromLoveScience(BaseResult baseResult) {
+    private BaseResult getPaperInfoFromLoveScience(BaseResult baseResult, PaperWebSiteEnum paperWebSite) {
         if (ObjectUtil.isNotNull(baseResult) && ArrayUtil.isNotEmpty(baseResult.getPaperList())) {
             LoveScienceDetector loveScienceDetector = new LoveScienceDetector();
-            BaseResult result = loveScienceDetector.detector(baseResult, logArea);
-            paperInfoGui.start(new HashMap<String, Object>(16) {
-                {
-                    put(BaseResult.class.getSimpleName(), result);
-                }
-            });
-            log.info("该批次文献信息已完成【爱科学】处理");
-            return result;
+            BaseResult result = null;
+            switch (paperWebSite) {
+                case ACM:
+                    result = loveScienceDetector.detector(baseResult, logArea, acmDetectorProgressBar);
+                    break;
+                case IEEE_XPLORE:
+                    result = loveScienceDetector.detector(baseResult, logArea, ieeeDetectorProgressBar);
+                    break;
+                default:
+                    break;
+            }
+            if (ObjectUtil.isNotNull(result)) {
+                HashMap<String, Object> inputData = new HashMap<>(16);
+                inputData.put(BaseResult.class.getSimpleName(), result);
+                paperInfoGui.start(inputData);
+                log.info("该批次文献信息已完成【爱科学】处理");
+                return result;
+            } else {
+                return null;
+            }
         } else {
             return null;
         }
@@ -282,11 +306,17 @@ public class MainGui {
         AcmSearchQuery acmSearchQuery = new AcmSearchQuery(searchQueryInput.getText());
         AcmResult acmResult;
         if (Objects.equals(resultLimitChoose.getSelectedItem(), GuiParam.RESULT_UN_LIMIT)) {
-            acmResult = acmResultProcessor.run(acmSearchQuery, logArea, GuiParam.RESULT_UN_LIMIT_NUM);
+            acmResult = acmResultProcessor.run(acmSearchQuery,
+                    logArea,
+                    acmProgressBar,
+                    GuiParam.RESULT_UN_LIMIT_NUM);
         } else {
-            acmResult = acmResultProcessor.run(acmSearchQuery, logArea, Integer.parseInt(String.valueOf(resultLimitChoose.getSelectedItem())));
+            acmResult = acmResultProcessor.run(acmSearchQuery,
+                    logArea,
+                    acmProgressBar,
+                    Integer.parseInt(String.valueOf(resultLimitChoose.getSelectedItem())));
         }
-        return getPaperInfoFromLoveScience(acmResult);
+        return getPaperInfoFromLoveScience(acmResult, PaperWebSiteEnum.ACM);
     }
 
 
@@ -325,6 +355,14 @@ public class MainGui {
     private JCheckBox acmChooseBox;
     private JButton showPaperInfoGuiButton;
     private JCheckBox saveResult2Db;
+    private JProgressBar ieeeProgressBar;
+    private JLabel searchProgressLabel;
+    private JProgressBar ieeeDetectorProgressBar;
+    private JLabel ieeeDetectorLabel;
+    private JProgressBar acmProgressBar;
+    private JLabel acmProgressLabel;
+    private JProgressBar acmDetectorProgressBar;
+    private JLabel acmDetectorLabel;
 
     /**
      * Method generated by IntelliJ IDEA GUI Designer
@@ -356,7 +394,7 @@ public class MainGui {
         gbc.weightx = 1.0;
         main.add(authorLabel, gbc);
         content = new JPanel();
-        content.setLayout(new GridLayoutManager(3, 1, new Insets(0, 0, 0, 0), -1, -1));
+        content.setLayout(new GridLayoutManager(7, 1, new Insets(0, 0, 0, 0), -1, -1));
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 2;
@@ -366,7 +404,7 @@ public class MainGui {
         searchQueryInput = new JTextField();
         content.add(searchQueryInput, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JPanel panel1 = new JPanel();
-        panel1.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.setLayout(new GridLayoutManager(2, 2, new Insets(0, 0, 0, 0), -1, -1));
         content.add(panel1, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayoutManager(6, 3, new Insets(0, 0, 0, 0), -1, -1));
@@ -457,6 +495,42 @@ public class MainGui {
         if (searchQueryLabelFont != null) searchQueryLabel.setFont(searchQueryLabelFont);
         searchQueryLabel.setText("关键字");
         content.add(searchQueryLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JPanel panel7 = new JPanel();
+        panel7.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
+        content.add(panel7, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        searchProgressLabel = new JLabel();
+        searchProgressLabel.setText("IEEE搜索进度");
+        panel7.add(searchProgressLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        ieeeProgressBar = new JProgressBar();
+        ieeeProgressBar.setStringPainted(true);
+        panel7.add(ieeeProgressBar, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JPanel panel8 = new JPanel();
+        panel8.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
+        content.add(panel8, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        ieeeDetectorLabel = new JLabel();
+        ieeeDetectorLabel.setText("IEEE查询进度");
+        panel8.add(ieeeDetectorLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        ieeeDetectorProgressBar = new JProgressBar();
+        ieeeDetectorProgressBar.setStringPainted(true);
+        panel8.add(ieeeDetectorProgressBar, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JPanel panel9 = new JPanel();
+        panel9.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
+        content.add(panel9, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        acmProgressLabel = new JLabel();
+        acmProgressLabel.setText("ACM搜索进度");
+        panel9.add(acmProgressLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        acmProgressBar = new JProgressBar();
+        acmProgressBar.setStringPainted(true);
+        panel9.add(acmProgressBar, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JPanel panel10 = new JPanel();
+        panel10.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
+        content.add(panel10, new GridConstraints(6, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        acmDetectorLabel = new JLabel();
+        acmDetectorLabel.setText("ACM查询进度");
+        panel10.add(acmDetectorLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        acmDetectorProgressBar = new JProgressBar();
+        acmDetectorProgressBar.setStringPainted(true);
+        panel10.add(acmDetectorProgressBar, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         logScrollPane = new JScrollPane();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;

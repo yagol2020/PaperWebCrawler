@@ -2,6 +2,7 @@ package core.detector.impl;
 
 import bean.result.BaseResult;
 import bean.searchquery.impl.LoveScienceSearchQuery;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import core.detector.PaperLevelDetector;
 import log.MyLogFactory;
@@ -28,7 +29,12 @@ import java.util.List;
  **/
 public class LoveScienceDetector implements PaperLevelDetector {
     private final MySwingTextAreaLog log = MyLogFactory.get();
+    private JProgressBar jProgressBar = null;
     private final WebDriver webDriver;
+    /**
+     * 用一个变量记录已经完成完善任务的数量，从而更新进度条
+     */
+    int paperDetectedPos = 1;
 
     public LoveScienceDetector() {
         webDriver = new ChromeUtil().initChrome();
@@ -108,6 +114,10 @@ public class LoveScienceDetector implements PaperLevelDetector {
             } else {
                 paperInfo.setInfluenceFactor(this.detector(paperInfo.getSource()));
             }
+            if (ObjectUtil.isNotNull(jProgressBar)) {
+                jProgressBar.setValue(paperDetectedPos * 100 / result.getPaperList().size());
+            }
+            paperDetectedPos++;
         });
         this.quitWebDriver();
         return result;
@@ -117,5 +127,11 @@ public class LoveScienceDetector implements PaperLevelDetector {
     public BaseResult detector(BaseResult result, JTextArea jTextArea) {
         log.setLogTextArea(jTextArea);
         return this.detector(result);
+    }
+
+    @Override
+    public BaseResult detector(BaseResult result, JTextArea jTextArea, JProgressBar jProgressBar) {
+        this.jProgressBar = jProgressBar;
+        return detector(result, jTextArea);
     }
 }

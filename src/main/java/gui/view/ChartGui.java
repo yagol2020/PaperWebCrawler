@@ -2,9 +2,6 @@ package gui.view;
 
 import bean.analysis.CountDataOneYear;
 import bean.analysis.CountDataPerYear;
-import bean.result.BaseResult;
-import bean.result.PaperInfo;
-import cn.hutool.core.collection.CollectionUtil;
 import com.mindfusion.charting.*;
 import com.mindfusion.charting.animation.Animation;
 import com.mindfusion.charting.animation.AnimationTimeline;
@@ -18,13 +15,13 @@ import util.TypeConvertUtil;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 /**
  * @author yagol
  * @date 17:45
- * @description
+ * @description 文献数量趋势折线图
  **/
 public class ChartGui implements BaseGui {
     /**
@@ -114,6 +111,8 @@ public class ChartGui implements BaseGui {
 
                 Axis countOfPaperAxis = new Axis();
                 countOfPaperAxis.setInterval(1.0);
+                //文献的最低数量是0
+                countOfPaperAxis.setMinValue(0.0);
                 countOfPaperAxis.setTitle("Count of Paper");
 
                 Axis yearsAxis = new Axis();

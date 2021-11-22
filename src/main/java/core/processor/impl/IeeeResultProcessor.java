@@ -1,6 +1,8 @@
 package core.processor.impl;
 
+import bean.result.IeeeResult;
 import bean.searchquery.impl.IeeeSearchQuery;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import core.processor.PaperProcessor;
 import log.MyLogFactory;
@@ -11,7 +13,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import param.IeeeParam;
-import bean.result.IeeeResult;
 import util.ChromeUtil;
 
 import javax.swing.*;
@@ -27,6 +28,7 @@ import java.util.List;
  **/
 public class IeeeResultProcessor implements PaperProcessor<IeeeSearchQuery, IeeeResult> {
     private final MySwingTextAreaLog log = MyLogFactory.get();
+    private JProgressBar jProgressBar = null;
     public volatile Boolean runnable = true;
 
     @Override
@@ -64,6 +66,12 @@ public class IeeeResultProcessor implements PaperProcessor<IeeeSearchQuery, Ieee
     public IeeeResult run(IeeeSearchQuery searchQuery, JTextArea jTextArea, Integer searchLimit) {
         log.setLogTextArea(jTextArea);
         return run(searchQuery, searchLimit);
+    }
+
+    @Override
+    public IeeeResult run(IeeeSearchQuery searchQuery, JTextArea jTextArea, JProgressBar jProgressBar, Integer searchLimit) {
+        this.jProgressBar = jProgressBar;
+        return run(searchQuery, jTextArea, searchLimit);
     }
 
     private void getIeeeResult(IeeeSearchQuery ieeeSearchQuery, WebDriver webDriver, IeeeResult ieeeResult, Integer searchLimit) {
@@ -104,6 +112,9 @@ public class IeeeResultProcessor implements PaperProcessor<IeeeSearchQuery, Ieee
             }
             String paperUrl = IeeeParam.PAPER_URL_PREFIX + webElement.getAttribute(IeeeParam.PAPER_ID_ATTRIBUTE);
             ieeeResult.addPaperInfo(title, authors, source, year, paperType, paperUrl);
+            if (ObjectUtil.isNotNull(jProgressBar)) {
+                jProgressBar.setValue(ieeeResult.getPaperList().size() * 100 / searchLimit);
+            }
             //循环过程中如果够数量了，就不要再执行了
             if (ieeeResult.getPaperList().size() >= searchLimit) {
                 break;

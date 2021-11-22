@@ -28,4 +28,14 @@ public interface PaperLevelDetector {
      */
     BaseResult detector(BaseResult result, JTextArea jTextArea);
 
+    /**
+     * 根据查询的result，完善论文等级等信息，将log输出到swing，并且实时更新swing progressBar的数据
+     *
+     * @param result
+     * @param jTextArea
+     * @param jProgressBar
+     * @return
+     */
+    BaseResult detector(BaseResult result, JTextArea jTextArea, JProgressBar jProgressBar);
+
 }

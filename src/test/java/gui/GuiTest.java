@@ -2,7 +2,6 @@ package gui;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
-import org.jfree.chart.JFreeChart;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +18,9 @@ public class GuiTest {
     private JButton testLog;
     private JTextArea logArea;
     private JCheckBox checkBox1;
+    private JProgressBar processBar;
     private final GuiLogCreator guiLogCreator;
+    private static int processBarValue = 0;
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("GuiTest");
@@ -46,6 +47,13 @@ public class GuiTest {
                 }
             }
         });
+        new Timer(500, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                processBar.setValue(processBarValue);
+                processBarValue = processBarValue + 10;
+            }
+        }).start();
     }
 
     {
@@ -64,7 +72,7 @@ public class GuiTest {
      */
     private void $$$setupUI$$$() {
         logTestPanel = new JPanel();
-        logTestPanel.setLayout(new GridLayoutManager(2, 2, new Insets(0, 0, 0, 0), -1, -1));
+        logTestPanel.setLayout(new GridLayoutManager(3, 2, new Insets(0, 0, 0, 0), -1, -1));
         testLog = new JButton();
         testLog.setText("Button");
         logTestPanel.add(testLog, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -73,6 +81,9 @@ public class GuiTest {
         checkBox1 = new JCheckBox();
         checkBox1.setText("CheckBox");
         logTestPanel.add(checkBox1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        processBar = new JProgressBar();
+        processBar.setStringPainted(true);
+        logTestPanel.add(processBar, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**

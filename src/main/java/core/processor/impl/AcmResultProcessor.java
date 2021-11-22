@@ -3,6 +3,7 @@ package core.processor.impl;
 import bean.result.AcmResult;
 import bean.searchquery.impl.AcmSearchQuery;
 import cn.hutool.core.util.NumberUtil;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import core.processor.PaperProcessor;
 import log.MyLogFactory;
@@ -24,6 +25,7 @@ import java.util.List;
  **/
 public class AcmResultProcessor implements PaperProcessor<AcmSearchQuery, AcmResult> {
     private final MySwingTextAreaLog log = MyLogFactory.get();
+    private JProgressBar jProgressBar = null;
     public volatile Boolean runnable = true;
 
     @Override
@@ -61,6 +63,12 @@ public class AcmResultProcessor implements PaperProcessor<AcmSearchQuery, AcmRes
         return run(searchQuery, searchLimit);
     }
 
+    @Override
+    public AcmResult run(AcmSearchQuery searchQuery, JTextArea jTextArea, JProgressBar jProgressBar, Integer searchLimit) {
+        this.jProgressBar = jProgressBar;
+        return run(searchQuery, jTextArea, searchLimit);
+    }
+
     private void getAcmResult(AcmSearchQuery acmSearchQuery, AcmResult acmResult, Integer searchLimit, WebDriver webDriver) {
         if (acmResult.getPaperList().size() >= searchLimit) {
             return;
@@ -85,6 +93,9 @@ public class AcmResultProcessor implements PaperProcessor<AcmSearchQuery, AcmRes
             }
             String paperUrl = webElement.findElement(By.xpath(AcmParam.TITLE_XPATH + "//a")).getAttribute("href");
             acmResult.addPaperInfo(title, source, StrUtil.splitTrim(authors, StrUtil.COMMA), publishYear, paperType, paperUrl);
+            if (ObjectUtil.isNotNull(jProgressBar)) {
+                jProgressBar.setValue(acmResult.getPaperList().size() * 100 / searchLimit);
+            }
             if (acmResult.getPaperList().size() >= searchLimit) {
                 break;
             }
