@@ -20,6 +20,7 @@ import java.util.List;
  * @Description 检查PWC是否存在更新
  **/
 public class MyUpdateUtil {
+    static final String GITHUB_RELEASES_JSON_FILE_URL = "";
     static final String PER_GITHUB_RELEASES_URL = "https://github.com/yagol2020/PaperWebCrawler/releases/";
 
     public void checkUpdate(JProgressBar jProgressBar, JTextArea logTextArea) throws IOException {
