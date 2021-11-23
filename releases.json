@@ -1,0 +1,20 @@
+{
+  "software_name": "Paper Web Crawler",
+  "chinese_software_name": "文献网站爬虫工具",
+  "authors": [
+    "yagol",
+    "vencerk"
+  ],
+  "exe_releases": [
+    {
+      "version": 1.1,
+      "download_path": "https://github.com/yagol2020/PaperWebCrawler/releases/download/exe_1.1/PWC.exe"
+    }
+  ],
+  "jar_releases": [
+    {
+      "version": 1.0,
+      "download_path": "https://github.com/yagol2020/PaperWebCrawler/releases/download/1.0/PaperWebCrawler-jar-with-dependencies.jar"
+    }
+  ]
+}
