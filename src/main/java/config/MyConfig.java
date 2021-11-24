@@ -14,6 +14,7 @@ import param.NormalParam;
  **/
 @Data
 public class MyConfig {
+    String version;
     ChromeProperties chrome;
 
     /**

@@ -10,14 +10,14 @@ import java.util.HashMap;
  **/
 public interface BaseGui {
     /**
-     * 启动窗口，并显示
+     * 向组件传递数据
      *
      * @param data 数据
      */
     void start(HashMap<String, Object> data);
 
     /**
-     * 初始化窗口
+     * 初始化窗口，注意，不能被内部的构造函数调用，任何时候都应该由外部调用
      *
      * @return 窗口自身
      */
@@ -29,7 +29,7 @@ public interface BaseGui {
     void show();
 
     /**
-     * 初始化组件功能
+     * 初始化组件功能，应该由构造函数内部调用
      */
     void initComponentFunctions();
 }

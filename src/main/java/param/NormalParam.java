@@ -19,6 +19,11 @@ public class NormalParam {
     public final static String ABOUT_FILE_PATH = "/gui_text_file/about.txt";
     public final static String HELP_FILE_PATH = "/gui_text_file/help.txt";
     public final static String CONFIG_FILE_NAME = "base.yaml";
+    public final static Integer ONE_HUNDRED = 100;
+    public final static Integer THIRTY = 30;
+    public final static Integer FIFTY = 50;
+    public final static Integer SEVENTY = 70;
+    public final static String QUESTION_MARK = "?";
     /**
      * 小、中、大括号内容匹配，注意需要循环遍历
      */

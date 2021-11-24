@@ -52,4 +52,9 @@ public class BastTest {
         System.out.println(properties.getChrome().getDriverPath());
         System.out.println(JarUtil.PWC_JAR_PATH);
     }
+
+    @Test
+    public void testExePath() {
+        System.out.println(System.getProperty("exe.path"));
+    }
 }

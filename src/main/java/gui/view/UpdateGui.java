@@ -18,6 +18,11 @@ import java.util.HashMap;
  **/
 public class UpdateGui implements BaseGui {
     private JFrame jFrame;
+    private String savePath;
+
+    public UpdateGui() {
+        initComponentFunctions();
+    }
 
     @Override
     public void start(HashMap<String, Object> data) {
@@ -30,6 +35,7 @@ public class UpdateGui implements BaseGui {
         jFrame.setContentPane(updatePanel);
         jFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         jFrame.pack();
+        update.setEnabled(false);
         return this;
     }
 
@@ -39,25 +45,39 @@ public class UpdateGui implements BaseGui {
         ThreadUtil.execute(new Runnable() {
             @Override
             public void run() {
-                updateLogTextArea.append(DateUtil.now() + StrUtil.SPACE + "已开始搜索GitHub");
+                updateLogTextArea.append(DateUtil.now() + StrUtil.SPACE + "已开始搜索GitHub" + StrUtil.LF);
                 downloadUpdateFile();
             }
         });
     }
 
     private void downloadUpdateFile() {
-        try {
-            MyUpdateUtil myUpdateUtil = new MyUpdateUtil();
-            myUpdateUtil.checkUpdate(updateProgressBar, updateLogTextArea);
-        } catch (Exception e) {
-            updateLogTextArea.append(DateUtil.now() + StrUtil.SPACE + "下载更新文件时出现错误，错误信息为：" + e.getMessage());
-            e.printStackTrace();
-        }
+        ThreadUtil.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    savePath = MyUpdateUtil.checkUpdate(updateProgressBar, updateLogTextArea);
+                    if (!StrUtil.equals(savePath, MyUpdateUtil.ALREADY_NEWEST_VERSION)) {
+                        update.setEnabled(true);
+                    } else {
+                        JOptionPane.showMessageDialog(updatePanel, "已为最新版，无需升级！");
+                    }
+                } catch (Exception e) {
+                    updateLogTextArea.append(DateUtil.now() + StrUtil.SPACE + "下载更新文件时出现错误，错误信息为：" + e.getMessage() + StrUtil.LF);
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override
     public void initComponentFunctions() {
-
+        update.addActionListener(e -> {
+            if (StrUtil.isNotEmpty(savePath)) {
+                JOptionPane.showMessageDialog(updatePanel, "新版本的地址为" + StrUtil.LF + savePath + StrUtil.LF + StrUtil.LF
+                        + "在使用前请重新命名为PWC.exe");
+            }
+        });
     }
 
 
@@ -84,19 +104,25 @@ public class UpdateGui implements BaseGui {
      */
     private void $$$setupUI$$$() {
         updatePanel = new JPanel();
-        updatePanel.setLayout(new GridLayoutManager(2, 2, new Insets(0, 0, 0, 0), -1, -1));
+        updatePanel.setLayout(new GridLayoutManager(2, 3, new Insets(0, 0, 0, 0), -1, -1));
         updatePanel.setPreferredSize(new Dimension(600, 200));
         updateLabel = new JLabel();
         updateLabel.setText("下载进度");
         updatePanel.add(updateLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 1, false));
         updateProgressBar = new JProgressBar();
+        updateProgressBar.setStringPainted(true);
         updatePanel.add(updateProgressBar, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 1, false));
+        final JScrollPane scrollPane1 = new JScrollPane();
+        updatePanel.add(scrollPane1, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         updateLogTextArea = new JTextArea();
         updateLogTextArea.setEditable(false);
-        updatePanel.add(updateLogTextArea, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
+        scrollPane1.setViewportView(updateLogTextArea);
         updateLogLabel = new JLabel();
         updateLogLabel.setText("日志");
         updatePanel.add(updateLogLabel, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        update = new JButton();
+        update.setText("更新");
+        updatePanel.add(update, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
