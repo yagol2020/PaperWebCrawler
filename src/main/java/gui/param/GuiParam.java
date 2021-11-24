@@ -18,4 +18,9 @@ public class GuiParam {
      * 虽然是无限制，但还是得制定数量
      */
     public final static Integer RESULT_UN_LIMIT_NUM = 10000;
+
+    /**
+     * 向图表组件传送数据时，网站信息
+     */
+    public final static String CHART_WEB_SITE_INFO_HASH_MAP_KEY = "webSiteInfos";
 }
