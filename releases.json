@@ -6,11 +6,16 @@
     "vencerk"
   ],
   "newest_releases": {
-    "version": 1.1,
-    "exe_download_path": "https://github.com/yagol2020/PaperWebCrawler/releases/download/exe_1.1/PWC.exe",
-    "jar_download_path": ""
+    "version": 1.2,
+    "exe_download_path": "https://github.com/yagol2020/PaperWebCrawler/releases/download/releases/PWC.exe",
+    "jar_download_path": "https://github.com/yagol2020/PaperWebCrawler/releases/download/releases/PaperWebCrawler-jar-with-dependencies.jar"
   },
   "releases_version": [
+    {
+      "version": 1.2,
+      "exe_download_path": "https://github.com/yagol2020/PaperWebCrawler/releases/download/releases/PWC.exe",
+      "jar_download_path": "https://github.com/yagol2020/PaperWebCrawler/releases/download/releases/PaperWebCrawler-jar-with-dependencies.jar"
+    },
     {
       "version": 1.1,
       "exe_download_path": "https://github.com/yagol2020/PaperWebCrawler/releases/download/exe_1.1/PWC.exe",

@@ -61,7 +61,7 @@ public class MyUpdateUtil {
             throw new Exception("不支持非全英文目录更新");
         }
         logTextArea.append(DateUtil.now() + StrUtil.SPACE + "检测到exe运行环境为：" + exePath + StrUtil.LF);
-        logTextArea.append(DateUtil.now() + StrUtil.SPACE + "正在获得GitHUb的更新信息..." + StrUtil.LF);
+        logTextArea.append(DateUtil.now() + StrUtil.SPACE + "正在获得GitHub的更新信息..." + StrUtil.LF);
         String downloadUrl = getNewestExeFileDownloadUrl();
         if (StrUtil.equals(downloadUrl, ALREADY_NEWEST_VERSION)) {
             logTextArea.append(DateUtil.now() + StrUtil.SPACE + "当前版本已经是最新版，无需升级！" + StrUtil.LF);

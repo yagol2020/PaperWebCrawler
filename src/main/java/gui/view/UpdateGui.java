@@ -42,10 +42,10 @@ public class UpdateGui implements BaseGui {
     @Override
     public void show() {
         jFrame.setVisible(true);
+        updateLogTextArea.setText(StrUtil.EMPTY);
         ThreadUtil.execute(new Runnable() {
             @Override
             public void run() {
-                updateLogTextArea.append(DateUtil.now() + StrUtil.SPACE + "已开始搜索GitHub" + StrUtil.LF);
                 downloadUpdateFile();
             }
         });
