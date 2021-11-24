@@ -6,7 +6,22 @@
 
 如果你是本地查看项目，请查看`README_LOCAL.md`
 
-## 准备工作
+### 使用说明
+
+1. 从releases中下载最新的exe文件和jar压缩包（该jar是java runtime环境，用于提供运行环境）
+2. 将exe和解压后的jar文件夹放到同一个目录下（英文目录）
+请确定目录结构如下
+```markdown
+your folder name
+	├── jre
+	│   ├── bin
+	│   └── lib
+	└── PWC.exe
+```
+3. 预先准备ChromeDriver（链接在下面）
+4. 打开exe，即可开始运行
+
+## 开发-准备工作
 
 * Chrome浏览器
 * **ChromeDriver: [链接](http://chromedriver.storage.googleapis.com/index.html)**
