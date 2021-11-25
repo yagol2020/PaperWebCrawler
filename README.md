@@ -8,7 +8,7 @@
 
 ### 使用说明
 
-1. 从releases中下载最新的exe文件和jar压缩包（该jar是java runtime环境，用于提供运行环境）
+1. 从releases中下载最新的exe文件和jre压缩包（该jre是java runtime环境，用于提供运行环境）
 2. 将exe和解压后的jar文件夹放到同一个目录下（英文目录）
 请确定目录结构如下
 ```markdown
