@@ -15,6 +15,7 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * @author yagol
@@ -86,6 +87,7 @@ public class PaperInfoGui implements BaseGui {
     public void initComponentFunctions() {
         showChartButton.addActionListener(e -> {
             ChartData chartData = new ChartData();
+            chartData.setWebsiteInfos(new LinkedHashMap<>());
             chartData.setPaperInfo(new HashMap<String, Object>(16) {
                 {
                     put(CountDataPerYear.class.getSimpleName(), new CountDataPerYear().getDataByBaseResult(baseResult));
