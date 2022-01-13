@@ -3,8 +3,8 @@
 还在为IEEE复杂的搜索条件发愁么？还在为ACM不支持自定义查询而苦恼么？那就试试这个小工具吧
 
 ## 开发文档及项目说明
-本项目的开发文档及项目说明可查看[链接](https://yagol2020.github.io/project/pwc.html)
 
+本项目的开发文档及项目说明可查看[链接](https://yagol2020.github.io/project/pwc.html)
 
 ### 说明
 
@@ -13,15 +13,12 @@
 ### 使用说明
 
 1. 从releases中下载最新的exe文件和jre压缩包（该jre是java runtime环境，用于提供运行环境）
-2. 将exe和解压后的jar文件夹放到同一个目录下（英文目录）
-请确定目录结构如下
+2. 将exe和解压后的jar文件夹放到同一个目录下（英文目录） 请确定目录结构如下
+
 ```markdown
-your folder name
-	├── jre
-	│   ├── bin
-	│   └── lib
-	└── PWC.exe
+your folder name ├── jre │ ├── bin │ └── lib └── PWC.exe
 ```
+
 3. 预先准备ChromeDriver（链接在下面）
 4. 打开exe，即可开始运行
 
@@ -63,15 +60,15 @@ public class App {
 ![gui paper info table](https://github.com/yagol2020/PaperWebCrawler/blob/master/images/gui%20paper%20info%20table.png)
 
 5. 目前文献的信息包括
-	1. 你查询的关键字
-	2. 文章标题
-	3. 作者列表
-	4. 出处（期刊或会议名称）
-	5. 发表日期
-	6. 论文类型（期刊或会议）
-	7. 对于期刊，可以获得影响因子
-	8. paper的网页地址
-	9. 论文数量统计，以折线图的形式
+    1. 你查询的关键字
+    2. 文章标题
+    3. 作者列表
+    4. 出处（期刊或会议名称）
+    5. 发表日期
+    6. 论文类型（期刊或会议）
+    7. 对于期刊，可以获得影响因子
+    8. paper的网页地址
+    9. 论文数量统计，以折线图的形式
 
 ## 文献查询结果 Csv Result
 
@@ -91,6 +88,10 @@ public class App {
 | 2        | 论文等级识别      |   2021年11月12日    |   2021年11月22日    |@[yagol2020](https://github.com/yagol2020) |
 | 3        | ACM 爬虫框架      |   2021年11月20日    |   2021年11月22日    |@[yagol](https://github.com/yagol2020) |
 | 4        | IEEE XPLORE 摘要获取      |   2021年11月13日    |   -    |@[vencerk](https://github.com/vencerk) |
+|5         | ACM 爬虫框架 | 2022年1月1日| 2022年1月13日|@[yagol](https://github.com/yagol2020)|
+|6         | 柱状图 | 2021年12月20日| 2022年1月13日|@[yagol](https://github.com/yagol2020)|
+|7         | 饼状图 | 2022年1月5日| -|@[yagol](https://github.com/yagol2020)|
+|8         | Springer 爬虫框架 | 2022年1月13日| -|@[yagol](https://github.com/yagol2020)|
 
 ## 仓库
 
