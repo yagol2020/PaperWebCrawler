@@ -5,6 +5,7 @@ import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.StrUtil;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import log.MyLogFactory;
 import util.MyUpdateUtil;
 
 import javax.swing.*;
@@ -64,6 +65,7 @@ public class UpdateGui implements BaseGui {
                     }
                 } catch (Exception e) {
                     updateLogTextArea.append(DateUtil.now() + StrUtil.SPACE + "下载更新文件时出现错误，错误信息为：" + e.getMessage() + StrUtil.LF);
+                    MyLogFactory.get().error(e.getMessage());
                     e.printStackTrace();
                 }
             }

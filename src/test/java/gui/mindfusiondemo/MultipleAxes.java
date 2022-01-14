@@ -12,6 +12,7 @@ import com.mindfusion.drawing.*;
 
 /**
  * 折线+柱状图
+ * 我们选择就是这个
  */
 public class MultipleAxes {
     public static void main(String[] args) {
@@ -112,7 +113,7 @@ public class MultipleAxes {
 
         XAxisRenderer xAxisRenderer = new XAxisRenderer(monthAxis);
         xAxisRenderer.setLabelsSource(plot);
-        YAxisRenderer yAxisRenderer=new YAxisRenderer(count);
+        YAxisRenderer yAxisRenderer = new YAxisRenderer(count);
         yAxisRenderer.setLabelsSource(plot);
         builder.createAndAddPlotAndAxes(plot,
                 null,

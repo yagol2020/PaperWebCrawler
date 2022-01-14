@@ -79,7 +79,6 @@ public class AcmResultProcessor implements PaperProcessor<AcmSearchQuery, AcmRes
         acmResult.parserTotalSize(webDriver.findElement(By.xpath(AcmParam.TOTAL_PAPER_SIZE_XPATH)).getText());
         List<WebElement> elements = webDriver.findElements(By.xpath(AcmParam.PAPER_INFO_PER_XPATH));
         for (WebElement webElement : elements) {
-            log.info(webElement.getText());
             String title = MySeleniumUtil.findElementByXpath(webElement, AcmParam.TITLE_XPATH);
             String authors = MySeleniumUtil.findElementByXpath(webElement, AcmParam.AUTHORS_XPATH);
             String source = MySeleniumUtil.findElementByXpath(webElement, AcmParam.SOURCE_XPATH);

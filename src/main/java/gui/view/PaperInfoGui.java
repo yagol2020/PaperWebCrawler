@@ -4,16 +4,12 @@ import bean.analysis.CountDataPerYear;
 import bean.result.BaseResult;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
-import com.intellij.uiDesigner.core.GridConstraints;
-import com.intellij.uiDesigner.core.GridLayoutManager;
-import com.intellij.uiDesigner.core.Spacer;
 import gui.bean.ChartData;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import java.awt.*;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -32,7 +28,7 @@ public class PaperInfoGui implements BaseGui {
     private JPanel upperPanel;
     private JButton showChartButton;
     private JFrame frame;
-    private final ChartDGui chartGui = new ChartDGui().init();
+    private final ChartGui chartGui = new ChartGui().init();
     private BaseResult baseResult;
 
     public PaperInfoGui() {

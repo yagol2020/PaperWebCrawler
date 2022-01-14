@@ -1,3 +1,4 @@
+import cn.hutool.log.Log;
 import cn.hutool.setting.yaml.YamlUtil;
 import config.MyConfig;
 import org.junit.Test;
@@ -56,5 +57,12 @@ public class BastTest {
     @Test
     public void testExePath() {
         System.out.println(System.getProperty("exe.path"));
+    }
+
+    @Test
+    public void logFileTest(){
+        Log.get().info("this log from junit, INFO");
+        Log.get().warn("this log from junit, WARN");
+        Log.get().error("this log from junit, ERROR");
     }
 }

@@ -27,9 +27,17 @@ public class MySwingTextAreaLog extends Slf4jLog {
         this.logTextArea = logTextArea;
     }
 
+    /**
+     * 只有INFO界别的才输出到GUI界面，其他的不要给用户展示
+     *
+     * @param format    文本
+     * @param arguments 参数
+     */
     @Override
     public void info(String format, Object... arguments) {
+        //正常日志输出
         super.info(format, arguments);
+        //如果GUI组件不是空，输出到GUI
         if (ObjectUtil.isNotNull(logTextArea)) {
             logTextArea.append(DateUtil.now());
             logTextArea.append(StrUtil.SPACE);
