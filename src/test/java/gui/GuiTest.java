@@ -30,7 +30,7 @@ public class GuiTest {
     private JButton guiTestButtonButton;
     private final GuiLogCreator guiLogCreator;
     private static int processBarValue = 0;
-    private ChartGui chartGui = new ChartGui().init();
+    private final ChartGui chartGui = new ChartGui().init();
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("GuiTest");

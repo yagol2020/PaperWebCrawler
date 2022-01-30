@@ -334,7 +334,6 @@ public class MainGui {
     }
 
     private JPanel content;
-    private JLabel searchQueryLabel;
     private JButton searchButton;
     private JButton helpButton;
     private JLabel titleLabel;

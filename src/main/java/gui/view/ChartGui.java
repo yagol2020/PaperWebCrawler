@@ -185,13 +185,6 @@ public class ChartGui implements BaseGui {
                 seriesList1.add(lineSeries);
                 ObservableList<Series> ols1 = new ObservableList<>(seriesList1);
                 LineRenderer lineRenderer = new LineRenderer(ols1);
-                Animation animation = new Animation();
-                AnimationTimeline timeline = new AnimationTimeline();
-                timeline.addAnimation(
-                        AnimationType.PerElementAnimation, 2f, barRenderer);
-                timeline.addAnimation(
-                        AnimationType.PerElementAnimation, 1f, lineRenderer);
-                animation.addTimeline(timeline);
                 UniformSeriesStyle style = new UniformSeriesStyle(
                         new SolidBrush(new Color(206, 0, 0)),
                         new SolidBrush(new Color(206, 0, 0)), 4.0,
@@ -224,6 +217,7 @@ public class ChartGui implements BaseGui {
                 dashboard.getTheme().setDataLabelsFontSize(12.0);
                 dashboard.getTheme().setLegendTitleFontSize(14.0);
 
+                //每个柱子上的文字样式
                 List<Series> sl = new ArrayList<>();
                 sl.add(lineSeries);
                 ObservableList<Series> observableList = new ObservableList<>(sl);
@@ -238,13 +232,17 @@ public class ChartGui implements BaseGui {
                 annotationRenderer.setSeriesStyle(aStyle);
                 plot.getSeriesRenderers().add(annotationRenderer);
 
+                //下坐标轴，年份
                 XAxisRenderer xAxisRenderer = new XAxisRenderer(yearsAxis);
                 xAxisRenderer.setLabelsSource(plot);
-                builder.createAndAddPlotAndAxes(plot,
+
+                builder.createAndAddPlotAndAxes(
+                        //画面的核心
+                        plot,
                         null,
-                        //左
+                        //左坐标轴
                         new YAxisRenderer[]{new YAxisRenderer(countOfPaperAxis)},
-                        //下
+                        //下坐标轴
                         new XAxisRenderer[]{xAxisRenderer},
                         //右
                         null
