@@ -16,7 +16,11 @@
 2. 将exe和解压后的jar文件夹放到同一个目录下（英文目录） 请确定目录结构如下
 
 ```markdown
-your folder name ├── jre │ ├── bin │ └── lib └── PWC.exe
+your folder name 
+├── jre
+│ ├── bin
+│ └── lib
+└── PWC.exe
 ```
 
 3. 预先准备ChromeDriver（链接在下面）
