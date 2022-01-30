@@ -86,7 +86,6 @@ public class IeeeResultProcessor implements PaperProcessor<IeeeSearchQuery, Ieee
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(IeeeParam.UNTIL_CONDITION_XPATH)));
         ieeeResult.parserTotalSize(webDriver.findElement(By.xpath(IeeeParam.PAPER_SIZE_XPATH)).getText());
         for (WebElement webElement : webDriver.findElements(By.xpath(IeeeParam.IEEE_PAPER_XPATH))) {
-            log.info(webElement.getText());
             List<String> webPaperInfos = StrUtil.split(webElement.getText(), "\n");
             String title = webPaperInfos.get(0);
             String year = StrUtil.EMPTY;

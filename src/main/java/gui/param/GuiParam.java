@@ -15,7 +15,7 @@ public class GuiParam {
 
     public final static String RESULT_UN_LIMIT = "无限制";
     /**
-     * 虽然是无限制，但还是得制定数量
+     * 虽然是无限制，但还是得指定数量
      */
     public final static Integer RESULT_UN_LIMIT_NUM = 10000;
 

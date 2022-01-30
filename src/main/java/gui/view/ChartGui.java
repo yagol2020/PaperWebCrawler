@@ -241,7 +241,7 @@ public class ChartGui implements BaseGui {
                         plot,
                         null,
                         //左坐标轴
-                        new YAxisRenderer[]{new YAxisRenderer(countOfPaperAxis)},
+                        null,
                         //下坐标轴
                         new XAxisRenderer[]{xAxisRenderer},
                         //右

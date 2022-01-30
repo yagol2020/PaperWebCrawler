@@ -1,10 +1,13 @@
 package gui.view;
 
 import bean.analysis.CountDataPerYear;
+import bean.result.AcmResult;
 import bean.result.BaseResult;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import gui.bean.ChartData;
+import gui.util.ResultSummer4Plot;
+import param.PaperWebSiteEnum;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -30,6 +33,11 @@ public class PaperInfoGui implements BaseGui {
     private JFrame frame;
     private final ChartGui chartGui = new ChartGui().init();
     private BaseResult baseResult;
+    /**
+     * 这个用于连续保存爬虫数据，从而将多个数据源的数据结合起来
+     * key为文献平台名称，value是该平台的爬虫数据
+     */
+    private HashMap<PaperWebSiteEnum, BaseResult> sumBaseResult = new HashMap<>(16);
 
     public PaperInfoGui() {
         initComponentFunctions();
@@ -41,6 +49,8 @@ public class PaperInfoGui implements BaseGui {
         tableModel.getDataVector().clear();
         //更新table
         tableModel.fireTableDataChanged();
+        //清空上一次保存的数据
+        sumBaseResult = new HashMap<>(16);
     }
 
     @Override
@@ -51,6 +61,9 @@ public class PaperInfoGui implements BaseGui {
                 BaseResult result = (BaseResult) data.get(BaseResult.class.getSimpleName());
                 //将数据保存到本地class中
                 baseResult = result;
+                //将平台数据集成起来，用于绘制图
+                PaperWebSiteEnum paperWebSite = (PaperWebSiteEnum) data.get(PaperWebSiteEnum.class.getSimpleName());
+                sumBaseResult.put(paperWebSite, result);
                 tableModel.setColumnIdentifiers(result.genHeader());
                 result.genResults().forEach(tableModel::addRow);
                 RowSorter<TableModel> rowSorter = new TableRowSorter<>(tableModel);
@@ -82,13 +95,8 @@ public class PaperInfoGui implements BaseGui {
     @Override
     public void initComponentFunctions() {
         showChartButton.addActionListener(e -> {
-            ChartData chartData = new ChartData();
-            chartData.setWebsiteInfos(new LinkedHashMap<>());
-            chartData.setPaperInfo(new HashMap<String, Object>(16) {
-                {
-                    put(CountDataPerYear.class.getSimpleName(), new CountDataPerYear().getDataByBaseResult(baseResult));
-                }
-            });
+            //将数据传递给绘图界面
+            ChartData chartData = ResultSummer4Plot.genData4Plot(sumBaseResult);
             //顺手初始化了图标
             chartGui.start(new HashMap<String, Object>(16) {
                 {

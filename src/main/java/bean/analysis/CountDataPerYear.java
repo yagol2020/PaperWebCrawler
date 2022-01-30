@@ -27,8 +27,7 @@ public class CountDataPerYear {
     Integer endYear;
     List<CountDataOneYear> data = new ArrayList<>();
 
-    public CountDataPerYear getDataByBaseResult(BaseResult baseResult) {
-        List<PaperInfo> paperInfos = baseResult.getPaperList();
+    public CountDataPerYear getDataByBaseResult(List<PaperInfo> paperInfos) {
         if (paperInfos.size() == 0) {
             startYear = 0;
             endYear = startYear;

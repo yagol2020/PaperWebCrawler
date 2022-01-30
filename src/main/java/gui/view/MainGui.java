@@ -76,8 +76,17 @@ public class MainGui {
         result.save2File();
     }
 
+    private void initProgressBars() {
+        ieeeProgressBar.setValue(0);
+        acmProgressBar.setValue(0);
+        ieeeDetectorProgressBar.setValue(0);
+        acmDetectorProgressBar.setValue(0);
+    }
+
     private void initComponentFunctions() {
         searchButton.addActionListener(e -> {
+            //点击开始的时候，将进度条清空
+            initProgressBars();
             if (StrUtil.isNotEmpty(configPath.getText())) {
                 String configPathStr = configPath.getText();
                 //判断地址是不是以/结尾，如果不是，则自己加一个
@@ -100,9 +109,11 @@ public class MainGui {
                 ThreadUtil.execute(() -> {
                     showPaperInfoGuiButton.setEnabled(false);
                     searchButton.setEnabled(false);
+                    //因为是新的关键字，所以清空表格中的数据
                     paperInfoGui.cleanTable();
                     processor.runnable = true;
                     acmResultProcessor.runnable = true;
+                    //2代表有最大有几个文献查询网站，目前指IEEE和ACM
                     CountDownLatch countDownLatch = ThreadUtil.newCountDownLatch(2);
                     if (ieeeChooseBox.isSelected()) {
                         ThreadUtil.execute(new Runnable() {
@@ -252,7 +263,7 @@ public class MainGui {
                 log.info("未选择输出到文件，跳过输出");
             }
             if (ObjectUtil.isNull(result) || CollUtil.isEmpty(Objects.requireNonNull(result).getPaperList())) {
-                log.info("爬虫启动错误，请检查网络链接是否正常");
+                log.info("文件保存失败：爬虫结果为空，请检查！爬虫启动错误，请检查网络链接是否正常");
             }
         }
     }
@@ -296,6 +307,8 @@ public class MainGui {
             if (ObjectUtil.isNotNull(result)) {
                 HashMap<String, Object> inputData = new HashMap<>(16);
                 inputData.put(BaseResult.class.getSimpleName(), result);
+                inputData.put(PaperWebSiteEnum.class.getSimpleName(), paperWebSite);
+                //将爬虫的数据传递给表格
                 paperInfoGui.start(inputData);
                 log.info("该批次文献信息已完成【爱科学】处理");
                 return result;
