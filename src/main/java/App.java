@@ -16,11 +16,6 @@ public class App {
     private static final Log log = LogFactory.get();
 
     public static void main(String[] args) {
-        log.info("控制台级别的启动程序");
-        IeeeSearchQuery ieeeSearchQuery = new IeeeSearchQuery("NLP Model");
-        IeeeResultProcessor processor = new IeeeResultProcessor();
-        IeeeResult ieeeResult = processor.run(ieeeSearchQuery,10);
-        LoveScienceDetector loveScienceDetector = new LoveScienceDetector();
-        BaseResult result = loveScienceDetector.detector(ieeeResult);
+        System.out.println("控制台启动已经作废，请使用GUI启动本项目");
     }
 }

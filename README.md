@@ -44,18 +44,9 @@ your folder name
 ## 使用说明 Usage
 
 1. 根据pom.xml配置依赖
-2. 控制台级别的工具入口是App.main，GUI级别的工具入口是`gui.view.MainGui.main`
+2. GUI级别的工具入口是`gui.view.MainGui.main`
 3. 输入想要查询的关键字
 
-```java
-public class App {
-    public static void main(String[] args) {
-        IeeeSearchQuery ieeeSearchQuery = new IeeeSearchQuery("put your search query in there");
-        IeeeResultProcessor processor = new IeeeResultProcessor();
-        processor.run(ieeeSearchQuery);
-    }
-}
-```
 
 ![gui main](https://github.com/yagol2020/PaperWebCrawler/blob/master/images/gui%20main.png)
 
