@@ -15,7 +15,7 @@
 1. 从releases中下载最新的exe文件和jre压缩包（该jre是java runtime环境，用于提供运行环境）
 2. 将exe和解压后的jar文件夹放到同一个目录下（英文目录） 请确定目录结构如下
 
-```markdown
+```tree
 your folder name 
 ├── jre
 │ ├── bin
@@ -47,7 +47,6 @@ your folder name
 2. GUI级别的工具入口是`gui.view.MainGui.main`
 3. 输入想要查询的关键字
 
-
 ![gui main](https://github.com/yagol2020/PaperWebCrawler/blob/master/images/gui%20main.png)
 
 4. 文献的结果会输出在`target/classes/output/IEEE XPLORE YourSerarchQuery.csv`中，GUI级别的会弹出结果展示表格
@@ -77,16 +76,17 @@ your folder name
 
 ## 近期目标 TODO List
 
-| 序号        | 内容    |  开工时间  |  完工时间  | 负责人 |
-| :--------:   | :-----   | :----: | :----: |:------: |
-| 1        | IEEE XPLORE 爬虫框架      |   2021年11月10日    |   2021年11月12日    | @[yagol202](https://github.com/yagol2020)|
-| 2        | 论文等级识别      |   2021年11月12日    |   2021年11月22日    |@[yagol2020](https://github.com/yagol2020) |
-| 3        | ACM 爬虫框架      |   2021年11月20日    |   2021年11月22日    |@[yagol](https://github.com/yagol2020) |
-| 4        | IEEE XPLORE 摘要获取      |   2021年11月13日    |   -    |@[vencerk](https://github.com/vencerk) |
-|5         | ACM 爬虫框架 | 2022年1月1日| 2022年1月13日|@[yagol](https://github.com/yagol2020)|
-|6         | 柱状图 | 2021年12月20日| 2022年1月13日|@[yagol](https://github.com/yagol2020)|
-|7         | 饼状图 | 2022年1月5日| -|@[yagol](https://github.com/yagol2020)|
-|8         | Springer 爬虫框架 | 2022年1月13日| -|@[yagol](https://github.com/yagol2020)|
+| 序号        | 内容    |  开工时间  |    完工时间     | 提出人 |                   开发                   |
+| :--------:   | :-----   | :----: |:-----------:|-----|:--------------------------------------:|
+| 1        | IEEE XPLORE 爬虫框架      |   2021年11月10日    | 2021年11月12日 |     | @[yagol](https://github.com/yagol2020) |
+| 2        | 论文等级识别      |   2021年11月12日    | 2021年11月22日 |     | @[yagol](https://github.com/yagol2020) |
+| 2        | 论文等级识别      |   2021年11月12日    | 2021年11月22日 |     | @[yagol](https://github.com/yagol2020) |
+| 3        | ACM 爬虫框架      |   2021年11月20日    | 2021年11月22日 |     | @[yagol](https://github.com/yagol2020) |
+| 4        | IEEE XPLORE 摘要获取      |   2021年11月13日    |      -      |  @[vencerk](https://github.com/vencerk)   | @[yagol](https://github.com/yagol2020) |
+|5         | ACM 爬虫框架 | 2022年1月1日| 2022年1月13日  |     | @[yagol](https://github.com/yagol2020) |
+|6         | 柱状图 | 2021年12月20日| 2022年1月13日  |     | @[yagol](https://github.com/yagol2020) |
+|7         | 饼状图 | 2022年1月5日| 2022年1月30日  |     | @[yagol](https://github.com/yagol2020) |
+|8         | Springer 爬虫框架 | 2022年1月13日|      -      |     | @[yagol](https://github.com/yagol2020) |
 
 ## 仓库
 

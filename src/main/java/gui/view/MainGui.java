@@ -47,7 +47,7 @@ public class MainGui {
     private final MySwingTextAreaLog log = MyLogFactory.get();
     private JTextField searchQueryInput;
     private JTextArea logArea;
-    private JPanel main;
+    public JPanel main;
 
     private final PaperInfoGui paperInfoGui = new PaperInfoGui().init();
     private final HelpGui helpGui = new HelpGui().init();
@@ -116,37 +116,31 @@ public class MainGui {
                     //2代表有最大有几个文献查询网站，目前指IEEE和ACM
                     CountDownLatch countDownLatch = ThreadUtil.newCountDownLatch(2);
                     if (ieeeChooseBox.isSelected()) {
-                        ThreadUtil.execute(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    BaseResult result = loadPaperInfoDataTable(PaperWebSiteEnum.IEEE_XPLORE);
-                                    //为了防止找到的文献数量不够限制数量，引起用户的误解，在完成爬虫后将进度条设为100
-                                    ieeeProgressBar.setValue(100);
-                                    saveResult(result);
-                                } catch (Exception exception) {
-                                    log.info("IEEE XPLORE爬虫过程出现异常，异常信息为{}", exception.getMessage());
-                                }
-                                countDownLatch.countDown();
+                        ThreadUtil.execute(() -> {
+                            try {
+                                BaseResult result = loadPaperInfoDataTable(PaperWebSiteEnum.IEEE_XPLORE);
+                                //为了防止找到的文献数量不够限制数量，引起用户的误解，在完成爬虫后将进度条设为100
+                                ieeeProgressBar.setValue(100);
+                                saveResult(result);
+                            } catch (Exception exception) {
+                                log.info("IEEE XPLORE爬虫过程出现异常，异常信息为{}", exception.getMessage());
                             }
+                            countDownLatch.countDown();
                         });
                     } else {
                         countDownLatch.countDown();
                     }
                     if (acmChooseBox.isSelected()) {
-                        ThreadUtil.execute(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    BaseResult result = loadPaperInfoDataTable(PaperWebSiteEnum.ACM);
-                                    //为了防止找到的文献数量不够限制数量，引起用户的误解，在完成爬虫后将进度条设为100
-                                    acmProgressBar.setValue(100);
-                                    saveResult(result);
-                                } catch (Exception exception) {
-                                    log.info("ACM爬虫过程出现异常，异常信息为{}", exception.getMessage());
-                                }
-                                countDownLatch.countDown();
+                        ThreadUtil.execute(() -> {
+                            try {
+                                BaseResult result = loadPaperInfoDataTable(PaperWebSiteEnum.ACM);
+                                //为了防止找到的文献数量不够限制数量，引起用户的误解，在完成爬虫后将进度条设为100
+                                acmProgressBar.setValue(100);
+                                saveResult(result);
+                            } catch (Exception exception) {
+                                log.info("ACM爬虫过程出现异常，异常信息为{}", exception.getMessage());
                             }
+                            countDownLatch.countDown();
                         });
                     } else {
                         countDownLatch.countDown();
@@ -185,62 +179,40 @@ public class MainGui {
                 MyConfig.createOrUpdateConfig(config, JarUtil.PWC_JAR_PATH);
             }
         });
-        resultLimitCheck.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (resultLimitCheck.isSelected()) {
-                    resultLimitChoose.insertItemAt(GuiParam.RESULT_UN_LIMIT, 0);
-                    resultLimitChoose.setSelectedIndex(0);
-                    resultLimitChoose.setEnabled(false);
-                } else {
-                    resultLimitChoose.removeItem(GuiParam.RESULT_UN_LIMIT);
-                    resultLimitChoose.setEnabled(true);
-                }
+        resultLimitCheck.addActionListener(e -> {
+            if (resultLimitCheck.isSelected()) {
+                resultLimitChoose.insertItemAt(GuiParam.RESULT_UN_LIMIT, 0);
+                resultLimitChoose.setSelectedIndex(0);
+                resultLimitChoose.setEnabled(false);
+            } else {
+                resultLimitChoose.removeItem(GuiParam.RESULT_UN_LIMIT);
+                resultLimitChoose.setEnabled(true);
             }
         });
-        outputPathChooserButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFileChooser outputFileChooser = new JFileChooser();
-                outputFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-                if (outputFileChooser.showOpenDialog(content) == JFileChooser.APPROVE_OPTION) {
-                    outputPath.setText(outputFileChooser.getSelectedFile().getAbsolutePath());
-                    log.info("设置的输出目录为:{}", outputPath.getText());
-                }
+        outputPathChooserButton.addActionListener(e -> {
+            JFileChooser outputFileChooser = new JFileChooser();
+            outputFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            if (outputFileChooser.showOpenDialog(content) == JFileChooser.APPROVE_OPTION) {
+                outputPath.setText(outputFileChooser.getSelectedFile().getAbsolutePath());
+                log.info("设置的输出目录为:{}", outputPath.getText());
             }
         });
-        configPathChooserButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFileChooser configPathChooser = new JFileChooser();
-                configPathChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-                if (configPathChooser.showOpenDialog(content) == JFileChooser.APPROVE_OPTION) {
-                    configPath.setText(configPathChooser.getSelectedFile().getAbsolutePath());
-                    log.info("选择的配置文件目录为:{}", configPath.getText());
-                }
+        configPathChooserButton.addActionListener(e -> {
+            JFileChooser configPathChooser = new JFileChooser();
+            configPathChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            if (configPathChooser.showOpenDialog(content) == JFileChooser.APPROVE_OPTION) {
+                configPath.setText(configPathChooser.getSelectedFile().getAbsolutePath());
+                log.info("选择的配置文件目录为:{}", configPath.getText());
             }
         });
-        stopButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                log.info("您请求终止爬虫，将在本次爬虫结束后终止！");
-                processor.runnable = false;
-                acmResultProcessor.runnable = false;
-            }
+        stopButton.addActionListener(e -> {
+            log.info("您请求终止爬虫，将在本次爬虫结束后终止！");
+            processor.runnable = false;
+            acmResultProcessor.runnable = false;
         });
         showPaperInfoGuiButton.setEnabled(false);
-        showPaperInfoGuiButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                paperInfoGui.show();
-            }
-        });
-        checkUpdateButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                updateGui.show();
-            }
-        });
+        showPaperInfoGuiButton.addActionListener(e -> paperInfoGui.show());
+        checkUpdateButton.addActionListener(e -> updateGui.show());
     }
 
     /**
