@@ -3,16 +3,24 @@ package gui.view;
 import bean.analysis.CountDataPerYear;
 import bean.result.AcmResult;
 import bean.result.BaseResult;
+import cn.hutool.core.io.StreamProgress;
+import cn.hutool.http.HttpUtil;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import gui.bean.ChartData;
 import gui.util.ResultSummer4Plot;
+import org.openqa.selenium.WebDriver;
 import param.PaperWebSiteEnum;
+import util.ChromeUtil;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -41,6 +49,54 @@ public class PaperInfoGui implements BaseGui {
 
     public PaperInfoGui() {
         initComponentFunctions();
+        paperInfoTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                if (SwingUtilities.isRightMouseButton(e)) {
+                    int row = paperInfoTable.rowAtPoint(e.getPoint());
+                    paperInfoTable.setRowSelectionInterval(row, row);
+                    JPopupMenu popupMenu = new JPopupMenu();
+                    JMenuItem downloadMenuItem = new JMenuItem("下载该论文");
+                    popupMenu.add(downloadMenuItem);
+                    downloadMenuItem.addActionListener(e1 -> {
+                        JFileChooser jFileChooser = new JFileChooser();
+                        FileSystemView fileSystemView = FileSystemView.getFileSystemView();
+                        jFileChooser.setCurrentDirectory(fileSystemView.getHomeDirectory());
+                        jFileChooser.setDialogTitle("请选择文件保存路径");
+                        jFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                        jFileChooser.setSelectedFile(new File(baseResult.getPaperList().get(row).getTitle() + ".pdf"));
+                        int returnValue = jFileChooser.showSaveDialog(null);
+                        if (returnValue == JFileChooser.APPROVE_OPTION) {
+                            File file = jFileChooser.getSelectedFile();
+                            HttpUtil.downloadFile(baseResult.getPaperList().get(row).getPaperDownloadUrl(), file, new StreamProgress() {
+                                @Override
+                                public void start() {
+                                    log.info("开始下载文件:{}", baseResult.getPaperList().get(row).getPaperDownloadUrl());
+                                }
+
+                                @Override
+                                public void progress(long progressSize) {
+
+                                }
+
+                                @Override
+                                public void finish() {
+                                    log.info("下载完成");
+                                }
+                            });
+                        }
+                    });
+                    JMenuItem openWebView = new JMenuItem("打开该论文网页");
+                    popupMenu.add(openWebView);
+                    openWebView.addActionListener(e1 -> {
+                        WebDriver webDriver = new ChromeUtil().initChromeWithView();
+                        webDriver.get(baseResult.getPaperList().get(row).getPaperUrl());
+                    });
+                    popupMenu.show(paperInfoTable, e.getX(), e.getY());
+                }
+            }
+        });
     }
 
     public void cleanTable() {

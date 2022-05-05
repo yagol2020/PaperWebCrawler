@@ -6,5 +6,5 @@ package param;
  * @Description
  **/
 public class PaperLevelParam {
-    public final static String THREE_NO_JOURNAL = "三无期刊";
+    public final static String THREE_NO_JOURNAL = "UnKnow";
 }

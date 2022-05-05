@@ -27,4 +27,16 @@ public class ChromeUtil {
     public WebDriver initChrome() {
         return new ChromeDriver(CHROME_OPTIONS);
     }
+
+    /**
+     * 带有界面的chrome
+     *
+     * @return WebDriver
+     */
+    public WebDriver initChromeWithView() {
+        ChromeOptions options = new ChromeOptions();
+        options.setPageLoadStrategy(PageLoadStrategy.EAGER);
+        return new ChromeDriver(options);
+
+    }
 }

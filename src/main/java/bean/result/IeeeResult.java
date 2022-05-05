@@ -34,9 +34,13 @@ public class IeeeResult extends BaseResult {
         this.addPaperInfo(title, authors, source, year, paperType, "N/A", paperUrl);
     }
 
+    private String convertUrl2DownloadUrl(String url) {
+        return url.replace("/document/", "/stamp/stamp.jsp?tp=&arnumber=");
+    }
+
 
     public void addPaperInfo(String title, List<String> authors, String source, String year, String paperType, String influenceFactor, String paperUrl) {
-        paperList.add(new PaperInfo(title, authors, source, year, paperType, influenceFactor, paperUrl));
+        paperList.add(new PaperInfo(title, authors, source, year, paperType, influenceFactor, paperUrl, convertUrl2DownloadUrl(paperUrl)));
     }
 
     @Override

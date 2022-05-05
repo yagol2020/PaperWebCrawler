@@ -20,4 +20,5 @@ public class PaperInfo {
     String paperType;
     String influenceFactor;
     String paperUrl;
+    String paperDownloadUrl;
 }
