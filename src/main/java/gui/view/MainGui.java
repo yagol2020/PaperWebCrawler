@@ -309,15 +309,6 @@ public class MainGui {
         return getPaperInfoFromLoveScience(acmResult, PaperWebSiteEnum.ACM);
     }
 
-
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("MainGui");
-        frame.setContentPane(new MainGui().main);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-    }
-
     private JPanel content;
     private JButton searchButton;
     private JButton helpButton;

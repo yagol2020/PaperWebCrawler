@@ -11,7 +11,7 @@
 
 驱动的版本应与Chrome的版本一致，下图将展示如何查看Chrome版本
 
-![chrome_version](images/chrome version.png)
+![chrome_version](images/chrome_version.png)
 
 ## 使用说明 Usage
 
@@ -29,11 +29,11 @@ public class App {
 }
 ```
 
-![gui main](images/gui main.png)
+![gui main](images/gui_main_2021.png)
 
 4. 文献的结果会输出在`target/classes/output/IEEE XPLORE YourSerarchQuery.csv`中，GUI级别的会弹出结果展示表格
 
-![gui paper info table](images/gui paper info table.png)
+![gui paper info table](images/gui_paper_info_table.png)
 
 5. 目前文献的信息包括
 	1. 你查询的关键字
@@ -48,7 +48,7 @@ public class App {
 
 文献查询结果会以`csv`文件形式呈现，如下图所示，该样例以`NLP Model Parameter`作为关键字进行查询。
 
-![ieee bean.result demo](images/ieee result demo.png)
+![ieee bean.result demo](images/ieee_result_demo.png)
 
 ## 近期目标 TODO List
 

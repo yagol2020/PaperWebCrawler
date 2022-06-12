@@ -39,7 +39,7 @@ your folder name
 
 驱动的版本应与Chrome的版本一致，下图将展示如何查看Chrome版本
 
-![chrome_version](https://github.com/yagol2020/PaperWebCrawler/blob/master/images/chrome%20version.png)
+<img alt="chrome_version" src="./images/chrome_version.png"/>
 
 ## 使用说明 Usage
 
@@ -47,11 +47,11 @@ your folder name
 2. GUI级别的工具入口是`gui.view.MainGui.main`
 3. 输入想要查询的关键字
 
-![gui main](https://github.com/yagol2020/PaperWebCrawler/blob/master/images/gui%20main.png)
+<img alt="gui_main" src="./images/gui_main.png"/>
 
 4. 文献的结果会输出在`target/classes/output/IEEE XPLORE YourSerarchQuery.csv`中，GUI级别的会弹出结果展示表格
 
-![gui paper info table](https://github.com/yagol2020/PaperWebCrawler/blob/master/images/gui%20paper%20info%20table.png)
+<img alt="gui_paper_info_table" src="./images/gui_paper_info_table.png"/>
 
 5. 目前文献的信息包括
     1. 你查询的关键字
@@ -68,11 +68,11 @@ your folder name
 
 文献查询结果会以`csv`文件形式呈现，如下图所示，该样例以`NLP Model Parameter`作为关键字进行查询。
 
-![ieee bean.result demo](https://github.com/yagol2020/PaperWebCrawler/blob/master/images/ieee%20result%20demo.png)
+<img alt="ieee_result_demo" src="./images/ieee_result_demo.png"/>
 
 ## 折线图
 
-![gui_chart](https://github.com/yagol2020/PaperWebCrawler/blob/master/images/gui%20chart.png)
+<img alt="gui_chart" src="./images/gui_chart.png"/>
 
 ## 近期目标 TODO List
 
