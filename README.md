@@ -6,10 +6,6 @@
 
 本项目的开发文档及项目说明可查看[链接](https://yagol2020.github.io/project/pwc.html)
 
-### 说明
-
-如果你是本地查看项目，请查看`README_LOCAL.md`
-
 ### 使用说明
 
 1. 从releases中下载最新的exe文件和jre压缩包（该jre是java runtime环境，用于提供运行环境）
