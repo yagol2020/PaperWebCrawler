@@ -72,17 +72,18 @@ your folder name
 
 ## 近期目标 TODO List
 
-| 序号        | 内容    |  开工时间  |    完工时间     | 提出人 |                   开发                   |
-| :--------:   | :-----   | :----: |:-----------:|-----|:--------------------------------------:|
-| 1        | IEEE XPLORE 爬虫框架      |   2021年11月10日    | 2021年11月12日 |     | @[yagol](https://github.com/yagol2020) |
-| 2        | 论文等级识别      |   2021年11月12日    | 2021年11月22日 |     | @[yagol](https://github.com/yagol2020) |
-| 2        | 论文等级识别      |   2021年11月12日    | 2021年11月22日 |     | @[yagol](https://github.com/yagol2020) |
-| 3        | ACM 爬虫框架      |   2021年11月20日    | 2021年11月22日 |     | @[yagol](https://github.com/yagol2020) |
-| 4        | IEEE XPLORE 摘要获取      |   2021年11月13日    |      -      |  @[vencerk](https://github.com/vencerk)   | @[yagol](https://github.com/yagol2020) |
-|5         | ACM 爬虫框架 | 2022年1月1日| 2022年1月13日  |     | @[yagol](https://github.com/yagol2020) |
-|6         | 柱状图 | 2021年12月20日| 2022年1月13日  |     | @[yagol](https://github.com/yagol2020) |
-|7         | 饼状图 | 2022年1月5日| 2022年1月30日  |     | @[yagol](https://github.com/yagol2020) |
-|8         | Springer 爬虫框架 | 2022年1月13日|      -      |     | @[yagol](https://github.com/yagol2020) |
+| 序号  | 内容               |    开工时间     |    完工时间     | 提出人                                    |                           开发                            |
+|:---:|:-----------------|:-----------:|:-----------:|----------------------------------------|:-------------------------------------------------------:|
+|  1  | IEEE XPLORE 爬虫框架 | 2021年11月10日 | 2021年11月12日 |                                        |         @[yagol](https://github.com/yagol2020)          |
+|  2  | 论文等级识别           | 2021年11月12日 | 2021年11月22日 |                                        |         @[yagol](https://github.com/yagol2020)          |
+|  2  | 论文等级识别           | 2021年11月12日 | 2021年11月22日 |                                        |         @[yagol](https://github.com/yagol2020)          |
+|  3  | ACM 爬虫框架         | 2021年11月20日 | 2021年11月22日 |                                        |         @[yagol](https://github.com/yagol2020)          |
+|  4  | IEEE XPLORE 摘要获取 | 2021年11月13日 |      -      | @[vencerk](https://github.com/vencerk) |         @[yagol](https://github.com/yagol2020)          |
+|  5  | ACM 爬虫框架         |  2022年1月1日  | 2022年1月13日  |                                        |         @[yagol](https://github.com/yagol2020)          |
+|  6  | 柱状图              | 2021年12月20日 | 2022年1月13日  |                                        |         @[yagol](https://github.com/yagol2020)          |
+|  7  | 饼状图              |  2022年1月5日  | 2022年1月30日  |                                        |         @[yagol](https://github.com/yagol2020)          |
+|  8  | Springer 爬虫框架    | 2022年1月13日  |      -      |                                        |         @[yagol](https://github.com/yagol2020)          |
+|  9  | 知网框架             | 2022年10月12日 |             |                                        |            @[yagol](https://github.com/yagol2020)       |
 
 ## 仓库
 
