@@ -90,7 +90,7 @@ public class MyUpdateUtil {
             }
 
             @Override
-            public void progress(long progressSize) {
+            public void progress(long total, long progressSize) {
                 jProgressBar.setValue((int) progressSize);
             }
 

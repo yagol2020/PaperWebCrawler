@@ -112,3 +112,6 @@ class YourCode {
 
 * EXE版发行的模版：标题为`PWC_EXE_x.x`，标签为`exe_x.x`。其中，`x.x`是版本号，其中包含一个`PWC.exe`可执行文件。
 * JAR版发行的模板：`PWC_x.x`
+
+## 版本变更说明
+* 2023.3.20, 更新Java版本到11

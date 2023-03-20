@@ -1,7 +1,5 @@
 package gui.view;
 
-import bean.analysis.CountDataPerYear;
-import bean.result.AcmResult;
 import bean.result.BaseResult;
 import cn.hutool.core.io.StreamProgress;
 import cn.hutool.http.HttpUtil;
@@ -22,12 +20,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 /**
  * @author yagol
  * @TIME 2021/11/15 - 1:50 下午
- * @description
+ * @Description
  **/
 public class PaperInfoGui implements BaseGui {
     private final Log log = LogFactory.get();
@@ -76,7 +73,7 @@ public class PaperInfoGui implements BaseGui {
                                 }
 
                                 @Override
-                                public void progress(long progressSize) {
+                                public void progress(long total, long progressSize) {
 
                                 }
 
