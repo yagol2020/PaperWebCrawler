@@ -4,7 +4,7 @@
 
 ## 开发文档及项目说明
 
-本项目的开发文档及项目说明可查看[链接](https://yagol2020.github.io/project/pwc.html)
+本项目的开发文档及项目说明可查看[~~链接（暂不可用）~~](https://yagol2020.github.io/project/pwc.html)
 
 ### 使用说明
 
